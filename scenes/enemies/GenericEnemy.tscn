@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpyrd5tkn71c4"]
+
+[ext_resource type="Script" uid="uid://bdpolb3mvo6l4" path="res://scenes/enemies/generic_enemy.gd" id="1_s1b0o"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5dc1e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s1b0o"]
+albedo_color = Color(0.5106012, 0.5106013, 0.5106012, 1)
+metallic = 1.0
+roughness = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_w5208"]
+material = SubResource("StandardMaterial3D_s1b0o")
+
+[node name="GenericEnemy" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_s1b0o")
+speed = 10.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5dc1e")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_w5208")
