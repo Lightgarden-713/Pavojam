@@ -5,6 +5,12 @@
 
 extends CharacterBody3D
 
+@export_group("Camera")
+
+## Camera pitch clamp (degrees). Increase magnitude to allow looking further up/down.
+@export_range(-89.0, 0.0, 0.5) var look_pitch_min_deg := -85.0
+@export_range(0.0, 89.0, 0.5) var look_pitch_max_deg := 85.0
+
 ## Can we move around?
 @export var can_move : bool = true
 ## Are we affected by gravity?
@@ -124,7 +130,7 @@ func _physics_process(delta: float) -> void:
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
 func rotate_look(rot_input : Vector2):
 	look_rotation.x -= rot_input.y * look_speed
-	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-85), deg_to_rad(85))
+	look_rotation.x = clamp(look_rotation.x, deg_to_rad(look_pitch_min_deg), deg_to_rad(look_pitch_max_deg))
 	look_rotation.y -= rot_input.x * look_speed
 	transform.basis = Basis()
 	rotate_y(look_rotation.y)
