@@ -19,8 +19,9 @@ height = 1.8
 radius = 0.4
 height = 1.65
 
-[node name="ProtoController" type="CharacterBody3D"]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("health_component")]
 script = ExtResource("1_ucva2")
+health_component = NodePath("HealthComponent")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

@@ -3,7 +3,11 @@
 # Intended for rapid prototyping of first-person games.
 # Happy prototyping!
 
+class_name ProtoController
 extends CharacterBody3D
+
+@export_group("Player component references")
+@export var health_component : HealthComponent
 
 @export_group("Camera")
 
@@ -70,11 +74,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		capture_mouse()
 	if Input.is_key_pressed(KEY_ESCAPE):
 		release_mouse()
-	
+
 	# Look around
 	if mouse_captured and event is InputEventMouseMotion:
 		rotate_look(event.relative)
-	
+
 	# Toggle freefly mode
 	if can_freefly and Input.is_action_just_pressed(input_freefly):
 		if not freeflying:
@@ -90,7 +94,7 @@ func _physics_process(delta: float) -> void:
 		motion *= freefly_speed * delta
 		move_and_collide(motion)
 		return
-	
+
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor():
@@ -120,7 +124,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 		velocity.y = 0
-	
+
 	# Use velocity to actually move
 	move_and_slide()
 
