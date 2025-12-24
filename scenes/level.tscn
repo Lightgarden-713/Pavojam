@@ -1,12 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
-[ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+sky_top_color = Color(0.27009362, 0.43445107, 0.7677927, 1)
+sky_horizon_color = Color(0.56060797, 0.7049371, 0.6872165, 1)
+ground_bottom_color = Color(0.20273119, 0.15534887, 0.11503116, 1)
+ground_horizon_color = Color(0.5068614, 0.46101862, 0.4694987, 1)
 
 [sub_resource type="Sky" id="Sky_w8frs"]
 sky_material = SubResource("ProceduralSkyMaterial_w7c3h")
