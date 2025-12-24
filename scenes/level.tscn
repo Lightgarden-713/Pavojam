@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
-[ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
@@ -45,12 +45,16 @@ mesh = SubResource("PlaneMesh_2q6dc")
 skeleton = NodePath("../..")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Floor"]
+collision_layer = 4
+collision_mask = 7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor/StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_2q6dc")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="NavigationRegion3D"]
 use_collision = true
+collision_layer = 4
+collision_mask = 7
 radius = 10.0
 height = 5.0
 
