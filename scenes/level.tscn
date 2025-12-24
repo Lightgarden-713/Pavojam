@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=12 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
-[ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
+[ext_resource type="PackedScene" uid="uid://yqvah55y156v" path="res://scenes/experience_orb.tscn" id="4_mx8sn"]
+[ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_ppgk2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -80,7 +81,7 @@ offset_right = 110.0
 offset_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
-script = ExtResource("4_mx8sn")
+script = ExtResource("4_ppgk2")
 level = NodePath("../../World")
 health_text = NodePath("MarginContainer/Label")
 
@@ -94,3 +95,10 @@ theme_override_constants/margin_bottom = 5
 [node name="Label" type="Label" parent="UI/HealthContainer/MarginContainer"]
 layout_mode = 2
 text = "Health: 0"
+
+[node name="TopBar" type="ColorRect" parent="UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ExperienceOrb" parent="." instance=ExtResource("4_mx8sn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0619125, 0.81158614, -4.1902623)

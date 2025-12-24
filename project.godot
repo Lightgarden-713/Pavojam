@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [global_group]
 
 enemies=""
+player=""
 
 [input]
 
@@ -59,6 +60,7 @@ ui_down={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Enemy"
 3d_physics/layer_3="Level"
+3d_physics/layer_10="experience"
 
 [physics]
 
