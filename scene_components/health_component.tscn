@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1i3f13st5yow"]
+
+[ext_resource type="Script" uid="uid://dkrtg6ydm6h6r" path="res://scripts/health_component.gd" id="1_wptcr"]
+
+[node name="HealthComponent" type="Node"]
+script = ExtResource("1_wptcr")
+max_health = 100.0
