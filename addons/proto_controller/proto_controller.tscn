@@ -19,7 +19,7 @@ height = 1.8
 radius = 0.4
 height = 1.65
 
-[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("health_component")]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("health_component") groups=["player"]]
 script = ExtResource("1_ucva2")
 health_component = NodePath("HealthComponent")
 
