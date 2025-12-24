@@ -17,7 +17,7 @@ func take_damage(damage_amount: float) -> void:
 	if !is_alive(): return
 
 	health -= damage_amount
-	if health <= 0:
+	if !is_alive():
 		health_depleted.emit()
 		print("I'm ded")
 
