@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=9 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://bb7xj3gm15bgx" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_5hfox"]
+[ext_resource type="PackedScene" uid="uid://bha5j07kt4xem" path="res://scene_components/xp_component.tscn" id="3_0rk7u"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_6dqce"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
@@ -19,9 +20,10 @@ height = 1.8
 radius = 0.4
 height = 1.65
 
-[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("health_component") groups=["player"]]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("health_component", "xp_component") groups=["player"]]
 script = ExtResource("1_ucva2")
 health_component = NodePath("HealthComponent")
+xp_component = NodePath("XPComponent")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -43,6 +45,8 @@ spring_length = 3.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_5hfox")]
+
+[node name="XPComponent" parent="." instance=ExtResource("3_0rk7u")]
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("owner_health_component") instance=ExtResource("3_6dqce")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

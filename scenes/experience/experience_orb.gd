@@ -31,8 +31,8 @@ func magnetize(player_node):
 	linear_velocity.y += 2.0 
 
 func collect():
-	# TODO: Add logic to give XP to player
 	print("Collected XP!")
+	target_player.xp_component.add_xp(xp_value)
 	queue_free()
 
 

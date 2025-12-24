@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=15 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
 [ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="4_ppgk2"]
+[ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/xp_bar.gd" id="5_2r41h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -27,6 +28,12 @@ polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(2, 0, 3), PackedInt32Arr
 size = Vector2(10, 10)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_2q6dc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppgk2"]
+bg_color = Color(0.101960786, 0.101960786, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2r41h"]
+bg_color = Color(0.2, 0.4, 0.9019608, 1)
 
 [node name="World" type="Node"]
 
@@ -76,12 +83,25 @@ speed = 1.0
 
 [node name="ExperienceOrb" parent="World" instance=ExtResource("4_ppgk2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0037904, 0.42718005, -5.2663383)
+xp_value = 45
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="XPBar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("level")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ppgk2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2r41h")
+value = 50.0
+script = ExtResource("5_2r41h")
+level = NodePath("../../World")
+
 [node name="HealthContainer" type="PanelContainer" parent="UI" node_paths=PackedStringArray("level", "health_text")]
+offset_top = 50.0
 offset_right = 110.0
-offset_bottom = 23.0
+offset_bottom = 83.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
 script = ExtResource("4_mx8sn")
