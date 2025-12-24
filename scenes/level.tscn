@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=11 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
+[ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -26,42 +27,70 @@ size = Vector2(10, 10)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_2q6dc"]
 
-[node name="Node3D" type="Node3D"]
+[node name="World" type="Node"]
+
+[node name="World" type="Node3D" parent="."]
 script = ExtResource("1_w8frs")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource("Environment_mx8sn")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, -3.6191678, 5.922341, -25.540798)
 shadow_enabled = true
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]
 navigation_mesh = SubResource("NavigationMesh_w8frs")
 
-[node name="Floor" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="Floor" type="MeshInstance3D" parent="World/NavigationRegion3D"]
 transform = Transform3D(-3.0000002, 0, -2.6226834e-07, 0, 3.0000002, 0, 2.6226834e-07, 0, -3.0000002, -0.043305874, 0.0059633255, 0.01994586)
 mesh = SubResource("PlaneMesh_2q6dc")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Floor"]
+[node name="StaticBody3D" type="StaticBody3D" parent="World/NavigationRegion3D/Floor"]
+collision_layer = 4
+collision_mask = 7
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Floor/StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_2q6dc")
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="NavigationRegion3D"]
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="World/NavigationRegion3D"]
 use_collision = true
+collision_layer = 4
+collision_mask = 7
 radius = 10.0
 height = 5.0
 
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="NavigationRegion3D/CSGCylinder3D"]
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="World/NavigationRegion3D/CSGCylinder3D"]
 operation = 2
 radius = 9.0
 height = 5.0
 
-[node name="Player" parent="." instance=ExtResource("1_2q6dc")]
+[node name="Player" parent="World" instance=ExtResource("1_2q6dc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15679836, 0, -0.0053617954)
 
-[node name="GenericEnemy" parent="." instance=ExtResource("2_w7c3h")]
+[node name="GenericEnemy" parent="World" instance=ExtResource("2_w7c3h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.194378, 0.5059633, -0.03728199)
 speed = 1.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthContainer" type="PanelContainer" parent="UI" node_paths=PackedStringArray("level", "health_text")]
+offset_right = 110.0
+offset_bottom = 23.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+script = ExtResource("4_mx8sn")
+level = NodePath("../../World")
+health_text = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/HealthContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="UI/HealthContainer/MarginContainer"]
+layout_mode = 2
+text = "Health: 0"

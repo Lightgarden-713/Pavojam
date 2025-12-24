@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=8 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://bb7xj3gm15bgx" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
+[ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_5hfox"]
+[ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_6dqce"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -13,8 +15,13 @@ height = 1.8
 radius = 0.4
 height = 1.8
 
-[node name="ProtoController" type="CharacterBody3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rk7u"]
+radius = 0.4
+height = 1.65
+
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("health_component")]
 script = ExtResource("1_ucva2")
+health_component = NodePath("HealthComponent")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -29,7 +36,20 @@ shape = SubResource("CapsuleShape3D_iof21")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head"]
+collision_mask = 4
 spring_length = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="Head/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_5hfox")]
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("owner_health_component") instance=ExtResource("3_6dqce")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+collision_mask = 2
+owner_health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CapsuleShape3D_0rk7u")
+
+[editable path="HurtboxComponent"]
