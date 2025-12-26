@@ -15,5 +15,5 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	position += direction * delta * projectile_speed
 
-func _on_projectile_hit() -> void:
+func _on_projectile_hit(_target: HurtboxComponent) -> void:
 	call_deferred("queue_free")
