@@ -3,8 +3,10 @@ extends RigidBody3D
 
 enum State { IDLE, BOUNCING, CHASING }
 
-@export_group("Orb config")
+@export_group("XP config")
 @export var xp_value = 1
+
+@export_group("Orb movement config")
 @export var flight_speed = 2
 @export var bounce_back_force = 2
 @export var bounce_back_duration = 0.25
