@@ -43,6 +43,5 @@ func shoot() -> void:
 		projectile.position = global_position
 
 		get_tree().root.call_deferred("add_child", projectile)
-		print("Shooting")
 	# Reset shoot timer
 	time_until_shooting = 1 / attacks_per_second
