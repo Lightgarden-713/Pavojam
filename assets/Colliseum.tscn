@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtp0wpbhenk4y"]
+
+[ext_resource type="PackedScene" uid="uid://fnh841acp431" path="res://assets/env_colliseum.gltf" id="1_nkf3s"]
+
+[node name="env_colliseum" instance=ExtResource("1_nkf3s")]
+
+[node name="StaticBody3D" parent="Colliseum" index="0"]
+collision_layer = 4
+collision_mask = 3
