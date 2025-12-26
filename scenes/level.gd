@@ -6,7 +6,7 @@ const ORB_CHEAT_RADIUS : float = 8
 const ORB_CHEAT_SPAWN_HEIGHT : float = 1
 const ORB_CHEAT_XP_AMOUNT : float = 10
 
-@onready var player_body = $Player/ProtoController
+@onready var player_body : ProtoController = $Player/ProtoController
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
