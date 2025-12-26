@@ -8,6 +8,7 @@ extends CharacterBody3D
 
 @export_group("Player component references")
 @export var health_component : HealthComponent
+@export var xp_component : XPComponent
 
 @export_group("Camera")
 
