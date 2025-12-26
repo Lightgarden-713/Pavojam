@@ -1,8 +1,8 @@
 class_name ProjectileAttack
 extends Node3D
 
-# TODO: test Homing / Teledirected projectiles
-enum AttackMode { AIMED, AUTO_AIMED }
+# TODO: test Auto aimed / Homing / Teledirected projectiles
+enum AttackMode { AIMED }
 
 @export_group("References")
 @export var projectile_prefab: PackedScene
