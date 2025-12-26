@@ -50,7 +50,7 @@ func bounce(player: ProtoController):
 	linear_velocity = away_direction * bounce_back_force
 
 func chase(delta):
-	var direction = (target_player.global_position - global_position).normalized()
+	var direction = (target_player.global_position + Vector3(0,0.5,0) - global_position).normalized()
 	linear_velocity = direction * flight_speed
 	flight_speed *= pow(acceleration_rate, delta)
 
