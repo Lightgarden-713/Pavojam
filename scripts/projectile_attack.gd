@@ -27,6 +27,8 @@ func _process(delta: float) -> void:
 		shoot()
 
 func shoot() -> void:
+	var tree_root = get_tree().root
+
 	# Pick target
 	var target = global_position - global_transform.basis.z
 
@@ -42,6 +44,6 @@ func shoot() -> void:
 		projectile.direction = shoot_direction
 		projectile.position = global_position
 
-		get_tree().root.call_deferred("add_child", projectile)
+		tree_root.call_deferred("add_child", projectile)
 	# Reset shoot timer
 	time_until_shooting = 1 / attacks_per_second
