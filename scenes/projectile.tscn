@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://gdr06m5854vu"]
+
+[ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="1_c8fcr"]
+[ext_resource type="Script" uid="uid://blqc8yfnssrup" path="res://scripts/projectile.gd" id="1_q3m7n"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_q3m7n"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_softn"]
+resource_local_to_scene = true
+radius = 0.25
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_q3m7n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_q3m7n")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("1_c8fcr")]
+collision_mask = 3
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+shape = SubResource("SphereShape3D_softn")
+
+[editable path="HitboxComponent"]
