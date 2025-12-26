@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
-[ext_resource type="Script" path="res://scripts/ui_health.gd" id="4_mx8sn"]
+[ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

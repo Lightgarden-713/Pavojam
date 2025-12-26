@@ -1,3 +1,4 @@
+class_name Level
 extends Node3D
 
 
@@ -7,5 +8,5 @@ extends Node3D
 func _ready() -> void:
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	get_tree().call_group("enemies", "update_target_location", player_body.global_position)

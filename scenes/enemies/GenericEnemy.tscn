@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpyrd5tkn71c4"]
+[gd_scene load_steps=10 format=3 uid="uid://bpyrd5tkn71c4"]
 
 [ext_resource type="Script" uid="uid://bdpolb3mvo6l4" path="res://scenes/enemies/generic_enemy.gd" id="1_s1b0o"]
+[ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_snxl2"]
+[ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="2_w5208"]
+[ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_12mnw"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5dc1e"]
 
@@ -12,7 +15,17 @@ roughness = 0.3
 [sub_resource type="SphereMesh" id="SphereMesh_w5208"]
 material = SubResource("StandardMaterial3D_s1b0o")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_vua17"]
+resource_local_to_scene = true
+radius = 0.55
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_w5208"]
+resource_local_to_scene = true
+radius = 0.45
+
 [node name="GenericEnemy" type="CharacterBody3D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_s1b0o")
 speed = 10.0
 
@@ -23,3 +36,22 @@ shape = SubResource("SphereShape3D_5dc1e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w5208")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_snxl2")]
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("owner_health_component") instance=ExtResource("3_12mnw")]
+collision_layer = 2
+owner_health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
+shape = SubResource("SphereShape3D_vua17")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_w5208")]
+collision_layer = 2
+damage_amount = 5.0
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+shape = SubResource("SphereShape3D_w5208")
+
+[editable path="HurtboxComponent"]
+[editable path="HitboxComponent"]
