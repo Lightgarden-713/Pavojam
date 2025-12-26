@@ -18,7 +18,7 @@ script = ExtResource("1_q3m7n")
 mesh = SubResource("SphereMesh_q3m7n")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("1_c8fcr")]
-collision_mask = 3
+collision_mask = 0
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
 shape = SubResource("SphereShape3D_softn")
