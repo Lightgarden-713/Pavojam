@@ -1,3 +1,4 @@
+class_name ExperienceOrb
 extends RigidBody3D
 
 enum State { IDLE, BOUNCING, CHASING }
@@ -14,9 +15,9 @@ var state = State.IDLE
 func _physics_process(delta):
 	if state != State.CHASING:
 		return
-		
+
 	gravity_scale = 0
-	collision_layer = 0 
+	collision_layer = 0
 	chase(delta)
 
 func magnetize(player_node):
@@ -25,7 +26,7 @@ func magnetize(player_node):
 	target_player = player_node
 	state = State.BOUNCING
 	bounce(player_node)
-	
+
 	await get_tree().create_timer(bounce_back_duration).timeout
 	state = State.CHASING
 
