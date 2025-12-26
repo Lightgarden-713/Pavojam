@@ -4,15 +4,14 @@
 [ext_resource type="Script" uid="uid://blqc8yfnssrup" path="res://scripts/projectile.gd" id="1_q3m7n"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_q3m7n"]
-radius = 0.25
-height = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_softn"]
 resource_local_to_scene = true
 radius = 0.25
 
-[node name="Projectile" type="Node3D"]
+[node name="Projectile" type="Node3D" node_paths=PackedStringArray("hitbox")]
 script = ExtResource("1_q3m7n")
+hitbox = NodePath("HitboxComponent")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_q3m7n")
