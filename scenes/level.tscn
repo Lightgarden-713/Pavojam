@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=10 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
+[ext_resource type="PackedScene" uid="uid://dtp0wpbhenk4y" path="res://assets/Colliseum.tscn" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
 [ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
 
@@ -22,11 +23,6 @@ glow_enabled = true
 vertices = PackedVector3Array(-14.543308, 0.5, 0.019944191, -10.543308, 0.5, 0.019944191, -10.543308, 0.5, -0.9800558, -7.7933083, 0.5, -7.480056, -14.543308, 0.5, -14.480056, -0.043308258, 0.5, -10.730056, -0.043308258, 0.5, -14.480056, 7.4566917, 0.5, -7.730056, 14.456692, 0.5, -14.480056, 10.706692, 0.5, 0.019944191, 14.456692, 0.5, 0.019944191, -5.7933083, 0.5, -5.980056, -8.293308, 0.5, -0.23005581, -6.0433083, 0.5, 5.519944, -0.29330826, 0.5, 8.269944, 5.7066917, 0.5, 6.019944, 8.206692, 0.5, 0.2699442, 0.20669174, 0.5, -8.230056, 5.9566917, 0.5, -5.730056, -0.043308258, 0.5, 14.519944, -0.043308258, 0.5, 10.519944, -1.0433083, 0.5, 10.519944, -7.7933083, 0.5, 7.519944, -14.543308, 0.5, 14.519944, 0.95669174, 0.5, 10.519944, 7.4566917, 0.5, 7.769944, 14.456692, 0.5, 14.519944)
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 4), PackedInt32Array(5, 6, 7), PackedInt32Array(7, 6, 8), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 8), PackedInt32Array(13, 12, 11), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 13), PackedInt32Array(16, 13, 17), PackedInt32Array(17, 13, 11), PackedInt32Array(17, 18, 16), PackedInt32Array(21, 20, 19), PackedInt32Array(1, 22, 0), PackedInt32Array(0, 22, 23), PackedInt32Array(21, 19, 22), PackedInt32Array(22, 19, 23), PackedInt32Array(19, 20, 24), PackedInt32Array(24, 25, 19), PackedInt32Array(19, 25, 26), PackedInt32Array(9, 10, 25), PackedInt32Array(25, 10, 26)]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_2q6dc"]
-size = Vector2(10, 10)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_2q6dc"]
-
 [node name="World" type="Node"]
 
 [node name="World" type="Node3D" parent="."]
@@ -42,35 +38,13 @@ shadow_enabled = true
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]
 navigation_mesh = SubResource("NavigationMesh_w8frs")
 
-[node name="Floor" type="MeshInstance3D" parent="World/NavigationRegion3D"]
-transform = Transform3D(-3.0000002, 0, -2.6226834e-07, 0, 3.0000002, 0, 2.6226834e-07, 0, -3.0000002, -0.043305874, 0.0059633255, 0.01994586)
-mesh = SubResource("PlaneMesh_2q6dc")
-skeleton = NodePath("../../..")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="World/NavigationRegion3D/Floor"]
-collision_layer = 4
-collision_mask = 7
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Floor/StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_2q6dc")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="World/NavigationRegion3D"]
-use_collision = true
-collision_layer = 4
-collision_mask = 7
-radius = 10.0
-height = 5.0
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="World/NavigationRegion3D/CSGCylinder3D"]
-operation = 2
-radius = 9.0
-height = 5.0
+[node name="env_colliseum" parent="World/NavigationRegion3D" instance=ExtResource("2_ppgk2")]
 
 [node name="Player" parent="World" instance=ExtResource("1_2q6dc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15679836, 0, -0.0053617954)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8238201, 0.14361048, 1.9383161)
 
 [node name="GenericEnemy" parent="World" instance=ExtResource("2_w7c3h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.194378, 0.5059633, -0.03728199)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.527357, 0.6495738, 1.9063959)
 speed = 1.0
 
 [node name="UI" type="CanvasLayer" parent="."]
