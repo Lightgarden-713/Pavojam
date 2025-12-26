@@ -65,6 +65,7 @@ spawn_xp_orb_cheat={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Enemy"
 3d_physics/layer_3="Level"
+3d_physics/layer_10="Pickup"
 
 [physics]
 

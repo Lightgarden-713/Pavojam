@@ -24,7 +24,7 @@ func add_xp(amount: float) -> void:
 func _level_up() -> void:
 	current_xp -= xp_to_next_level # this way you keep the experience obtained that surpassed the level limit
 	level += 1
-	xp_to_next_level = xp_to_first_level * level_scaling
+	xp_to_next_level *= level_scaling
 	leveled_up.emit(level)
 	print("Level up! Now level " + str(level) + ". Next level at " + str(xp_to_next_level) + " XP")
 

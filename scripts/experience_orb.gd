@@ -3,6 +3,7 @@ extends RigidBody3D
 
 enum State { IDLE, BOUNCING, CHASING }
 
+@export_group("Orb config")
 @export var xp_value = 1
 @export var flight_speed = 2
 @export var bounce_back_force = 2
@@ -13,14 +14,16 @@ var target_player: ProtoController = null
 var state = State.IDLE
 
 func _physics_process(delta):
+	if state != State.IDLE:
+		gravity_scale = 0
+		collision_layer = 0
+
 	if state != State.CHASING:
 		return
 
-	gravity_scale = 0
-	collision_layer = 0
 	chase(delta)
 
-func magnetize(player_node):
+func magnetize(player_node: ProtoController):
 	if target_player:
 		return
 	target_player = player_node
@@ -34,13 +37,14 @@ func collect():
 	target_player.xp_component.add_xp(xp_value)
 	queue_free()
 
-func _on_pickup_range_body_entered(body: Node3D) -> void:
-	if body.is_in_group("player"):
-		magnetize(body)
+func _on_pickup_range_body_entered(player: ProtoController) -> void:
+	if player != null:
+		magnetize(player)
 
-func bounce(player):
+func bounce(player: ProtoController):
 	var away_direction = (global_position - player.global_position).normalized()
-	away_direction.y = 0.5
+	away_direction.y += 0.5 # fly a little upwards
+
 	linear_velocity = away_direction * bounce_back_force
 
 func chase(delta):
