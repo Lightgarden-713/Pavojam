@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
+[ext_resource type="PackedScene" uid="uid://dtp0wpbhenk4y" path="res://assets/Colliseum.tscn" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
 [ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="4_ppgk2"]
@@ -50,35 +51,13 @@ shadow_enabled = true
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]
 navigation_mesh = SubResource("NavigationMesh_w8frs")
 
-[node name="Floor" type="MeshInstance3D" parent="World/NavigationRegion3D"]
-transform = Transform3D(-3.0000002, 0, -2.6226834e-07, 0, 3.0000002, 0, 2.6226834e-07, 0, -3.0000002, -0.043305874, 0.0059633255, 0.01994586)
-mesh = SubResource("PlaneMesh_2q6dc")
-skeleton = NodePath("../../..")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="World/NavigationRegion3D/Floor"]
-collision_layer = 4
-collision_mask = 7
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World/NavigationRegion3D/Floor/StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_2q6dc")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="World/NavigationRegion3D"]
-use_collision = true
-collision_layer = 4
-collision_mask = 7
-radius = 10.0
-height = 5.0
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="World/NavigationRegion3D/CSGCylinder3D"]
-operation = 2
-radius = 9.0
-height = 5.0
+[node name="env_colliseum" parent="World/NavigationRegion3D" instance=ExtResource("2_ppgk2")]
 
 [node name="Player" parent="World" instance=ExtResource("1_2q6dc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15679836, 0, -0.0053617954)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8238201, 0.14361048, 1.9383161)
 
 [node name="GenericEnemy" parent="World" instance=ExtResource("2_w7c3h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.194378, 0.5059633, -0.03728199)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.527357, 0.6495738, 1.9063959)
 speed = 1.0
 
 [node name="ExperienceOrb" parent="World" instance=ExtResource("4_ppgk2")]
