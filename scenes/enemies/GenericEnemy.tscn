@@ -37,7 +37,7 @@ collision_mask = 4
 script = ExtResource("1_s1b0o")
 nav_agent = NodePath("NavigationAgent3D")
 health_component = NodePath("HealthComponent")
-speed = 10.0
+speed = 4.0
 drops = Array[ExtResource("2_vua17")]([SubResource("Resource_wh6aq")])
 drop_force = 6.0
 
@@ -50,6 +50,7 @@ shape = SubResource("SphereShape3D_5dc1e")
 mesh = SubResource("SphereMesh_w5208")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_snxl2")]
+max_health = 50.0
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("owner_health_component") instance=ExtResource("3_12mnw")]
 collision_layer = 2
