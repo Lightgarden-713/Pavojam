@@ -30,7 +30,8 @@ func _physics_process(delta):
 	var new_velocity = (next_location - current_location).normalized() * speed
 	velocity.x = new_velocity.x
 	velocity.z = new_velocity.z
-
+	self.rotation.y = atan2(new_velocity.x, new_velocity.z)
+	
 	move_and_slide()
 
 # Call this from your main level script or a timer to update where the enemy wants to go
