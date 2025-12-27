@@ -18,3 +18,4 @@ func _on_area_entered(hitbox: HitboxComponent) -> void:
 	if hitbox == null: return
 
 	owner_health_component.take_damage(hitbox.damage_amount)
+	hitbox.register_hit(self)

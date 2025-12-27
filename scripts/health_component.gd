@@ -21,8 +21,6 @@ func take_damage(damage_amount: float) -> void:
 		health_depleted.emit()
 		print("I'm ded")
 
-	print("Ouch! Getting hit for " + str(damage_amount) + ". Current health: " + str(health))
-
 func heal(heal_amount: float) -> void:
 	if !is_alive(): return
 
