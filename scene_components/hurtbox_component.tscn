@@ -3,9 +3,7 @@
 [ext_resource type="Script" uid="uid://dqbf5kjjc7fxx" path="res://scripts/hurtbox_component.gd" id="1_mlgxs"]
 
 [node name="HurtboxComponent" type="Area3D"]
-monitorable = false
+monitoring = false
 script = ExtResource("1_mlgxs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
