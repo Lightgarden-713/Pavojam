@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=17 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
+[ext_resource type="Script" uid="uid://my3j856pvsl4" path="res://scripts/game_manager.gd" id="1_olg7q"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://dtp0wpbhenk4y" path="res://assets/Colliseum.tscn" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
@@ -34,8 +35,11 @@ bg_color = Color(0.101960786, 0.101960786, 0.2, 1)
 bg_color = Color(0.2, 0.4, 0.9019608, 1)
 
 [node name="World" type="Node"]
+process_mode = 3
+script = ExtResource("1_olg7q")
 
 [node name="World" type="Node3D" parent="."]
+process_mode = 1
 script = ExtResource("1_w8frs")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
