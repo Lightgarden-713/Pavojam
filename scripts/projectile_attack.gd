@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 func shoot() -> void:
 	var tree_root = get_tree().root
 
-	# Pick target
+	# Pick target as a forward pos
 	var target = global_position - global_transform.basis.z
 
 	# Calculate direction towards target
@@ -38,12 +38,17 @@ func shoot() -> void:
 	# Spawn and setup Projectiles
 	for projectile_n in range(projectiles_per_attack):
 		var projectile : Projectile = projectile_prefab.instantiate() as Projectile
-		projectile.projectile_speed = projectile_speed
+		
 		projectile.hitbox.damage_amount = projectile_damage
 		projectile.hitbox.collision_mask = projectile_collision_mask
+
+		projectile.projectile_speed = projectile_speed
 		projectile.direction = shoot_direction
 		projectile.position = global_position
-
+		
+		# Vector3(0.7, 0, -0.7)  →  atan2()  →  Rotation Angle (≈ -45°)
+		projectile.rotation.y = atan2(shoot_direction.x, shoot_direction.z)
+		
 		tree_root.call_deferred("add_child", projectile)
 	# Reset shoot timer
 	time_until_shooting = 1 / attacks_per_second
