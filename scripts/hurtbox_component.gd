@@ -13,9 +13,5 @@ func _ready() -> void:
 	if owner_health_component == null:
 		push_error("Health component not set for hitbox")
 
-
-func _on_area_entered(hitbox: HitboxComponent) -> void:
-	if hitbox == null: return
-
+func get_hit(hitbox: HitboxComponent) -> void:
 	owner_health_component.take_damage(hitbox.damage_amount)
-	hitbox.register_hit(self)
