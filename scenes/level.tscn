@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=24 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://my3j856pvsl4" path="res://scripts/game_manager.gd" id="1_olg7q"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/xp_bar.gd" id="5_2r41h"]
 [ext_resource type="Script" uid="uid://slwhbg4sgaym" path="res://scripts/wave_manager.gd" id="6_b121j"]
 [ext_resource type="Script" uid="uid://b8upaitibbcq6" path="res://scripts/wave_level_ui.gd" id="9_8c41q"]
+[ext_resource type="Script" uid="uid://cfx5iw35d7ic7" path="res://scripts/level_up_ui.gd" id="11_8iemx"]
+[ext_resource type="Texture2D" uid="uid://kvwe8snu17kl" path="res://icon.svg" id="11_t1rx8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -34,9 +36,79 @@ bg_color = Color(0.101960786, 0.101960786, 0.2, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2r41h"]
 bg_color = Color(0.2, 0.4, 0.9019608, 1)
 
-[node name="World" type="Node"]
+[sub_resource type="LabelSettings" id="LabelSettings_olg7q"]
+font_size = 48
+
+[sub_resource type="Animation" id="Animation_8iemx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(256, -500)]
+}
+
+[sub_resource type="Animation" id="Animation_olg7q"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(256, -500), Vector2(256, 64)]
+}
+
+[sub_resource type="Animation" id="Animation_t1rx8"]
+resource_name = "exit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(256, 64), Vector2(256, -500)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_exit_animation_finished"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_64w2a"]
+_data = {
+&"RESET": SubResource("Animation_8iemx"),
+&"close": SubResource("Animation_t1rx8"),
+&"open": SubResource("Animation_olg7q")
+}
+
+[node name="World" type="Node" node_paths=PackedStringArray("level_up_ui")]
 process_mode = 3
 script = ExtResource("1_olg7q")
+level_up_ui = NodePath("UI/LevelUpUI")
 
 [node name="World" type="Node3D" parent="."]
 process_mode = 1
@@ -82,6 +154,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0.6, -8)
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10, 0.5, -8)
 
 [node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="XPBar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("level")]
 anchors_preset = 10
@@ -144,3 +217,89 @@ text = "Wave: 0"
 [node name="NextWave" type="Label" parent="UI/VBoxContainer/WaveLevelUI/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Next Wave"
+
+[node name="LevelUpUI" type="PanelContainer" parent="UI" node_paths=PackedStringArray("game_manager", "animation_player")]
+custom_minimum_size = Vector2(640, 480)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -824.0
+offset_right = 320.0
+offset_bottom = -343.99988
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("11_8iemx")
+game_manager = NodePath("../..")
+animation_player = NodePath("LevelUpAnimator")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/LevelUpUI"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelUpUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="Title" type="Label" parent="UI/LevelUpUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Leveled up!"
+label_settings = SubResource("LabelSettings_olg7q")
+horizontal_alignment = 1
+
+[node name="OptionsContainer" type="HBoxContainer" parent="UI/LevelUpUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Option 1" type="MarginContainer" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_right = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 1"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 1/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("11_t1rx8")
+texture_pressed = ExtResource("11_t1rx8")
+texture_hover = ExtResource("11_t1rx8")
+texture_disabled = ExtResource("11_t1rx8")
+texture_focused = ExtResource("11_t1rx8")
+
+[node name="Label" type="Label" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 1/VBoxContainer"]
+layout_mode = 2
+text = "Upgrade 1"
+horizontal_alignment = 1
+
+[node name="Option 2" type="MarginContainer" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_right = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 2"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 2/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("11_t1rx8")
+texture_pressed = ExtResource("11_t1rx8")
+texture_hover = ExtResource("11_t1rx8")
+texture_disabled = ExtResource("11_t1rx8")
+texture_focused = ExtResource("11_t1rx8")
+
+[node name="Label" type="Label" parent="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 2/VBoxContainer"]
+layout_mode = 2
+text = "Upgrade 2"
+horizontal_alignment = 1
+
+[node name="LevelUpAnimator" type="AnimationPlayer" parent="UI/LevelUpUI"]
+libraries = {
+&"": SubResource("AnimationLibrary_64w2a")
+}
+
+[connection signal="button_up" from="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 1/VBoxContainer/TextureButton" to="UI/LevelUpUI" method="_on_upgrade_1_button_up"]
+[connection signal="button_up" from="UI/LevelUpUI/MarginContainer/VBoxContainer/OptionsContainer/Option 2/VBoxContainer/TextureButton" to="UI/LevelUpUI" method="_on_upgrade_2_button_up"]
