@@ -15,14 +15,12 @@ enum State { SPAWNING, IDLE, BOUNCING, CHASING }
 @export var bounce_back_duration = 0.25
 @export var acceleration_rate = 40
 
-const PLAYER_LAYER : int = 1
-
 var target_player: ProtoController = null
 var state = State.SPAWNING
 
 func _ready() -> void:
-	# Disable collision with player magnetize until the spawn finishes
-	pickup_range.collision_mask &= ~PLAYER_LAYER
+	# Disable magnet until we exit the SPAWNING state
+	pickup_range.monitoring = false
 
 func _physics_process(delta):
 	if state == State.SPAWNING:
@@ -75,5 +73,5 @@ func _on_pickup_range_body_entered(player: ProtoController) -> void:
 func _on_body_entered(_body: Node) -> void:
 	print("Touched Ground")
 	state = State.IDLE
-	# re-enable collision with player
-	pickup_range.collision_mask |= PLAYER_LAYER
+	# enable magnet
+	pickup_range.monitoring = true
