@@ -13,7 +13,7 @@ extends Node3D
 @export var increase_per_wave := 5
 
 var rand = RandomNumberGenerator.new()
-var wave_number = 0
+var wave_number : int = 0
 var time_until_next_wave: float = 0.0
 
 signal wave_started(wave_number: int)
@@ -30,27 +30,24 @@ func _process(delta: float) -> void:
 		time_until_next_wave -= delta
 	else:
 		_start_next_wave()
-	
+
 func _start_next_wave():
 	wave_number += 1
 	time_until_next_wave = wave_duration_sec
 	wave_started.emit(wave_number)
-	
+
 	var enemies_to_spawn = base_enemies + increase_per_wave * wave_number
 	for i in enemies_to_spawn:
 		_spawn_enemy()
 		await get_tree().create_timer(spawn_wait_time).timeout
-		
+
 func _spawn_enemy():
 	print("spawning enemy")
 	var enemy = enemy_scene.instantiate()
 	get_parent().add_child(enemy)
 	enemy.global_position = _get_spawn_position()
-	
-	
+
 func _get_spawn_position() -> Vector3:
 	var spawners_count = get_child_count()-1
 	var chosen_spawner_i = rand.randi_range(0, spawners_count)
 	return get_child(chosen_spawner_i).global_position
-	
-	
