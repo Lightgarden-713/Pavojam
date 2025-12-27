@@ -20,9 +20,8 @@ signal wave_started(wave_number: int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	await get_tree().create_timer(initial_delay_sec).timeout
-	print("starting wave")
-	_start_next_wave()
+	time_until_next_wave = initial_delay_sec
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
