@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=16 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="4_ppgk2"]
 [ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/xp_bar.gd" id="5_2r41h"]
+[ext_resource type="Script" uid="uid://slwhbg4sgaym" path="res://scripts/wave_manager.gd" id="6_b121j"]
+[ext_resource type="Script" uid="uid://b8upaitibbcq6" path="res://scripts/wave_level_ui.gd" id="9_8c41q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -22,13 +24,8 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_w8frs"]
-vertices = PackedVector3Array(-14.543308, 0.5, 0.019944191, -10.543308, 0.5, 0.019944191, -10.543308, 0.5, -0.9800558, -7.7933083, 0.5, -7.480056, -14.543308, 0.5, -14.480056, -0.043308258, 0.5, -10.730056, -0.043308258, 0.5, -14.480056, 7.4566917, 0.5, -7.730056, 14.456692, 0.5, -14.480056, 10.706692, 0.5, 0.019944191, 14.456692, 0.5, 0.019944191, -5.7933083, 0.5, -5.980056, -8.293308, 0.5, -0.23005581, -6.0433083, 0.5, 5.519944, -0.29330826, 0.5, 8.269944, 5.7066917, 0.5, 6.019944, 8.206692, 0.5, 0.2699442, 0.20669174, 0.5, -8.230056, 5.9566917, 0.5, -5.730056, -0.043308258, 0.5, 14.519944, -0.043308258, 0.5, 10.519944, -1.0433083, 0.5, 10.519944, -7.7933083, 0.5, 7.519944, -14.543308, 0.5, 14.519944, 0.95669174, 0.5, 10.519944, 7.4566917, 0.5, 7.769944, 14.456692, 0.5, 14.519944)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 4), PackedInt32Array(5, 6, 7), PackedInt32Array(7, 6, 8), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 8), PackedInt32Array(13, 12, 11), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 13), PackedInt32Array(16, 13, 17), PackedInt32Array(17, 13, 11), PackedInt32Array(17, 18, 16), PackedInt32Array(21, 20, 19), PackedInt32Array(1, 22, 0), PackedInt32Array(0, 22, 23), PackedInt32Array(21, 19, 22), PackedInt32Array(22, 19, 23), PackedInt32Array(19, 20, 24), PackedInt32Array(24, 25, 19), PackedInt32Array(19, 25, 26), PackedInt32Array(9, 10, 25), PackedInt32Array(25, 10, 26)]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_2q6dc"]
-size = Vector2(10, 10)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_2q6dc"]
+vertices = PackedVector3Array(-15.019865, 6.25, 1.230135, -15.019865, 6.25, -1.269865, -16.519865, 7.25, -1.019865, -15.519865, 7.25, -6.269865, -14.019865, 6.25, -6.019865, 6.480135, 7.25, 15.480135, 11.730135, 7.25, 11.980135, 10.230135, 6.25, 11.230135, 5.230135, 6.25, 14.230135, -15.519865, 7.25, 6.230135, -14.019865, 6.25, 5.980135, -6.269865, 7.25, 15.480135, -1.269865, 7.25, 16.480135, -1.519865, 6.25, 14.980135, -6.019865, 6.25, 13.980135, -12.269865, 7.25, 11.230135, -11.019865, 6.25, 10.480135, 1.480135, 6.25, 14.980135, 0.021800995, 6.75, 16.313467, -11.269865, 7.25, -12.269865, -10.519865, 6.25, -11.019865, -6.019865, 6.25, -14.019865, -6.269865, 7.25, -15.519865, 15.480135, 7.25, 6.480135, 13.980135, 6.25, 5.980135, -1.269865, 6.25, -15.019865, 1.230135, 7.25, -16.519865, 14.980135, 6.25, 1.480135, 16.480135, 7.25, 1.230135, 1.230135, 6.25, -15.019865, 6.230135, 7.25, -15.519865, 5.980135, 6.25, -14.019865, 14.980135, 6.25, -1.519865, 16.480135, 7.25, -1.269865, 12.230135, 7.25, -11.269865, 10.980135, 6.25, -10.519865, 15.480135, 7.25, -6.269865, 13.980135, 6.25, -6.019865, -10.019865, 0.5, -10.269865, -13.269865, 0.5, -5.519865, -14.269865, 0.5, -0.76986504, -13.269865, 0.5, 5.480135, -10.519865, 0.5, 9.730135, -5.519865, 0.5, 13.230135, -1.019865, 0.5, 14.230135, 9.730135, 0.5, 10.480135, 13.230135, 0.5, 5.480135, 14.230135, 0.5, 0.98013496, 5.480135, 0.5, 13.230135, 10.480135, 0.5, -9.769865, 5.480135, 0.5, -13.269865, 0.73013496, 0.5, -14.269865, -5.519865, 0.5, -13.269865, 13.230135, 0.5, -5.519865)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 1, 3), PackedInt32Array(3, 1, 2), PackedInt32Array(8, 7, 5), PackedInt32Array(5, 7, 6), PackedInt32Array(10, 9, 0), PackedInt32Array(0, 9, 2), PackedInt32Array(14, 13, 11), PackedInt32Array(11, 13, 12), PackedInt32Array(16, 15, 10), PackedInt32Array(10, 15, 9), PackedInt32Array(12, 17, 18), PackedInt32Array(18, 17, 8), PackedInt32Array(18, 8, 5), PackedInt32Array(20, 4, 19), PackedInt32Array(19, 4, 3), PackedInt32Array(16, 14, 15), PackedInt32Array(15, 14, 11), PackedInt32Array(20, 19, 21), PackedInt32Array(21, 19, 22), PackedInt32Array(7, 24, 6), PackedInt32Array(6, 24, 23), PackedInt32Array(21, 22, 25), PackedInt32Array(25, 22, 26), PackedInt32Array(24, 27, 23), PackedInt32Array(23, 27, 28), PackedInt32Array(29, 25, 26), PackedInt32Array(31, 29, 30), PackedInt32Array(30, 29, 26), PackedInt32Array(33, 28, 32), PackedInt32Array(32, 28, 27), PackedInt32Array(35, 31, 34), PackedInt32Array(34, 31, 30), PackedInt32Array(37, 36, 32), PackedInt32Array(32, 36, 33), PackedInt32Array(35, 34, 37), PackedInt32Array(37, 34, 36), PackedInt32Array(13, 17, 12), PackedInt32Array(39, 38, 40), PackedInt32Array(40, 38, 41), PackedInt32Array(41, 38, 42), PackedInt32Array(44, 43, 42), PackedInt32Array(46, 45, 47), PackedInt32Array(47, 45, 48), PackedInt32Array(47, 48, 44), PackedInt32Array(51, 50, 49), PackedInt32Array(38, 52, 51), PackedInt32Array(49, 47, 51), PackedInt32Array(51, 47, 38), PackedInt32Array(38, 47, 42), PackedInt32Array(42, 47, 44), PackedInt32Array(49, 53, 47)]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppgk2"]
 bg_color = Color(0.101960786, 0.101960786, 0.2, 1)
@@ -64,6 +61,22 @@ speed = 1.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0037904, 0.42718005, -5.2663383)
 xp_value = 45
 
+[node name="WaveManager" type="Node3D" parent="World"]
+script = ExtResource("6_b121j")
+initial_delay_sec = 3.0
+wave_duration_sec = 10.0
+base_enemies = 5
+increase_per_wave = 2
+
+[node name="Spawn1" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2, -11)
+
+[node name="Spawn2" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0.6, -8)
+
+[node name="Spawn3" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10, 0.5, -8)
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="XPBar" type="ProgressBar" parent="UI" node_paths=PackedStringArray("level")]
@@ -77,23 +90,53 @@ value = 50.0
 script = ExtResource("5_2r41h")
 level = NodePath("../../World")
 
-[node name="HealthContainer" type="PanelContainer" parent="UI" node_paths=PackedStringArray("level", "health_text")]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 offset_top = 50.0
-offset_right = 110.0
-offset_bottom = 83.0
+offset_right = 124.0
+offset_bottom = 147.0
+
+[node name="HealthContainer" type="PanelContainer" parent="UI/VBoxContainer" node_paths=PackedStringArray("level", "health_text")]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
 script = ExtResource("4_mx8sn")
-level = NodePath("../../World")
+level = NodePath("../../../World")
 health_text = NodePath("MarginContainer/Label")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/HealthContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/VBoxContainer/HealthContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="UI/HealthContainer/MarginContainer"]
+[node name="Label" type="Label" parent="UI/VBoxContainer/HealthContainer/MarginContainer"]
 layout_mode = 2
 text = "Health: 0"
+
+[node name="WaveLevelUI" type="PanelContainer" parent="UI/VBoxContainer" node_paths=PackedStringArray("wave_manager", "wave_number_lavel", "next_wave_label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+script = ExtResource("9_8c41q")
+wave_manager = NodePath("../../../World/WaveManager")
+wave_number_lavel = NodePath("MarginContainer/VBoxContainer/WaveNumber")
+next_wave_label = NodePath("MarginContainer/VBoxContainer/NextWave")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/VBoxContainer/WaveLevelUI"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/VBoxContainer/WaveLevelUI/MarginContainer"]
+layout_mode = 2
+
+[node name="WaveNumber" type="Label" parent="UI/VBoxContainer/WaveLevelUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Wave: 0"
+
+[node name="NextWave" type="Label" parent="UI/VBoxContainer/WaveLevelUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Next Wave"
