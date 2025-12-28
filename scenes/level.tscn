@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=28 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://my3j856pvsl4" path="res://scripts/game_manager.gd" id="1_olg7q"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://d1c4h70yeyjhv" path="res://resources/upgrades/health_upgrade.tres" id="4_ux5qa"]
 [ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/xp_bar.gd" id="5_2r41h"]
 [ext_resource type="Resource" uid="uid://d12crmrod7vn7" path="res://resources/upgrades/speed_upgrade.tres" id="5_82cfe"]
+[ext_resource type="Resource" uid="uid://dbhyl7mqt8x4a" path="res://resources/upgrades/xp_absorption_factor_upgrade.tres" id="6_arp2o"]
 [ext_resource type="Script" uid="uid://slwhbg4sgaym" path="res://scripts/wave_manager.gd" id="6_b121j"]
 [ext_resource type="Script" uid="uid://b8upaitibbcq6" path="res://scripts/ui/wave_level_ui.gd" id="9_8c41q"]
 [ext_resource type="Script" uid="uid://cfx5iw35d7ic7" path="res://scripts/ui/level_up_ui.gd" id="11_8iemx"]
@@ -112,7 +113,7 @@ _data = {
 process_mode = 3
 script = ExtResource("1_olg7q")
 level_up_ui = NodePath("UI/LevelUpUI")
-upgrades_pool = Array[ExtResource("2_wc255")]([ExtResource("3_arp2o"), ExtResource("4_ux5qa"), ExtResource("5_82cfe")])
+upgrades_pool = Array[ExtResource("2_wc255")]([ExtResource("3_arp2o"), ExtResource("4_ux5qa"), ExtResource("5_82cfe"), ExtResource("6_arp2o")])
 
 [node name="World" type="Node3D" parent="."]
 process_mode = 1
