@@ -46,7 +46,7 @@ func shoot() -> void:
 		projectile.direction = shoot_direction
 		projectile.position = global_position
 		
-		# Vector3(0.7, 0, -0.7)  →  atan2()  →  Rotation Angle (≈ -45°)
+		# Vector3(0, 0.7, -0.7)  →  atan2()  →  Rotation Angle (≈ -45°)
 		projectile.rotation.y = atan2(shoot_direction.x, shoot_direction.z)
 		
 		tree_root.call_deferred("add_child", projectile)

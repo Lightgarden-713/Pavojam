@@ -1,7 +1,7 @@
 class_name WaveManager
 extends Node3D
 
-@export var enemy_scene: PackedScene = preload("res://scenes/enemies/GenericEnemy.tscn")
+@export var enemy_scene: PackedScene = preload("res://scenes/enemies/rat_enemy.tscn")
 
 @export_category("Timing")
 @export var initial_delay_sec := 5.0
