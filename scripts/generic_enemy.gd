@@ -35,7 +35,7 @@ func _physics_process(delta):
 	velocity.x = new_velocity.x
 	velocity.z = new_velocity.z
 	self.rotation.y = atan2(new_velocity.x, new_velocity.z)
-	
+
 	move_and_slide()
 
 # Call this from your main level script or a timer to update where the enemy wants to go
@@ -74,5 +74,4 @@ func get_random_drop_direction() -> Vector3:
 func _update_animation() -> void:
 	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	if horizontal_speed > 0.1 and animation_player.has_animation("walk") and not animation_player.is_playing():
-		print("playing animation")
 		animation_player.play("walk")
