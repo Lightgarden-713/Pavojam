@@ -65,5 +65,6 @@ func get_level_up_upgrades(num_upgrades: int) -> Array[PlayerUpgrade]:
 		# pick an upgrade from the available upgrades
 		var random_upgrade = available_upgrades[randi_range(0, len(available_upgrades) - 1)]
 		level_up_upgrades.append(random_upgrade)
+		available_upgrades.erase(random_upgrade)
 
 	return level_up_upgrades
