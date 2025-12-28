@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export_category("References")
 @export var nav_agent : NavigationAgent3D
 @export var health_component : HealthComponent
+@export var animation_player: AnimationPlayer
 
 @export_category("Stats")
 @export var speed = 1.0
@@ -16,6 +17,9 @@ func _ready() -> void:
 		push_error("Health Component not set up for enemy: " + name)
 
 	health_component.health_depleted.connect(die)
+
+func _process(_delta: float) -> void:
+	_update_animation()
 
 func _physics_process(delta):
 	# Add gravity
@@ -66,3 +70,9 @@ func get_random_drop_direction() -> Vector3:
 	dir.z = sin(random_angle_radians)
 
 	return dir.normalized()
+
+func _update_animation() -> void:
+	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
+	if horizontal_speed > 0.1 and animation_player.has_animation("walk") and not animation_player.is_playing():
+		print("playing animation")
+		animation_player.play("walk")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bpyrd5tkn71c4"]
+[gd_scene load_steps=16 format=3 uid="uid://bpyrd5tkn71c4"]
 
 [ext_resource type="Script" uid="uid://bdpolb3mvo6l4" path="res://scripts/generic_enemy.gd" id="1_s1b0o"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_snxl2"]
@@ -31,12 +31,26 @@ radius = 0.55
 resource_local_to_scene = true
 radius = 0.45
 
-[node name="GenericEnemy" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "health_component") groups=["enemies"]]
+[sub_resource type="Animation" id="Animation_7xmb4"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_8rxqf"]
+resource_name = "walk"
+step = 0.25
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ob4g"]
+_data = {
+&"RESET": SubResource("Animation_7xmb4"),
+&"walk": SubResource("Animation_8rxqf")
+}
+
+[node name="GenericEnemy" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "health_component", "animation_player") groups=["enemies"]]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_s1b0o")
 nav_agent = NodePath("NavigationAgent3D")
 health_component = NodePath("HealthComponent")
+animation_player = NodePath("AnimationPlayer")
 speed = 4.0
 drops = Array[ExtResource("2_vua17")]([SubResource("Resource_wh6aq")])
 drop_force = 6.0
@@ -65,6 +79,11 @@ damage_amount = 5.0
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
 shape = SubResource("SphereShape3D_w5208")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8ob4g")
+}
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]
