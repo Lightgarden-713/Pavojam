@@ -21,7 +21,10 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_menu"):
-		change_game_state(State.PAUSED if state != State.PAUSED else prev_state)
+		# only pause if not already paused, otherwise
+		# unpause and go to the state previous to pausing
+		var next_state = State.PAUSED if state != State.PAUSED else prev_state
+		change_game_state(next_state)
 
 func change_game_state(new_state: State) -> void:
 	if new_state == state:
