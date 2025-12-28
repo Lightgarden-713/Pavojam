@@ -16,9 +16,13 @@ enum AttackMode { AIMED }
 @export_group("Projectile Config")
 @export_flags_3d_physics var projectile_collision_mask : int
 
+# Upgradable Stats
+var current_attacks_per_second : float
+
 var time_until_shooting : float
 
 func _ready() -> void:
+	current_attacks_per_second = attacks_per_second
 	time_until_shooting = 1 / attacks_per_second
 
 func _process(delta: float) -> void:
@@ -38,17 +42,17 @@ func shoot() -> void:
 	# Spawn and setup Projectiles
 	for projectile_n in range(projectiles_per_attack):
 		var projectile : Projectile = projectile_prefab.instantiate() as Projectile
-		
+
 		projectile.hitbox.damage_amount = projectile_damage
 		projectile.hitbox.collision_mask = projectile_collision_mask
 
 		projectile.projectile_speed = projectile_speed
 		projectile.direction = shoot_direction
 		projectile.position = global_position
-		
+
 		# Vector3(0, 0.7, -0.7)  →  atan2()  →  Rotation Angle (≈ -45°)
 		projectile.rotation.y = atan2(shoot_direction.x, shoot_direction.z)
-		
+
 		tree_root.call_deferred("add_child", projectile)
 	# Reset shoot timer
-	time_until_shooting = 1 / attacks_per_second
+	time_until_shooting = 1 / current_attacks_per_second

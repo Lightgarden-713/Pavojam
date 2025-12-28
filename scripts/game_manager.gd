@@ -4,6 +4,9 @@ extends Node
 @export_group("References")
 @export var level_up_ui : LevelUpUI
 
+@export_group("Upgrades")
+@export var upgrades_pool: Array[PlayerUpgrade]
+
 @onready var player_controller : ProtoController = $World/Player/ProtoController
 
 enum State {
@@ -37,7 +40,8 @@ func change_game_state(new_state: State) -> void:
 		# open_pause_menu()
 	elif new_state == State.LEVELING_UP:
 		get_tree().paused = true
-		level_up_ui.open()
+		var upgrades_to_choose = get_level_up_upgrades(3)
+		level_up_ui.open(upgrades_to_choose)
 	elif new_state == State.PLAYING:
 		get_tree().paused = false
 
@@ -46,5 +50,19 @@ func change_game_state(new_state: State) -> void:
 func _on_level_up_finish() -> void:
 	change_game_state(State.PLAYING)
 
-func _on_player_level_up(new_level: int) -> void:
+func _on_player_level_up(_new_level: int) -> void:
 	change_game_state(State.LEVELING_UP)
+
+# === Player Upgrades ===
+func get_level_up_upgrades(num_upgrades: int) -> Array[PlayerUpgrade]:
+	var available_upgrades : Array[PlayerUpgrade] = []
+	available_upgrades.append_array(upgrades_pool)
+
+	var level_up_upgrades : Array[PlayerUpgrade] = []
+
+	for upgrade_n in range(num_upgrades):
+		# pick an upgrade from the available upgrades
+		var random_upgrade = available_upgrades[randi_range(0, len(available_upgrades) - 1)]
+		level_up_upgrades.append(random_upgrade)
+
+	return level_up_upgrades

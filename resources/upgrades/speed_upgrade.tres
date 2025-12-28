@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeBaseSpeed" load_steps=3 format=3 uid="uid://d12crmrod7vn7"]
+
+[ext_resource type="Script" uid="uid://dhc7fs4sirbq4" path="res://scripts/player_upgrades/upgrade_base_speed.gd" id="1_406e2"]
+[ext_resource type="Texture2D" uid="uid://kvwe8snu17kl" path="res://icon.svg" id="1_qpksk"]
+
+[resource]
+script = ExtResource("1_406e2")
+flat_speed_increase = 1.0
+name = "+ Movement Speed"
+image = ExtResource("1_qpksk")
+metadata/_custom_type_script = "uid://dhc7fs4sirbq4"
