@@ -48,6 +48,7 @@ func change_game_state(new_state: State) -> void:
 	state = new_state
 
 func _on_level_up_finish() -> void:
+	level_up_ui.selected_upgrade.apply_upgrade(player_controller)
 	change_game_state(State.PLAYING)
 
 func _on_player_level_up(_new_level: int) -> void:

@@ -8,6 +8,8 @@ extends PanelContainer
 
 const LEVEL_UP_OPTION_PREFAB : PackedScene = preload("res://scenes/ui/level_up_option_ui.tscn")
 
+var selected_upgrade : PlayerUpgrade = null
+
 signal exited
 
 func open(upgrades_to_choose: Array[PlayerUpgrade]) -> void:
@@ -24,8 +26,9 @@ func open(upgrades_to_choose: Array[PlayerUpgrade]) -> void:
 	animation_player.play("open")
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-func _on_upgrade_selected(_selected_upgrade: PlayerUpgrade) -> void:
+func _on_upgrade_selected(upgrade: PlayerUpgrade) -> void:
 	animation_player.play("close")
+	self.selected_upgrade = upgrade
 
 func _on_exit_animation_finished() -> void:
 	print("exit animation finished")
