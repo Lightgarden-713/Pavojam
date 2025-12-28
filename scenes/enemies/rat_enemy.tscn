@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://cpmy1m5ky1gbr"]
+
+[ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="1_abj3n"]
+[ext_resource type="PackedScene" uid="uid://baksqdyxcsf7i" path="res://scenes/enemies/rat_mesh.tscn" id="2_2m570"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v1swg"]
+size = Vector3(1.5, 1, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_abj3n"]
+size = Vector3(1.5, 1, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2m570"]
+size = Vector3(1.15, 1, 1.95)
+
+[sub_resource type="Animation" id="Animation_7xmb4"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_8rxqf"]
+resource_name = "walk"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RatMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.05235988), Vector3(0, 0, 0), Vector3(0, 0, -0.05235988), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2m570"]
+_data = {
+&"RESET": SubResource("Animation_7xmb4"),
+&"walk": SubResource("Animation_8rxqf")
+}
+
+[node name="RatEnemy" instance=ExtResource("1_abj3n")]
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)
+shape = SubResource("BoxShape3D_v1swg")
+
+[node name="RatMesh" parent="." index="2" instance=ExtResource("2_2m570")]
+
+[node name="MeshInstance3D" parent="." index="3"]
+visible = false
+
+[node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)
+shape = SubResource("BoxShape3D_abj3n")
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5535156)
+shape = SubResource("BoxShape3D_2m570")
+
+[node name="AnimationPlayer" parent="." index="7"]
+libraries = {
+&"": SubResource("AnimationLibrary_2m570")
+}
+
+[editable path="HurtboxComponent"]
+[editable path="HitboxComponent"]
