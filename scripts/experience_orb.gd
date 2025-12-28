@@ -1,7 +1,10 @@
 class_name ExperienceOrb
 extends RigidBody3D
 
-enum State { IDLE, BOUNCING, CHASING }
+enum State { SPAWNING, IDLE, BOUNCING, CHASING }
+
+@export_group("References")
+@export var pickup_range : Area3D
 
 @export_group("XP config")
 @export var xp_value = 1
@@ -13,9 +16,16 @@ enum State { IDLE, BOUNCING, CHASING }
 @export var acceleration_rate = 40
 
 var target_player: ProtoController = null
-var state = State.IDLE
+var state = State.SPAWNING
+
+func _ready() -> void:
+	# Disable magnet until we exit the SPAWNING state
+	pickup_range.monitoring = false
 
 func _physics_process(delta):
+	if state == State.SPAWNING:
+		return
+
 	if state != State.IDLE:
 		gravity_scale = 0
 		collision_layer = 0
@@ -39,10 +49,6 @@ func collect():
 	target_player.xp_component.add_xp(xp_value)
 	queue_free()
 
-func _on_pickup_range_body_entered(player: ProtoController) -> void:
-	if player != null:
-		magnetize(player)
-
 func bounce(player: ProtoController):
 	var away_direction = (global_position - player.global_position).normalized()
 	away_direction.y += 0.5 # fly a little upwards
@@ -56,3 +62,16 @@ func chase(delta):
 
 	if global_position.distance_to(target_player.global_position) < 1.0:
 		collect()
+
+func _on_pickup_range_body_entered(player: ProtoController) -> void:
+	print("body entered")
+
+	if player != null:
+		magnetize(player)
+
+# Only body colliding with xp ball is the level geometry
+func _on_body_entered(_body: Node) -> void:
+	print("Touched Ground")
+	state = State.IDLE
+	# enable magnet
+	pickup_range.monitoring = true
