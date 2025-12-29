@@ -9,6 +9,7 @@ extends CharacterBody3D
 @export_group("Player component references")
 @export var health_component : HealthComponent
 @export var xp_component : XPComponent
+@export var projectile_attack_component : ProjectileAttack
 
 @export_group("Camera")
 
@@ -55,6 +56,9 @@ extends CharacterBody3D
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly : String = "freefly"
 
+# Upgradable stats
+var current_base_speed : float
+
 var mouse_captured : bool = false
 var look_rotation : Vector2
 var move_speed : float = 0.0
@@ -65,6 +69,9 @@ var freeflying : bool = false
 @onready var collider: CollisionShape3D = $Collider
 
 func _ready() -> void:
+	# Initialize stats
+	current_base_speed = base_speed
+
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
@@ -110,7 +117,7 @@ func _physics_process(delta: float) -> void:
 	if can_sprint and Input.is_action_pressed(input_sprint):
 			move_speed = sprint_speed
 	else:
-		move_speed = base_speed
+		move_speed = current_base_speed
 
 	# Apply desired movement to velocity
 	if can_move:
