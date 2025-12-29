@@ -12,7 +12,11 @@ var selected_upgrade : PlayerUpgrade = null
 
 signal exited
 
+func _ready() -> void:
+	visible = false
+
 func open(upgrades_to_choose: Array[PlayerUpgrade]) -> void:
+	visible = true
 	# Instantiate options
 	for upgrade in upgrades_to_choose:
 		# create UI node
@@ -31,6 +35,7 @@ func _on_upgrade_selected(upgrade: PlayerUpgrade) -> void:
 	self.selected_upgrade = upgrade
 
 func _on_exit_animation_finished() -> void:
+	visible = false
 	print("exit animation finished")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
