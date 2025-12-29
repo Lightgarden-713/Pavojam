@@ -59,6 +59,13 @@ drop_force = 6.0
 shape = SubResource("SphereShape3D_5dc1e")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_max_distance = 2.51
+avoidance_enabled = true
+neighbor_distance = 6.0
+max_neighbors = 5
+time_horizon_agents = 2.0
+max_speed = 4.0
+debug_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w5208")
@@ -84,6 +91,8 @@ shape = SubResource("SphereShape3D_w5208")
 libraries = {
 &"": SubResource("AnimationLibrary_8ob4g")
 }
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_velocity_computed"]
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]

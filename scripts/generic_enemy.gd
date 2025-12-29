@@ -26,21 +26,34 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= 9.8 * delta
 
+	if nav_agent.is_navigation_finished():
+		return
+
 	# Get the next location on the path to the target
 	var current_location = global_transform.origin
 	var next_location = nav_agent.get_next_path_position()
 
 	# Calculate velocity towards that point
 	var new_velocity = (next_location - current_location).normalized() * speed
-	velocity.x = new_velocity.x
-	velocity.z = new_velocity.z
-	self.rotation.y = atan2(new_velocity.x, new_velocity.z)
 
-	move_and_slide()
+	if nav_agent.avoidance_enabled:
+		nav_agent.set_velocity(new_velocity)
+	else:
+		_on_velocity_computed(new_velocity)
 
 # Call this from your main level script or a timer to update where the enemy wants to go
 func update_target_location(target_position):
 	nav_agent.target_position = target_position
+
+func _on_velocity_computed(safe_velocity: Vector3) -> void:
+	if nav_agent.is_navigation_finished():
+		return
+
+	velocity.x = safe_velocity.x
+	velocity.z = safe_velocity.z
+	self.rotation.y = atan2(safe_velocity.x, safe_velocity.z)
+
+	move_and_slide()
 
 func die() -> void:
 	# Drop XP orbs
