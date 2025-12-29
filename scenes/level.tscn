@@ -4,11 +4,11 @@
 [ext_resource type="Script" uid="uid://x5pg580jet5v" path="res://scenes/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://dtp0wpbhenk4y" path="res://assets/Colliseum.tscn" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="2_w7c3h"]
-[ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui_health.gd" id="4_mx8sn"]
+[ext_resource type="Script" path="res://scripts/ui/ui_health.gd" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="4_ppgk2"]
 [ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/xp_bar.gd" id="5_2r41h"]
 [ext_resource type="Script" uid="uid://slwhbg4sgaym" path="res://scripts/wave_manager.gd" id="6_b121j"]
-[ext_resource type="Script" uid="uid://b8upaitibbcq6" path="res://scripts/wave_level_ui.gd" id="9_8c41q"]
+[ext_resource type="Script" path="res://scripts/ui/wave_level_ui.gd" id="9_8c41q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -65,17 +65,18 @@ xp_value = 45
 script = ExtResource("6_b121j")
 initial_delay_sec = 3.0
 wave_duration_sec = 10.0
+spawn_wait_time = 0.75
 base_enemies = 5
 increase_per_wave = 2
 
 [node name="Spawn1" type="Node3D" parent="World/WaveManager"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2, -11)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.3, -11)
 
 [node name="Spawn2" type="Node3D" parent="World/WaveManager"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0.6, -8)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0.3, -8)
 
 [node name="Spawn3" type="Node3D" parent="World/WaveManager"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10, 0.5, -8)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10, 0.3, -8)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
