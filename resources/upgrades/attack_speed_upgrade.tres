@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeAttackSpeed" load_steps=3 format=3 uid="uid://dwojndl23voh4"]
+
+[ext_resource type="Script" uid="uid://yumqlv2upuyn" path="res://scripts/player_upgrades/upgrade_attack_speed.gd" id="1_g0gaf"]
+[ext_resource type="Texture2D" uid="uid://kvwe8snu17kl" path="res://icon.svg" id="1_vvs07"]
+
+[resource]
+script = ExtResource("1_g0gaf")
+flat_attack_speed_increase = 0.25
+name = "+ Attack Speed"
+image = ExtResource("1_vvs07")
+metadata/_custom_type_script = "uid://yumqlv2upuyn"
