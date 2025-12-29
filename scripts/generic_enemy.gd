@@ -1,7 +1,6 @@
 extends RigidBody3D
 
 @export_category("References")
-@export var nav_agent : NavigationAgent3D
 @export var health_component : HealthComponent
 @export var animation_player: AnimationPlayer
 
@@ -11,6 +10,11 @@ extends RigidBody3D
 @export_category("Drop")
 @export var drops : Array[DropData]
 @export var drop_force : float
+
+@export_category("Pathing")
+@export var distance_to_destination : float = 1
+
+var target_location : Vector3
 
 func _ready() -> void:
 	if health_component == null:
@@ -24,17 +28,21 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float):
 	# Get the next location on the path to the target
 	var current_location = global_transform.origin
-	var next_location = nav_agent.get_next_path_position()
+
+	var vector_to_target = target_location - current_location
+	self.rotation.y = atan2(vector_to_target.x, vector_to_target.z)
+
+	if current_location.distance_to(target_location) < distance_to_destination:
+		return
 
 	# Calculate velocity towards that point
-	var new_velocity = (next_location - current_location).normalized() * speed
+	var new_velocity = (target_location - current_location).normalized() * speed
 	linear_velocity.x = new_velocity.x
 	linear_velocity.z = new_velocity.z
-	self.rotation.y = atan2(new_velocity.x, new_velocity.z)
 
 # Call this from your main level script or a timer to update where the enemy wants to go
 func update_target_location(target_position):
-	nav_agent.target_position = target_position
+	self.target_location = target_position
 
 func die() -> void:
 	# Drop XP orbs

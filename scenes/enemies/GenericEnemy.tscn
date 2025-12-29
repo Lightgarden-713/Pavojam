@@ -50,7 +50,7 @@ collision_mask = 6
 mass = 10.0
 lock_rotation = true
 script = ExtResource("1_s1b0o")
-nav_agent = NodePath("NavigationAgent3D")
+nav_agent = NodePath("")
 health_component = NodePath("HealthComponent")
 animation_player = NodePath("AnimationPlayer")
 speed = 4.0
@@ -59,8 +59,6 @@ drop_force = 6.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_5dc1e")
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w5208")
