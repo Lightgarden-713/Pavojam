@@ -64,14 +64,11 @@ func chase(delta):
 		collect()
 
 func _on_pickup_range_body_entered(player: ProtoController) -> void:
-	print("body entered")
-
 	if player != null:
 		magnetize(player)
 
 # Only body colliding with xp ball is the level geometry
 func _on_body_entered(_body: Node) -> void:
-	print("Touched Ground")
 	state = State.IDLE
 	# enable magnet
 	pickup_range.monitoring = true
