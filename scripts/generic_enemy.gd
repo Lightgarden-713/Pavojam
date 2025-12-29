@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends RigidBody3D
 
 @export_category("References")
 @export var nav_agent : NavigationAgent3D
@@ -21,22 +21,16 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_update_animation()
 
-func _physics_process(delta):
-	# Add gravity
-	if not is_on_floor():
-		velocity.y -= 9.8 * delta
-
+func _physics_process(_delta: float):
 	# Get the next location on the path to the target
 	var current_location = global_transform.origin
 	var next_location = nav_agent.get_next_path_position()
 
 	# Calculate velocity towards that point
 	var new_velocity = (next_location - current_location).normalized() * speed
-	velocity.x = new_velocity.x
-	velocity.z = new_velocity.z
+	linear_velocity.x = new_velocity.x
+	linear_velocity.z = new_velocity.z
 	self.rotation.y = atan2(new_velocity.x, new_velocity.z)
-
-	move_and_slide()
 
 # Call this from your main level script or a timer to update where the enemy wants to go
 func update_target_location(target_position):
@@ -72,6 +66,6 @@ func get_random_drop_direction() -> Vector3:
 	return dir.normalized()
 
 func _update_animation() -> void:
-	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
+	var horizontal_speed = Vector2(linear_velocity.x, linear_velocity.z).length()
 	if horizontal_speed > 0.1 and animation_player.has_animation("walk") and not animation_player.is_playing():
 		animation_player.play("walk")
