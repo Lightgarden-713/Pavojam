@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cpmy1m5ky1gbr"]
+[gd_scene load_steps=21 format=4 uid="uid://cpmy1m5ky1gbr"]
 
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="1_abj3n"]
 [ext_resource type="PackedScene" uid="uid://baksqdyxcsf7i" path="res://scenes/enemies/rat_mesh.tscn" id="2_2m570"]
@@ -15,6 +15,7 @@ vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("3_v1swg")
 roughness = 0.9
 emission_enabled = true
+grow = true
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_uesqq"]
 _surfaces = [{
@@ -152,6 +153,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_mi3y3")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1swg"]
+resource_local_to_scene = true
+albedo_color = Color(0.5106012, 0.5106013, 0.5106012, 1)
+metallic = 1.0
+roughness = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_8rxqf"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_v1swg")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_abj3n"]
 size = Vector3(1.5, 1, 3)
 
@@ -205,6 +216,7 @@ mesh = SubResource("ArrayMesh_2jdfr")
 
 [node name="MeshInstance3D" parent="." index="3"]
 visible = false
+mesh = SubResource("SphereMesh_8rxqf")
 
 [node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)
@@ -219,8 +231,8 @@ libraries = {
 &"": SubResource("AnimationLibrary_2m570")
 }
 
-[node name="HitFlashComponent" parent="." index="8" node_paths=PackedStringArray("flashing_meshes")]
-flashing_meshes = [NodePath("../MeshInstance3D"), NodePath("../RatMesh/Body"), NodePath("../RatMesh/EarR"), NodePath("../RatMesh/Cola"), NodePath("../RatMesh/Cube")]
+[node name="HitFeedbackComponent" parent="." index="8" node_paths=PackedStringArray("affected_meshes")]
+affected_meshes = [NodePath("../MeshInstance3D"), NodePath("../RatMesh/Body"), NodePath("../RatMesh/EarR"), NodePath("../RatMesh/Cola"), NodePath("../RatMesh/Cube")]
 
 [editable path="RatMesh"]
 [editable path="HurtboxComponent"]

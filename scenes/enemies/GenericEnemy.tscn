@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="2_w5208"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_12mnw"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="3_btb75"]
-[ext_resource type="Script" uid="uid://dpkvss3ysmb7r" path="res://scripts/hit_flash_component.gd" id="7_btb75"]
+[ext_resource type="PackedScene" uid="uid://b3cxypyld35gx" path="res://scene_components/hit_feedback_component.tscn" id="7_btb75"]
 
 [sub_resource type="Resource" id="Resource_wh6aq"]
 script = ExtResource("2_vua17")
@@ -91,11 +91,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_8ob4g")
 }
 
-[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "flashing_meshes")]
-script = ExtResource("7_btb75")
+[node name="HitFeedbackComponent" parent="." node_paths=PackedStringArray("health_component", "affected_meshes") instance=ExtResource("7_btb75")]
 health_component = NodePath("../HealthComponent")
-flashing_meshes = [NodePath("../MeshInstance3D")]
-flash_duration = 0.25
+affected_meshes = [NodePath("../MeshInstance3D")]
+grow_duration = 0.1
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]
