@@ -20,11 +20,13 @@ enum AttackMode { AIMED, AUTO_AIMED }
 
 # Upgradable Stats
 var current_attacks_per_second : float
+var current_projectiles_per_attack : float
 
 var time_until_shooting : float
 
 func _ready() -> void:
 	current_attacks_per_second = attacks_per_second
+	current_projectiles_per_attack = projectiles_per_attack
 	time_until_shooting = 1 / attacks_per_second
 
 func _process(delta: float) -> void:
@@ -36,7 +38,7 @@ func shoot() -> void:
 	var entities_in_range : Array[Node3D] = []
 	entities_in_range.append_array(entity_tracker.entities_within_detection_range)
 
-	for projectile_n in range(projectiles_per_attack):
+	for projectile_n in range(current_projectiles_per_attack):
 		# Pick target as a forward pos
 		var target = global_position - global_transform.basis.z
 
