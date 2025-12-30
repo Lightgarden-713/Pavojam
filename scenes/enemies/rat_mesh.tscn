@@ -1,5 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://baksqdyxcsf7i"]
+[gd_scene load_steps=5 format=3 uid="uid://baksqdyxcsf7i"]
 
 [ext_resource type="PackedScene" uid="uid://drjvcea7bwg61" path="res://assets/rat.gltf" id="1_mxy18"]
+[ext_resource type="Shader" uid="uid://1vmi46e8ef4x" path="res://assets/materials/shaders/psx.gdshader" id="2_10h4d"]
+[ext_resource type="Texture2D" uid="uid://cc3wcdgdiy8l" path="res://assets/Rat_tex.png" id="3_6rc86"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w767g"]
+render_priority = 0
+shader = ExtResource("2_10h4d")
+shader_parameter/billboard = false
+shader_parameter/color_texture = ExtResource("3_6rc86")
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/vertex_snapping = true
+shader_parameter/affine_texture_mapping = false
+shader_parameter/add_fog = false
+shader_parameter/fog_color = Color(0.42, 0.42, 0.45, 1)
+shader_parameter/fog_start_end = Vector2(10, 100)
+shader_parameter/add_dynamic_vertex_lighting = true
+shader_parameter/light_direction = Vector3(0, 1, 1)
+shader_parameter/light_intensity = 1.0
+shader_parameter/ambient_light = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/add_dither = true
+shader_parameter/dither_spread = 1.0
+shader_parameter/dither_gamma = 1.0
 
 [node name="rat" instance=ExtResource("1_mxy18")]
+
+[node name="Body" parent="." index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_w767g")
+
+[node name="EarR" parent="." index="1"]
+surface_material_override/0 = SubResource("ShaderMaterial_w767g")
+
+[node name="Cola" parent="." index="2"]
+surface_material_override/0 = SubResource("ShaderMaterial_w767g")
+
+[node name="Cube" parent="." index="3"]
+surface_material_override/0 = SubResource("ShaderMaterial_w767g")

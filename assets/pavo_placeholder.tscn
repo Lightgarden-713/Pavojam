@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcs3r23obwheu"]
+
+[ext_resource type="PackedScene" uid="uid://cms2p0o7ouxiv" path="res://assets/pavo_placeholder.gltf" id="1_4vo0m"]
+[ext_resource type="Shader" uid="uid://1vmi46e8ef4x" path="res://assets/materials/shaders/psx.gdshader" id="2_fd8nn"]
+[ext_resource type="Texture2D" uid="uid://c6g7pydonj5y5" path="res://assets/Pavo_tex.png" id="3_jbwov"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xtdo6"]
+render_priority = 0
+shader = ExtResource("2_fd8nn")
+shader_parameter/billboard = false
+shader_parameter/color_texture = ExtResource("3_jbwov")
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/vertex_snapping = true
+shader_parameter/affine_texture_mapping = true
+shader_parameter/add_fog = false
+shader_parameter/fog_color = Color(0.42, 0.42, 0.45, 1)
+shader_parameter/fog_start_end = Vector2(10, 100)
+shader_parameter/add_dynamic_vertex_lighting = true
+shader_parameter/light_direction = Vector3(0, 1, 1)
+shader_parameter/light_intensity = 1.0
+shader_parameter/ambient_light = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/add_dither = true
+shader_parameter/dither_spread = 1.0
+shader_parameter/dither_gamma = 1.0
+
+[node name="pavo_placeholder" instance=ExtResource("1_4vo0m")]
+
+[node name="Pavo_placeholder" parent="." index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_xtdo6")
