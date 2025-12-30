@@ -2,7 +2,6 @@ class_name EntityTracker
 extends Area3D
 
 @export_group("Settings")
-@export_flags_3d_physics var tracked_enemies_mask : int
 @export var initial_detection_radius : float
 
 @export_group("References")
@@ -17,7 +16,6 @@ func _ready() -> void:
 		push_error("Only supported collision shape is sphere shape 3D")
 
 	_sphere_detector = collision_shape.shape as SphereShape3D
-	collision_mask = tracked_enemies_mask
 	update_radius(initial_detection_radius)
 
 func update_radius(new_radius: float) -> void:
