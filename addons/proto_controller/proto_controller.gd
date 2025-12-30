@@ -6,6 +6,9 @@
 class_name ProtoController
 extends CharacterBody3D
 
+@export_group("References")
+@export var body_mesh_node : Node3D
+
 @export_group("Player component references")
 @export var health_component : HealthComponent
 @export var xp_component : XPComponent
@@ -99,6 +102,11 @@ func _physics_process(delta: float) -> void:
 	if can_freefly and freeflying:
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
 		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
+		# align body_mesh_node with motion direction
+		if input_dir.length_squared() > 0.1:
+			body_mesh_node.look_at(body_mesh_node.global_position + motion, global_basis.y, true)
+
 		motion *= freefly_speed * delta
 		move_and_collide(motion)
 		return
@@ -123,6 +131,11 @@ func _physics_process(delta: float) -> void:
 	if can_move:
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
 		var move_dir := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
+		# align body_mesh_node with motion direction
+		if input_dir.length_squared() > 0.1:
+			body_mesh_node.look_at(body_mesh_node.global_position + move_dir, global_basis.y, true)
+
 		if move_dir:
 			velocity.x = move_dir.x * move_speed
 			velocity.z = move_dir.z * move_speed
