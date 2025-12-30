@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bpyrd5tkn71c4"]
+[gd_scene load_steps=18 format=3 uid="uid://bpyrd5tkn71c4"]
 
 [ext_resource type="Script" uid="uid://bdpolb3mvo6l4" path="res://scripts/generic_enemy.gd" id="1_s1b0o"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_snxl2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="2_w5208"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_12mnw"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="3_btb75"]
+[ext_resource type="Shader" uid="uid://1vmi46e8ef4x" path="res://assets/materials/shaders/psx.gdshader" id="4_btb75"]
 
 [sub_resource type="Resource" id="Resource_wh6aq"]
 script = ExtResource("2_vua17")
@@ -22,6 +23,24 @@ roughness = 0.3
 
 [sub_resource type="SphereMesh" id="SphereMesh_w5208"]
 material = SubResource("StandardMaterial3D_s1b0o")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wh6aq"]
+render_priority = 0
+shader = ExtResource("4_btb75")
+shader_parameter/billboard = false
+shader_parameter/tint = Color(0.31061712, 0.31061712, 0.3106171, 1)
+shader_parameter/vertex_snapping = true
+shader_parameter/affine_texture_mapping = false
+shader_parameter/add_fog = true
+shader_parameter/fog_color = Color(0.42, 0.42, 0.45, 1)
+shader_parameter/fog_start_end = Vector2(3, 100)
+shader_parameter/add_dynamic_vertex_lighting = true
+shader_parameter/light_direction = Vector3(0, 1, 1)
+shader_parameter/light_intensity = 1.0
+shader_parameter/ambient_light = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/add_dither = true
+shader_parameter/dither_spread = 1.0
+shader_parameter/dither_gamma = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vua17"]
 resource_local_to_scene = true
@@ -62,6 +81,7 @@ shape = SubResource("SphereShape3D_5dc1e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w5208")
+surface_material_override/0 = SubResource("ShaderMaterial_wh6aq")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_snxl2")]
 max_health = 50.0

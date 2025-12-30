@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://toswubf77db8"]
+[gd_scene load_steps=11 format=3 uid="uid://toswubf77db8"]
 
 [ext_resource type="Script" uid="uid://b1xhgfsvi81he" path="res://scripts/experience_orb.gd" id="1_kb7ro"]
+[ext_resource type="Shader" uid="uid://1vmi46e8ef4x" path="res://assets/materials/shaders/psx.gdshader" id="2_7ig3s"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2tx8d"]
 gravity = Vector3(0, 0, 0)
@@ -22,6 +23,24 @@ roughness = 0.4
 
 [sub_resource type="SphereMesh" id="SphereMesh_2tx8d"]
 material = SubResource("StandardMaterial3D_gy0td")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rk8h7"]
+render_priority = 0
+shader = ExtResource("2_7ig3s")
+shader_parameter/billboard = false
+shader_parameter/tint = Color(1, 1, 0.06666667, 1)
+shader_parameter/vertex_snapping = true
+shader_parameter/affine_texture_mapping = false
+shader_parameter/add_fog = true
+shader_parameter/fog_color = Color(0.42, 0.42, 0.45, 1)
+shader_parameter/fog_start_end = Vector2(3, 100)
+shader_parameter/add_dynamic_vertex_lighting = true
+shader_parameter/light_direction = Vector3(0, 1, 1)
+shader_parameter/light_intensity = 1.0
+shader_parameter/ambient_light = Color(0.10374347, 0.103743546, 0.103743516, 1)
+shader_parameter/add_dither = true
+shader_parameter/dither_spread = 1.0
+shader_parameter/dither_gamma = 0.7
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ra6fx"]
 
@@ -46,6 +65,7 @@ draw_pass_1 = SubResource("QuadMesh_8rvem")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("SphereMesh_2tx8d")
+surface_material_override/0 = SubResource("ShaderMaterial_rk8h7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)

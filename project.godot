@@ -17,6 +17,10 @@ config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=320
+window/size/viewport_height=240
+window/size/window_width_override=1920
+window/size/window_height_override=1080
 mouse_cursor/custom_image="uid://cb4nb7rhc1p7c"
 
 [filesystem]
