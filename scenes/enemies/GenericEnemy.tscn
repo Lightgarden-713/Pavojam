@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bpyrd5tkn71c4"]
+[gd_scene load_steps=17 format=3 uid="uid://bpyrd5tkn71c4"]
 
 [ext_resource type="Script" uid="uid://bdpolb3mvo6l4" path="res://scripts/generic_enemy.gd" id="1_s1b0o"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_snxl2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="2_w5208"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_12mnw"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="3_btb75"]
+[ext_resource type="Script" uid="uid://dpkvss3ysmb7r" path="res://scripts/hit_flash_component.gd" id="7_btb75"]
 
 [sub_resource type="Resource" id="Resource_wh6aq"]
 script = ExtResource("2_vua17")
@@ -87,6 +88,12 @@ shape = SubResource("SphereShape3D_w5208")
 libraries = {
 &"": SubResource("AnimationLibrary_8ob4g")
 }
+
+[node name="HitFlashComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "flashing_meshes")]
+script = ExtResource("7_btb75")
+health_component = NodePath("../HealthComponent")
+flashing_meshes = [NodePath("../MeshInstance3D")]
+flash_duration = 0.75
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]
