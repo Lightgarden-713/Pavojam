@@ -66,8 +66,8 @@ shape = SubResource("CapsuleShape3D_0rk7u")
 
 [node name="ProjectileAttack" parent="." instance=ExtResource("6_h60nn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0921607, -0.41275918)
-attack_mode = 1
 projectiles_per_attack = 3
+projectile_collision_mask = 2
 
 [node name="EntityTracker" parent="ProjectileAttack" index="0"]
 collision_layer = 1

@@ -10,6 +10,7 @@
 [node name="Projectile" type="Node3D" node_paths=PackedStringArray("hitbox")]
 script = ExtResource("1_q3m7n")
 hitbox = NodePath("HitboxComponent")
+projectile_lifetime_sec = 10.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
