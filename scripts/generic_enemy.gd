@@ -26,6 +26,11 @@ func _physics_process(_delta: float):
 	var current_location = global_transform.origin
 	var next_location = nav_agent.get_next_path_position()
 
+	if nav_agent.is_target_reached():
+		var direction_towards_target = current_location.direction_to(nav_agent.target_position)
+		self.rotation.y = atan2(direction_towards_target.x, direction_towards_target.z)
+		return
+
 	# Calculate velocity towards that point
 	var new_velocity = (next_location - current_location).normalized() * speed
 	linear_velocity.x = new_velocity.x

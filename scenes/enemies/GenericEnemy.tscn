@@ -61,6 +61,7 @@ drop_force = 6.0
 shape = SubResource("SphereShape3D_5dc1e")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 1.5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w5208")
