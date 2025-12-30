@@ -16,9 +16,12 @@ func _ready() -> void:
 		push_error("Only supported collision shape is sphere shape 3D")
 
 	_sphere_detector = collision_shape.shape as SphereShape3D
-	update_radius(initial_detection_radius)
+	update_detection_radius(initial_detection_radius)
 
-func update_radius(new_radius: float) -> void:
+func get_detection_radius() -> float:
+	return _sphere_detector.radius
+
+func update_detection_radius(new_radius: float) -> void:
 	if _sphere_detector == null:
 		return
 
