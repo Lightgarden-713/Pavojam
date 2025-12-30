@@ -22,9 +22,9 @@ height = 1.8
 radius = 0.4
 height = 1.65
 
-[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("visual", "health_component", "xp_component", "projectile_attack_component") groups=["player"]]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("body_mesh_node", "health_component", "xp_component", "projectile_attack_component") groups=["player"]]
 script = ExtResource("1_ucva2")
-visual = NodePath("pavo_placeholder")
+body_mesh_node = NodePath("pavo_placeholder")
 health_component = NodePath("HealthComponent")
 xp_component = NodePath("XPComponent")
 projectile_attack_component = NodePath("ProjectileAttack")
