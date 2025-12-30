@@ -6,6 +6,7 @@ enum AttackMode { AIMED }
 
 @export_group("References")
 @export var projectile_prefab: PackedScene
+@export var entity_tracker: EntityTracker
 
 @export_group("Attack Stats")
 @export var projectile_damage: float
