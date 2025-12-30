@@ -44,9 +44,11 @@ _data = {
 &"walk": SubResource("Animation_8rxqf")
 }
 
-[node name="GenericEnemy" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "health_component", "animation_player") groups=["enemies"]]
+[node name="GenericEnemy" type="RigidBody3D" node_paths=PackedStringArray("nav_agent", "health_component", "animation_player") groups=["enemies"]]
 collision_layer = 2
-collision_mask = 4
+collision_mask = 6
+mass = 10.0
+lock_rotation = true
 script = ExtResource("1_s1b0o")
 nav_agent = NodePath("NavigationAgent3D")
 health_component = NodePath("HealthComponent")
@@ -59,6 +61,7 @@ drop_force = 6.0
 shape = SubResource("SphereShape3D_5dc1e")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_w5208")
