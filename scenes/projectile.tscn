@@ -9,6 +9,7 @@
 [node name="Projectile" type="Node3D" node_paths=PackedStringArray("hitbox")]
 script = ExtResource("1_q3m7n")
 hitbox = NodePath("HitboxComponent")
+projectile_lifetime_sec = 10.0
 
 [node name="HitboxComponent" parent="." instance=ExtResource("1_c8fcr")]
 collision_mask = 0

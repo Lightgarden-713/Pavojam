@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4vlhehr58l6x"]
+
+[ext_resource type="Script" uid="uid://b6bdaykmkraqy" path="res://scripts/entity_tracker.gd" id="1_rllc3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_488e8"]
+
+[node name="EntityTracker" type="Area3D" node_paths=PackedStringArray("collision_shape")]
+collision_layer = 0
+collision_mask = 0
+monitorable = false
+script = ExtResource("1_rllc3")
+collision_shape = NodePath("CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_488e8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

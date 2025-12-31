@@ -5,8 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ch8t0twm5k5s5" path="res://assets/Pavo.gltf" id="2_ujot4"]
 [ext_resource type="PackedScene" uid="uid://bha5j07kt4xem" path="res://scene_components/xp_component.tscn" id="3_0rk7u"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_6dqce"]
-[ext_resource type="Script" uid="uid://bolgpyj5nlopy" path="res://scripts/projectile_attack.gd" id="6_h60nn"]
-[ext_resource type="PackedScene" uid="uid://gdr06m5854vu" path="res://scenes/projectile.tscn" id="7_ujot4"]
+[ext_resource type="PackedScene" uid="uid://b24jc8h8s18jn" path="res://scenes/attacks/projectile_attack.tscn" id="6_h60nn"]
 
 [sub_resource type="Curve" id="Curve_ujot4"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
@@ -71,14 +70,16 @@ owner_health_component = NodePath("../HealthComponent")
 [node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
 shape = SubResource("CapsuleShape3D_0rk7u")
 
-[node name="ProjectileAttack" type="Node3D" parent="."]
+[node name="ProjectileAttack" parent="." instance=ExtResource("6_h60nn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0921607, -0.41275918)
-script = ExtResource("6_h60nn")
-projectile_prefab = ExtResource("7_ujot4")
-projectile_damage = 15.0
-projectile_speed = 10.0
-attacks_per_second = 1.0
-projectiles_per_attack = 1.0
-projectile_collision_mask = 6
+attack_mode = 1
+projectiles_per_attack = 1
+projectile_collision_mask = 2
+
+[node name="EntityTracker" parent="ProjectileAttack" index="0"]
+collision_layer = 1
+collision_mask = 2
+initial_detection_radius = 10.0
 
 [editable path="HurtboxComponent"]
+[editable path="ProjectileAttack"]

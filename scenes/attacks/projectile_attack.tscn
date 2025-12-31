@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b24jc8h8s18jn"]
+
+[ext_resource type="Script" uid="uid://bolgpyj5nlopy" path="res://scripts/projectile_attack.gd" id="1_kwq0n"]
+[ext_resource type="PackedScene" uid="uid://gdr06m5854vu" path="res://scenes/projectile.tscn" id="2_y08g6"]
+[ext_resource type="PackedScene" uid="uid://c4vlhehr58l6x" path="res://scenes/entity_tracker.tscn" id="3_y08g6"]
+
+[node name="ProjectileAttack" type="Node3D" node_paths=PackedStringArray("entity_tracker")]
+script = ExtResource("1_kwq0n")
+projectile_prefab = ExtResource("2_y08g6")
+entity_tracker = NodePath("EntityTracker")
+projectile_damage = 15.0
+projectile_speed = 10.0
+attacks_per_second = 1.0
+projectiles_per_attack = 1.0
+projectile_collision_mask = 6
+
+[node name="EntityTracker" parent="." instance=ExtResource("3_y08g6")]
