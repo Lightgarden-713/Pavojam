@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=12 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://bb7xj3gm15bgx" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_5hfox"]
@@ -33,7 +33,9 @@ health_component = NodePath("HealthComponent")
 xp_component = NodePath("XPComponent")
 projectile_attack_component = NodePath("ProjectileAttack")
 hurtbox_component = NodePath("HurtboxComponent")
+jump_velocity = 6.0
 knockback_falloff_curve = SubResource("Curve_ujot4")
+knockback_max_vertical_angle_deg = 15.0
 
 [node name="Pavo" parent="." instance=ExtResource("2_ujot4")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0.15)
