@@ -166,13 +166,14 @@ func _physics_process(delta: float) -> void:
 
 		var falloff_start_time = knockback_force_duration - knockback_falloff_duration
 		if knockback_timer > falloff_start_time:
-			can_move = true
-
 			var normalized_knockback_falloff_time = (knockback_timer - falloff_start_time) / knockback_falloff_duration
 			var knockback_effective_factor = 1 - knockback_falloff_curve.sample(normalized_knockback_falloff_time)
 			current_knockback_force *= knockback_effective_factor
 
 		velocity += current_knockback_force
+
+		if knockback_timer >= knockback_force_duration:
+			can_move = true
 
 	# Use velocity to actually move
 	move_and_slide()
