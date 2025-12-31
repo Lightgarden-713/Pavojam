@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeAttack" load_steps=3 format=3 uid="uid://bowd0560n82h3"]
+
+[ext_resource type="Texture2D" uid="uid://c2tyssp7n3m8" path="res://assets/upgrades/atk.png" id="1_63pkt"]
+[ext_resource type="Script" uid="uid://dvl7lsc5gler" path="res://scripts/player_upgrades/upgrade_attack.gd" id="2_0sxmg"]
+
+[resource]
+script = ExtResource("2_0sxmg")
+flat_attack_increase = 5.0
+name = "+ Attack"
+image = ExtResource("1_63pkt")
+metadata/_custom_type_script = "uid://yumqlv2upuyn"
