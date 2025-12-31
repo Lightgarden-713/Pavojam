@@ -35,7 +35,7 @@ xp_component = NodePath("XPComponent")
 projectile_attack_component = NodePath("ProjectileAttack")
 hurtbox_component = NodePath("HurtboxComponent")
 knockback_falloff_curve = SubResource("Curve_ujot4")
-knockback_max_vertical_angle_deg = 45.0
+knockback_max_vertical_angle_deg = 30.0
 
 [node name="pavo_placeholder" parent="." instance=ExtResource("2_6dqce")]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0, 0)
