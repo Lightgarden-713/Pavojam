@@ -6,6 +6,8 @@
 
 [node name="ProtoController" parent="." instance=ExtResource("1_3vyb7")]
 collision_mask = 4
+knockback_force_duration = 0.5
+knockback_falloff_duration = 0.3
 
 [editable path="ProtoController"]
 [editable path="ProtoController/HurtboxComponent"]

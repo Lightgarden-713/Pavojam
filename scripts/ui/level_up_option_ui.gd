@@ -6,6 +6,7 @@ extends MarginContainer
 @export var option_name : Label
 
 signal selected
+signal selection_started
 
 func init(upgrade: PlayerUpgrade) -> void:
 	option_name.text = upgrade.name
@@ -17,4 +18,10 @@ func init(upgrade: PlayerUpgrade) -> void:
 
 
 func _on_texture_button_button_up() -> void:
+	selection_started.emit()
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($VBoxContainer/ImageButton, "modulate", Color(0.55, 0.55, 0.55, 1.0), 0.3).from(Color(1, 1, 1, 1))
+	await tween.finished
 	selected.emit()

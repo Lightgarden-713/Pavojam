@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dvwdspel6jewj"]
 
 [ext_resource type="Script" uid="uid://cjqjn05h4t05s" path="res://scripts/ui/level_up_option_ui.gd" id="1_r8iu3"]
-[ext_resource type="Texture2D" uid="uid://kvwe8snu17kl" path="res://icon.svg" id="1_ua1da"]
+[ext_resource type="Texture2D" uid="uid://c2tyssp7n3m8" path="res://assets/upgrades/atk.png" id="2_r8iu3"]
 
 [node name="MarginContainer" type="MarginContainer" node_paths=PackedStringArray("option_image", "option_name")]
 theme_override_constants/margin_left = 80
@@ -14,16 +14,21 @@ option_name = NodePath("VBoxContainer/Name")
 layout_mode = 2
 
 [node name="ImageButton" type="TextureButton" parent="VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
-texture_normal = ExtResource("1_ua1da")
-texture_pressed = ExtResource("1_ua1da")
-texture_hover = ExtResource("1_ua1da")
-texture_disabled = ExtResource("1_ua1da")
-texture_focused = ExtResource("1_ua1da")
+texture_normal = ExtResource("2_r8iu3")
+texture_pressed = ExtResource("2_r8iu3")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="Name" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
-text = "Upgrade 1"
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 16
+text = "Upgrade 1 very large text"
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [connection signal="button_up" from="VBoxContainer/ImageButton" to="." method="_on_texture_button_button_up"]

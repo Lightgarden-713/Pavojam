@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bpyrd5tkn71c4"]
+[gd_scene load_steps=17 format=3 uid="uid://bpyrd5tkn71c4"]
 
 [ext_resource type="Script" uid="uid://bdpolb3mvo6l4" path="res://scripts/generic_enemy.gd" id="1_s1b0o"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_snxl2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="2_w5208"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_12mnw"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="3_btb75"]
+[ext_resource type="PackedScene" path="res://scene_components/hit_feedback_component.tscn" id="7_btb75"]
 
 [sub_resource type="Resource" id="Resource_wh6aq"]
 script = ExtResource("2_vua17")
@@ -16,11 +17,13 @@ metadata/_custom_type_script = "uid://co1uhnxlfd20c"
 [sub_resource type="SphereShape3D" id="SphereShape3D_5dc1e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s1b0o"]
+resource_local_to_scene = true
 albedo_color = Color(0.5106012, 0.5106013, 0.5106012, 1)
 metallic = 1.0
 roughness = 0.3
 
 [sub_resource type="SphereMesh" id="SphereMesh_w5208"]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_s1b0o")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vua17"]
@@ -79,6 +82,7 @@ shape = SubResource("SphereShape3D_vua17")
 [node name="HitboxComponent" parent="." instance=ExtResource("2_w5208")]
 collision_layer = 2
 damage_amount = 5.0
+knockback_force = 20.0
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
 shape = SubResource("SphereShape3D_w5208")
@@ -87,6 +91,12 @@ shape = SubResource("SphereShape3D_w5208")
 libraries = {
 &"": SubResource("AnimationLibrary_8ob4g")
 }
+
+[node name="HitFeedbackComponent" parent="." node_paths=PackedStringArray("health_component", "affected_meshes") instance=ExtResource("7_btb75")]
+health_component = NodePath("../HealthComponent")
+affected_meshes = [NodePath("../MeshInstance3D")]
+flash_duration = 0.15
+grow_duration = 0.1
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]
