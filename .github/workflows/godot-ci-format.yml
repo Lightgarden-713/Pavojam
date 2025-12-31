@@ -13,9 +13,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-      - name: Setup
+      - name: Setup Path
         run: |
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Install Formatter
+        run: |
           curl -L -f -O "https://github.com/GDQuest/GDScript-formatter/releases/download/${FORMATTER_VERSION}/gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64.zip"
           unzip -q gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64.zip
           mv gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64 $HOME/.local/bin/gdscript-formatter
