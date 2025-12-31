@@ -15,9 +15,10 @@ jobs:
           lfs: true
       - name: Setup
         run: |
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           curl -L -f -o "gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64.zip" "https://github.com/GDQuest/GDScript-formatter/releases/download/${FORMATTER_VERSION}/gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64.zip"
           unzip -q gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64.zip
-          mv gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64 gdscript-formatter
+          mv gdscript-formatter-${FORMATTER_VERSION}-linux-x86_64 $HOME/.local/bin/gdscript-formatter
       - name: Run format checker
         run: |
           make format-check
