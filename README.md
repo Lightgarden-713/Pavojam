@@ -7,9 +7,11 @@ Controls:
 
 ## Playable Builds
 
-We currently have a workflow that builds the game on each commit merged to main.
-
 [![build-workflow](https://github.com/Lightgarden-713/Pavojam/actions/workflows/godot-ci.yml/badge.svg)](https://github.com/Lightgarden-713/Pavojam/actions/workflows/godot-ci.yml)
+
+We currently have a workflow that builds the game on each commit merged to main.
+You can click on the status badge, open the last workflow run and on the
+artifacts section you'll see the downloadable binaries for your machine.
 
 ## Dependencies
 
