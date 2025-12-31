@@ -82,6 +82,7 @@ shape = SubResource("SphereShape3D_vua17")
 [node name="HitboxComponent" parent="." instance=ExtResource("2_w5208")]
 collision_layer = 2
 damage_amount = 5.0
+knockback_force = 20.0
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
 shape = SubResource("SphereShape3D_w5208")

@@ -13,6 +13,7 @@ extends CharacterBody3D
 @export var health_component : HealthComponent
 @export var xp_component : XPComponent
 @export var projectile_attack_component : ProjectileAttack
+@export var hurtbox_component : HurtboxComponent
 
 @export_group("Camera")
 
@@ -43,6 +44,11 @@ extends CharacterBody3D
 ## How fast do we freefly?
 @export var freefly_speed : float = 25.0
 
+@export_group("Knockback")
+@export var knockback_force_duration : float = .75
+@export var knockback_falloff_duration : float = .25
+@export var knockback_falloff_curve : Curve
+
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
 @export var input_left : String = "ui_left"
@@ -66,6 +72,8 @@ var mouse_captured : bool = false
 var look_rotation : Vector2
 var move_speed : float = 0.0
 var freeflying : bool = false
+var knockback_timer : float = 0.0
+var knockback_vector : Vector3
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
@@ -75,9 +83,12 @@ func _ready() -> void:
 	# Initialize stats
 	current_base_speed = base_speed
 
+	check_knockback_stats()
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
+
+	hurtbox_component.on_hit.connect(_handle_on_hit)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -145,10 +156,27 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 		velocity.y = 0
+		velocity.z = 0
+
+	# If we're getting knocked back
+	if knockback_timer <= knockback_force_duration:
+		knockback_timer += delta
+
+		var current_knockback_force = knockback_vector
+
+		var falloff_start_time = knockback_force_duration - knockback_falloff_duration
+		if knockback_timer > falloff_start_time:
+			var normalized_knockback_time = (knockback_timer - falloff_start_time) / knockback_falloff_duration
+			var knockback_effective_factor = 1 - knockback_falloff_curve.sample(normalized_knockback_time)
+			current_knockback_force *= knockback_effective_factor
+
+		velocity += current_knockback_force
+
+		if knockback_timer >= knockback_force_duration:
+			can_move = true
 
 	# Use velocity to actually move
 	move_and_slide()
-
 
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
@@ -207,3 +235,18 @@ func check_input_mappings():
 	if can_freefly and not InputMap.has_action(input_freefly):
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
+
+func check_knockback_stats() -> void:
+	if knockback_falloff_duration > knockback_force_duration:
+		push_error("Knockback falloff cannot be greater than the total knockback duration")
+
+func apply_knockback(knockback_direction: Vector3) -> void:
+	knockback_vector = knockback_direction
+	knockback_timer = 0
+	can_move = false
+
+func _handle_on_hit(incoming_hitbox : HitboxComponent) -> void:
+	# calculate knockback direction (might improve if we use collision shape centers)
+	var knockback_dir = incoming_hitbox.global_position.direction_to(hurtbox_component.global_position)
+
+	apply_knockback(incoming_hitbox.knockback_force * knockback_dir.normalized())
