@@ -18,8 +18,8 @@ func _ready() -> void:
 	_sphere_detector = collision_shape.shape as SphereShape3D
 	update_detection_radius(initial_detection_radius)
 
-func get_detection_radius() -> float:
-	return _sphere_detector.radius
+func increase_detection_radius(radius_increase: float) -> void:
+	update_detection_radius(_sphere_detector.radius + radius_increase)
 
 func update_detection_radius(new_radius: float) -> void:
 	if _sphere_detector == null:

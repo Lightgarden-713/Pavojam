@@ -6,5 +6,4 @@ extends PlayerUpgrade
 
 func apply_upgrade(player: ProtoController) -> void:
 	var player_entity_tracker = player.projectile_attack_component.entity_tracker
-	var current_radius = player_entity_tracker.get_detection_radius()
-	player_entity_tracker.update_detection_radius(current_radius + flat_attack_range_increase)
+	player_entity_tracker.increase_detection_radius(flat_attack_range_increase)
