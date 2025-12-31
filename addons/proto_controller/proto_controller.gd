@@ -2,17 +2,17 @@
 # CC0 License
 # Intended for rapid prototyping of first-person games.
 # Happy prototyping!
-
 class_name ProtoController
 extends CharacterBody3D
 
 @export_group("References")
-@export var body_mesh_node : Node3D
+@export var body_mesh_node: Node3D
 
 @export_group("Player component references")
-@export var health_component : HealthComponent
-@export var xp_component : XPComponent
-@export var projectile_attack_component : ProjectileAttack
+@export var health_component: HealthComponent
+@export var xp_component: XPComponent
+@export var projectile_attack_component: ProjectileAttack
+@export var hurtbox_component: HurtboxComponent
 
 @export_group("Camera")
 
@@ -21,63 +21,78 @@ extends CharacterBody3D
 @export_range(0.0, 89.0, 0.5) var look_pitch_max_deg := 85.0
 
 ## Can we move around?
-@export var can_move : bool = true
+@export var can_move: bool = true
 ## Are we affected by gravity?
-@export var has_gravity : bool = true
+@export var has_gravity: bool = true
 ## Can we press to jump?
-@export var can_jump : bool = true
+@export var can_jump: bool = true
 ## Can we hold to run?
-@export var can_sprint : bool = false
+@export var can_sprint: bool = false
 ## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = false
+@export var can_freefly: bool = false
 
 @export_group("Speeds")
-## Look around rotation speed.
-@export var look_speed : float = 0.002
+## Look around rotation speed (mouse).
+@export var look_speed: float = 0.002
+## Look around rotation speed (joystick). Higher value = faster camera movement.
+@export var joystick_look_speed: float = 13
 ## Normal speed.
-@export var base_speed : float = 7.0
+@export var base_speed: float = 7.0
 ## Speed of jump.
-@export var jump_velocity : float = 4.5
+@export var jump_velocity: float = 4.5
 ## How fast do we run?
-@export var sprint_speed : float = 10.0
+@export var sprint_speed: float = 10.0
 ## How fast do we freefly?
-@export var freefly_speed : float = 25.0
+@export var freefly_speed: float = 25.0
+
+@export_group("Knockback")
+@export var knockback_force_duration: float = .75
+@export var knockback_falloff_duration: float = .25
+@export var knockback_falloff_curve: Curve
+@export var knockback_max_vertical_angle_deg: float = 20.0
 
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
-@export var input_left : String = "ui_left"
+@export var input_left: String = "ui_left"
 ## Name of Input Action to move Right.
-@export var input_right : String = "ui_right"
+@export var input_right: String = "ui_right"
 ## Name of Input Action to move Forward.
-@export var input_forward : String = "ui_up"
+@export var input_forward: String = "ui_up"
 ## Name of Input Action to move Backward.
-@export var input_back : String = "ui_down"
+@export var input_back: String = "ui_down"
 ## Name of Input Action to Jump.
-@export var input_jump : String = "ui_accept"
+@export var input_jump: String = "ui_accept"
 ## Name of Input Action to Sprint.
-@export var input_sprint : String = "sprint"
+@export var input_sprint: String = "sprint"
 ## Name of Input Action to toggle freefly mode.
-@export var input_freefly : String = "freefly"
+@export var input_freefly: String = "freefly"
 
 # Upgradable stats
-var current_base_speed : float
+var current_base_speed: float
 
-var mouse_captured : bool = false
-var look_rotation : Vector2
-var move_speed : float = 0.0
-var freeflying : bool = false
+var mouse_captured: bool = false
+var look_rotation: Vector2
+var move_speed: float = 0.0
+var freeflying: bool = false
+
+var ongoing_knockback_time_left: float = 0.0
+var knockback_vector: Vector3
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 
+
 func _ready() -> void:
 	# Initialize stats
 	current_base_speed = base_speed
 
+	check_knockback_stats()
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
+	hurtbox_component.on_hit.connect(_handle_on_hit)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -86,7 +101,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_ESCAPE):
 		release_mouse()
 
-	# Look around
+	# Look around (mouse)
 	if mouse_captured and event is InputEventMouseMotion:
 		rotate_look(event.relative)
 
@@ -96,6 +111,22 @@ func _unhandled_input(event: InputEvent) -> void:
 			enable_freefly()
 		else:
 			disable_freefly()
+
+
+func _process(delta: float) -> void:
+	# Handle right analog stick for camera look
+	# Axis 2 = Right Stick X, Axis 3 = Right Stick Y
+	var joystick_look := Vector2(
+		Input.get_joy_axis(0, JOY_AXIS_RIGHT_X),
+		Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y),
+	)
+
+	# Apply deadzone
+	if joystick_look.length() > 0.15:
+		# Scale input to feel natural (multiply by speed and delta for frame-independent movement)
+		var look_input := joystick_look * joystick_look_speed * delta * 100.0
+		rotate_look(look_input)
+
 
 func _physics_process(delta: float) -> void:
 	# If freeflying, handle freefly and nothing else
@@ -145,6 +176,24 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 		velocity.y = 0
+		velocity.z = 0
+
+	# If we're getting knocked back
+	if ongoing_knockback_time_left >= 0:
+		ongoing_knockback_time_left -= delta
+
+		var current_knockback_force = knockback_vector
+
+		if ongoing_knockback_time_left <= knockback_falloff_duration:
+			# when falloff just starts it's equal to 0, when whole knockback finishes it's equal to 1
+			var normalized_time_since_falloff_start = 1 - ongoing_knockback_time_left / knockback_falloff_duration
+			var knockback_effective_factor = 1 - knockback_falloff_curve.sample(normalized_time_since_falloff_start)
+			current_knockback_force *= knockback_effective_factor
+
+		velocity += current_knockback_force
+
+		if ongoing_knockback_time_left <= 0:
+			can_move = true
 
 	# Use velocity to actually move
 	move_and_slide()
@@ -153,7 +202,7 @@ func _physics_process(delta: float) -> void:
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
-func rotate_look(rot_input : Vector2):
+func rotate_look(rot_input: Vector2):
 	look_rotation.x -= rot_input.y * look_speed
 	look_rotation.x = clamp(look_rotation.x, deg_to_rad(look_pitch_min_deg), deg_to_rad(look_pitch_max_deg))
 	look_rotation.y -= rot_input.x * look_speed
@@ -167,6 +216,7 @@ func enable_freefly():
 	collider.disabled = true
 	freeflying = true
 	velocity = Vector3.ZERO
+
 
 func disable_freefly():
 	collider.disabled = false
@@ -207,3 +257,34 @@ func check_input_mappings():
 	if can_freefly and not InputMap.has_action(input_freefly):
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
+
+
+func check_knockback_stats() -> void:
+	if knockback_falloff_duration > knockback_force_duration:
+		push_error("Knockback falloff cannot be greater than the total knockback duration")
+
+
+func apply_knockback(knockback_direction: Vector3) -> void:
+	knockback_vector = knockback_direction
+	ongoing_knockback_time_left = knockback_force_duration
+	can_move = false
+
+
+func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
+	if incoming_hitbox.knockback_force == 0:
+		return
+
+	# calculate knockback direction (might improve if we use collision shape centers)
+	var knockback_dir = incoming_hitbox.global_position.direction_to(hurtbox_component.global_position)
+
+	# cardinal to polar (r = 1)
+	var theta = atan2(knockback_dir.z, knockback_dir.x)
+	var phi = atan2(knockback_dir.y, Vector2(knockback_dir.x, knockback_dir.z).length())
+
+	# clamp vertical angle
+	phi = clamp(phi, -deg_to_rad(knockback_max_vertical_angle_deg), deg_to_rad(knockback_max_vertical_angle_deg))
+
+	# go back to cartesian coords (use sin on Y axis so it keeps symmetrical on (-angle, angle))
+	knockback_dir = Vector3(cos(phi) * cos(theta), sin(phi), cos(phi) * sin(theta))
+
+	apply_knockback(incoming_hitbox.knockback_force * knockback_dir.normalized())

@@ -1,11 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=13 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://bb7xj3gm15bgx" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_5hfox"]
-[ext_resource type="PackedScene" uid="uid://cms2p0o7ouxiv" path="res://assets/pavo_placeholder.gltf" id="2_6dqce"]
+[ext_resource type="PackedScene" uid="uid://ch8t0twm5k5s5" path="res://assets/Pavo.gltf" id="2_ujot4"]
 [ext_resource type="PackedScene" uid="uid://bha5j07kt4xem" path="res://scene_components/xp_component.tscn" id="3_0rk7u"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_6dqce"]
 [ext_resource type="PackedScene" uid="uid://b24jc8h8s18jn" path="res://scenes/attacks/projectile_attack.tscn" id="6_h60nn"]
+
+[sub_resource type="Curve" id="Curve_ujot4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -22,15 +26,17 @@ height = 1.8
 radius = 0.4
 height = 1.65
 
-[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("body_mesh_node", "health_component", "xp_component", "projectile_attack_component") groups=["player"]]
+[node name="ProtoController" type="CharacterBody3D" node_paths=PackedStringArray("body_mesh_node", "health_component", "xp_component", "projectile_attack_component", "hurtbox_component") groups=["player"]]
 script = ExtResource("1_ucva2")
-body_mesh_node = NodePath("pavo_placeholder")
+body_mesh_node = NodePath("Pavo")
 health_component = NodePath("HealthComponent")
 xp_component = NodePath("XPComponent")
 projectile_attack_component = NodePath("ProjectileAttack")
+hurtbox_component = NodePath("HurtboxComponent")
+knockback_falloff_curve = SubResource("Curve_ujot4")
 
-[node name="pavo_placeholder" parent="." instance=ExtResource("2_6dqce")]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0, 0)
+[node name="Pavo" parent="." instance=ExtResource("2_ujot4")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0.15)
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

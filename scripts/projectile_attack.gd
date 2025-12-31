@@ -16,26 +16,30 @@ enum AttackMode { AIMED, AUTO_AIMED }
 @export var projectiles_per_attack: int
 
 @export_group("Projectile Config")
-@export_flags_3d_physics var projectile_collision_mask : int
+@export_flags_3d_physics var projectile_collision_mask: int
 
 # Upgradable Stats
-var current_attacks_per_second : float
-var current_projectiles_per_attack : float
+var current_projectile_damage: float
+var current_attacks_per_second: float
+var current_projectiles_per_attack: float
+var time_until_shooting: float
 
-var time_until_shooting : float
 
 func _ready() -> void:
 	current_attacks_per_second = attacks_per_second
 	current_projectiles_per_attack = projectiles_per_attack
+	current_projectile_damage = projectile_damage
 	time_until_shooting = 1 / attacks_per_second
+
 
 func _process(delta: float) -> void:
 	time_until_shooting -= delta
 	if time_until_shooting <= 0:
 		shoot()
 
+
 func shoot() -> void:
-	var entities_in_range : Array[Node3D] = []
+	var entities_in_range: Array[Node3D] = []
 	entities_in_range.append_array(entity_tracker.entities_within_detection_range)
 
 	for projectile_n in range(current_projectiles_per_attack):
@@ -43,7 +47,6 @@ func shoot() -> void:
 		var target = global_position - global_transform.basis.z
 
 		if attack_mode == AttackMode.AUTO_AIMED:
-
 			if entities_in_range.is_empty():
 				# Reset shoot timer
 				time_until_shooting = 1 / current_attacks_per_second
@@ -68,12 +71,13 @@ func shoot() -> void:
 	# Reset shoot timer
 	time_until_shooting = 1 / current_attacks_per_second
 
+
 func spawn_projectile(projectile_direction: Vector3) -> void:
 	var tree_root = get_tree().root
 
-	var projectile : Projectile = projectile_prefab.instantiate() as Projectile
+	var projectile: Projectile = projectile_prefab.instantiate() as Projectile
 
-	projectile.hitbox.damage_amount = projectile_damage
+	projectile.hitbox.damage_amount = current_projectile_damage
 	projectile.hitbox.collision_mask = projectile_collision_mask
 
 	projectile.projectile_speed = projectile_speed
