@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3cxypyld35gx"]
+
+[ext_resource type="Script" uid="uid://dpkvss3ysmb7r" path="res://scripts/hit_feedback_component.gd" id="1_ylrjl"]
+
+[node name="HitFeedbackComponent" type="Node"]
+script = ExtResource("1_ylrjl")
+flash_duration = 0.25
+grow_duration = 0.5
+grow_amount = 0.15
