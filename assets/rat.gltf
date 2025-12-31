@@ -21,11 +21,6 @@
 				0,
 				0,
 				0.7071068286895752
-			],
-			"translation":[
-				0,
-				0.3499999940395355,
-				-0.26711228489875793
 			]
 		}
 	],
@@ -58,16 +53,16 @@
 			"samplers":[
 				{
 					"input":6,
-					"interpolation":"LINEAR",
+					"interpolation":"STEP",
 					"output":7
 				},
 				{
-					"input":6,
+					"input":8,
 					"interpolation":"LINEAR",
-					"output":8
+					"output":9
 				},
 				{
-					"input":9,
+					"input":6,
 					"interpolation":"STEP",
 					"output":10
 				}
@@ -126,12 +121,12 @@
 			"max":[
 				0.5905824899673462,
 				1.2447571754455566,
-				-0.01582014560699463
+				-0.0009618699550628662
 			],
 			"min":[
 				-0.5905824899673462,
 				-2.0857090950012207,
-				-0.8519682884216309
+				-0.8371100425720215
 			],
 			"type":"VEC3"
 		},
@@ -170,7 +165,7 @@
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":48,
+			"count":2,
 			"max":[
 				2
 			],
@@ -182,19 +177,13 @@
 		{
 			"bufferView":7,
 			"componentType":5126,
-			"count":48,
+			"count":2,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":8,
 			"componentType":5126,
 			"count":48,
-			"type":"VEC4"
-		},
-		{
-			"bufferView":9,
-			"componentType":5126,
-			"count":2,
 			"max":[
 				2
 			],
@@ -202,6 +191,12 @@
 				0.041666666666666664
 			],
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":9,
+			"componentType":5126,
+			"count":48,
+			"type":"VEC4"
 		},
 		{
 			"bufferView":10,
@@ -249,28 +244,28 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":192,
+			"byteLength":8,
 			"byteOffset":18280
 		},
 		{
 			"buffer":0,
-			"byteLength":576,
-			"byteOffset":18472
+			"byteLength":24,
+			"byteOffset":18288
+		},
+		{
+			"buffer":0,
+			"byteLength":192,
+			"byteOffset":18312
 		},
 		{
 			"buffer":0,
 			"byteLength":768,
-			"byteOffset":19048
-		},
-		{
-			"buffer":0,
-			"byteLength":8,
-			"byteOffset":19816
+			"byteOffset":18504
 		},
 		{
 			"buffer":0,
 			"byteLength":24,
-			"byteOffset":19824
+			"byteOffset":19272
 		}
 	],
 	"samplers":[
@@ -281,7 +276,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":19848,
+			"byteLength":19296,
 			"uri":"rat.bin"
 		}
 	]
