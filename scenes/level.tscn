@@ -61,6 +61,7 @@ texture_margin_left = 12.0
 texture_margin_top = 12.0
 texture_margin_right = 12.0
 texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.88235295)
 
 [sub_resource type="LabelSettings" id="LabelSettings_olg7q"]
 font_size = 58
