@@ -307,13 +307,14 @@ func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
 func _setup_animation_loops() -> void:
 	if not animation_player:
 		return
-
+		animation_player.animation_finished.connect(_on_hurt_animation_finished)
 	# Make looping animations loop
 	var looping_anims := ["Idle", "Pavo_Walk"]
 	for anim_name in looping_anims:
 		var anim := animation_player.get_animation(anim_name)
 		if anim:
 			anim.loop_mode = Animation.LOOP_LINEAR
+	
 
 
 func _update_state() -> void:
@@ -351,10 +352,11 @@ func _play_animation_for_state(state: State) -> void:
 			animation_player.play("Pavo_Walk") # No jump animation yet
 		State.HURT:
 			animation_player.play("Pavo_Hurt")
-			animation_player.animation_finished.connect(_on_hurt_animation_finished, CONNECT_ONE_SHOT)
 
 
-func _on_hurt_animation_finished(_anim_name: String) -> void:
+func _on_hurt_animation_finished(anim_name: String) -> void:
+	if anim_name != "Pavo_Hurt":
+		return
 	# Return to appropriate state after hurt
 	current_state = State.IDLE # Reset so _update_state can pick the right one
 	_update_state()
