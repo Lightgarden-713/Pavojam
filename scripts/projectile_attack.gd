@@ -18,12 +18,14 @@ enum AttackMode { AIMED }
 
 # Upgradable Stats
 var current_attacks_per_second: float
+var current_projectile_damage: float
 
 var time_until_shooting: float
 
 
 func _ready() -> void:
 	current_attacks_per_second = attacks_per_second
+	current_projectile_damage = projectile_damage
 	time_until_shooting = 1 / attacks_per_second
 
 
@@ -46,7 +48,7 @@ func shoot() -> void:
 	for projectile_n in range(projectiles_per_attack):
 		var projectile: Projectile = projectile_prefab.instantiate() as Projectile
 
-		projectile.hitbox.damage_amount = projectile_damage
+		projectile.hitbox.damage_amount = current_projectile_damage
 		projectile.hitbox.collision_mask = projectile_collision_mask
 
 		projectile.projectile_speed = projectile_speed

@@ -4,7 +4,8 @@ extends Area3D
 signal on_hit(target: HurtboxComponent)
 
 @export_category("stats")
-@export var damage_amount: float
+@export var damage_amount : float
+@export var knockback_force : float = 0.0 # no knockback by default
 
 
 func _on_area_entered(hurtbox: HurtboxComponent) -> void:

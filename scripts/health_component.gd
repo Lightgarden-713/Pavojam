@@ -2,6 +2,7 @@ class_name HealthComponent
 extends Node
 
 signal health_depleted
+signal damage_taken
 
 @export_group("Stats")
 @export var max_health: float
@@ -19,6 +20,7 @@ func take_damage(damage_amount: float) -> void:
 	if !is_alive():
 		return
 
+	damage_taken.emit()
 	health -= damage_amount
 	if !is_alive():
 		health_depleted.emit()

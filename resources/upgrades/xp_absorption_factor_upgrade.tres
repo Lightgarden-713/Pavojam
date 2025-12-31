@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UpgradeExperienceOrbAbsorption" load_steps=3 format=3 uid="uid://dbhyl7mqt8x4a"]
 
-[ext_resource type="Texture2D" uid="uid://kvwe8snu17kl" path="res://icon.svg" id="1_abr0j"]
+[ext_resource type="Texture2D" uid="uid://bg2xdt0yytddj" path="res://assets/upgrades/orb.png" id="1_abr0j"]
 [ext_resource type="Script" uid="uid://182kbjc3jp0y" path="res://scripts/player_upgrades/upgrade_experience_orb_absorption.gd" id="1_r8f3w"]
 
 [resource]
