@@ -13,14 +13,16 @@ extends Node3D
 @export var increase_per_wave := 5
 
 var rand = RandomNumberGenerator.new()
-var wave_number : int = 0
+var wave_number: int = 0
 var time_until_next_wave: float = 0.0
 
 signal wave_started(wave_number: int)
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	time_until_next_wave = initial_delay_sec
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -29,6 +31,7 @@ func _process(delta: float) -> void:
 
 		if time_until_next_wave <= 0:
 			_start_next_wave()
+
 
 func _start_next_wave():
 	wave_number += 1
@@ -41,13 +44,15 @@ func _start_next_wave():
 
 	time_until_next_wave = time_between_waves_sec
 
+
 func _spawn_enemy():
 	print("spawning enemy")
 	var enemy = enemy_scene.instantiate()
 	get_parent().add_child(enemy)
 	enemy.global_position = _get_spawn_position()
 
+
 func _get_spawn_position() -> Vector3:
-	var spawners_count = get_child_count()-1
+	var spawners_count = get_child_count() - 1
 	var chosen_spawner_i = rand.randi_range(0, spawners_count)
 	return get_child(chosen_spawner_i).global_position

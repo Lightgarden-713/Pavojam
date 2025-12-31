@@ -2,21 +2,22 @@ class_name HitFeedbackComponent
 extends Node
 
 @export_group("References")
-@export var health_component : HealthComponent
-@export var affected_meshes : Array[MeshInstance3D]
+@export var health_component: HealthComponent
+@export var affected_meshes: Array[MeshInstance3D]
 
 @export_group("Flash parameters")
-@export var flash_duration : float
+@export var flash_duration: float
 
 @export_group("Grow Parameters")
-@export var grow_duration : float
-@export var grow_amount : float
+@export var grow_duration: float
+@export var grow_amount: float
 
-var mesh_materials : Array[BaseMaterial3D]
-var hit_flash_tween : Tween
-var hit_grow_tween : Tween
+var mesh_materials: Array[BaseMaterial3D]
+var hit_flash_tween: Tween
+var hit_grow_tween: Tween
 
-var meshes_initial_scales : Dictionary[MeshInstance3D, Vector3]
+var meshes_initial_scales: Dictionary[MeshInstance3D, Vector3]
+
 
 func _ready() -> void:
 	health_component.damage_taken.connect(_play_hit_flash)
@@ -37,6 +38,7 @@ func _ready() -> void:
 			(material as BaseMaterial3D).grow = true
 			mesh_materials.append(material)
 
+
 func _play_hit_flash() -> void:
 	if hit_flash_tween:
 		hit_flash_tween.kill() # Abort the previous flash
@@ -46,6 +48,7 @@ func _play_hit_flash() -> void:
 	for material in mesh_materials:
 		material.emission = Color.WHITE
 		hit_flash_tween.tween_property(material, "emission", Color.BLACK, flash_duration)
+
 
 func _play_grow() -> void:
 	if hit_grow_tween:
