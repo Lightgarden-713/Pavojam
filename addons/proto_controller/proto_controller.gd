@@ -247,6 +247,9 @@ func apply_knockback(knockback_direction: Vector3) -> void:
 	can_move = false
 
 func _handle_on_hit(incoming_hitbox : HitboxComponent) -> void:
+	if incoming_hitbox.knockback_force == 0:
+		return
+
 	# calculate knockback direction (might improve if we use collision shape centers)
 	var knockback_dir = incoming_hitbox.global_position.direction_to(hurtbox_component.global_position)
 
