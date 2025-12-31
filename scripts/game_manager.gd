@@ -2,25 +2,27 @@ class_name GameManager
 extends Node
 
 @export_group("References")
-@export var level_up_ui : LevelUpUI
+@export var level_up_ui: LevelUpUI
 
 @export_group("Upgrades")
 @export var upgrades_pool: Array[PlayerUpgrade]
 
-@onready var player_controller : ProtoController = $World/Player/ProtoController
+@onready var player_controller: ProtoController = $World/Player/ProtoController
 
 enum State {
 	PLAYING,
 	LEVELING_UP,
-	PAUSED
+	PAUSED,
 }
 
 var state = State.PLAYING
 var prev_state = State.PLAYING
 
+
 func _ready() -> void:
 	level_up_ui.exited.connect(_on_level_up_finish)
 	player_controller.xp_component.leveled_up.connect(_on_player_level_up)
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_menu"):
@@ -28,6 +30,7 @@ func _process(_delta: float) -> void:
 		# unpause and go to the state previous to pausing
 		var next_state = State.PAUSED if state != State.PAUSED else prev_state
 		change_game_state(next_state)
+
 
 func change_game_state(new_state: State) -> void:
 	if new_state == state:
@@ -47,19 +50,22 @@ func change_game_state(new_state: State) -> void:
 
 	state = new_state
 
+
 func _on_level_up_finish() -> void:
 	level_up_ui.selected_upgrade.apply_upgrade(player_controller)
 	change_game_state(State.PLAYING)
 
+
 func _on_player_level_up(_new_level: int) -> void:
 	change_game_state(State.LEVELING_UP)
 
+
 # === Player Upgrades ===
 func get_level_up_upgrades(num_upgrades: int) -> Array[PlayerUpgrade]:
-	var available_upgrades : Array[PlayerUpgrade] = []
+	var available_upgrades: Array[PlayerUpgrade] = []
 	available_upgrades.append_array(upgrades_pool)
 
-	var level_up_upgrades : Array[PlayerUpgrade] = []
+	var level_up_upgrades: Array[PlayerUpgrade] = []
 
 	for upgrade_n in range(num_upgrades):
 		# pick an upgrade from the available upgrades

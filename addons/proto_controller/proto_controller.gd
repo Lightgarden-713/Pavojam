@@ -74,6 +74,7 @@ var mouse_captured: bool = false
 var look_rotation: Vector2
 var move_speed: float = 0.0
 var freeflying: bool = false
+
 var ongoing_knockback_time_left: float = 0.0
 var knockback_vector: Vector3
 
@@ -90,7 +91,6 @@ func _ready() -> void:
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
-
 	hurtbox_component.on_hit.connect(_handle_on_hit)
 
 

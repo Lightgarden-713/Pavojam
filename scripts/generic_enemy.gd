@@ -1,16 +1,17 @@
 extends RigidBody3D
 
 @export_category("References")
-@export var nav_agent : NavigationAgent3D
-@export var health_component : HealthComponent
+@export var nav_agent: NavigationAgent3D
+@export var health_component: HealthComponent
 @export var animation_player: AnimationPlayer
 
 @export_category("Stats")
 @export var speed = 1.0
 
 @export_category("Drop")
-@export var drops : Array[DropData]
-@export var drop_force : float
+@export var drops: Array[DropData]
+@export var drop_force: float
+
 
 func _ready() -> void:
 	if health_component == null:
@@ -18,8 +19,10 @@ func _ready() -> void:
 
 	health_component.health_depleted.connect(die)
 
+
 func _process(_delta: float) -> void:
 	_update_animation()
+
 
 func _physics_process(_delta: float):
 	# Get the next location on the path to the target
@@ -37,9 +40,11 @@ func _physics_process(_delta: float):
 	linear_velocity.z = new_velocity.z
 	self.rotation.y = atan2(new_velocity.x, new_velocity.z)
 
+
 # Call this from your main level script or a timer to update where the enemy wants to go
 func update_target_location(target_position):
 	nav_agent.target_position = target_position
+
 
 func die() -> void:
 	# Drop XP orbs
@@ -62,6 +67,7 @@ func die() -> void:
 	# Delte GO
 	call_deferred("queue_free")
 
+
 func get_random_drop_direction() -> Vector3:
 	var dir = Vector3.UP
 	var random_angle_radians = randf_range(0.0, 2 * PI)
@@ -69,6 +75,7 @@ func get_random_drop_direction() -> Vector3:
 	dir.z = sin(random_angle_radians)
 
 	return dir.normalized()
+
 
 func _update_animation() -> void:
 	var horizontal_speed = Vector2(linear_velocity.x, linear_velocity.z).length()

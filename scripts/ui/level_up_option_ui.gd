@@ -2,11 +2,12 @@ class_name LevelUpOptionUI
 extends MarginContainer
 
 @export_group("References")
-@export var option_image : TextureButton
-@export var option_name : Label
+@export var option_image: TextureButton
+@export var option_name: Label
 
 signal selected
 signal selection_started
+
 
 func init(upgrade: PlayerUpgrade) -> void:
 	option_name.text = upgrade.name
