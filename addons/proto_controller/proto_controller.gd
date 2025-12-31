@@ -96,7 +96,7 @@ func _ready() -> void:
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 	hurtbox_component.on_hit.connect(_handle_on_hit)
-	
+
 	# Set animation loop modes
 	_setup_animation_loops()
 
@@ -204,7 +204,7 @@ func _physics_process(delta: float) -> void:
 
 	# Use velocity to actually move
 	move_and_slide()
-	
+
 	# Update state and animations
 	_update_state()
 
@@ -283,7 +283,7 @@ func apply_knockback(knockback_direction: Vector3) -> void:
 func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
 	# Enter hurt state
 	_set_state(State.HURT)
-	
+
 	if incoming_hitbox.knockback_force == 0:
 		return
 
@@ -302,11 +302,12 @@ func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
 
 	apply_knockback(incoming_hitbox.knockback_force * knockback_dir.normalized())
 
+
 # TODO: Fix this in blender
 func _setup_animation_loops() -> void:
 	if not animation_player:
 		return
-	
+
 	# Make looping animations loop
 	var looping_anims := ["Idle", "Pavo_Walk"]
 	for anim_name in looping_anims:
@@ -319,10 +320,10 @@ func _update_state() -> void:
 	# Don't interrupt hurt state until animation finishes
 	if current_state == State.HURT:
 		return
-	
+
 	var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
 	var is_moving := input_dir.length_squared() > 0.1
-	
+
 	if is_on_floor():
 		_set_state(State.WALK if is_moving else State.IDLE)
 	else:
@@ -332,7 +333,7 @@ func _update_state() -> void:
 func _set_state(new_state: State) -> void:
 	if current_state == new_state:
 		return
-	
+
 	current_state = new_state
 	_play_animation_for_state(new_state)
 
@@ -340,14 +341,14 @@ func _set_state(new_state: State) -> void:
 func _play_animation_for_state(state: State) -> void:
 	if not animation_player:
 		return
-	
+
 	match state:
 		State.IDLE:
 			animation_player.play("Idle")
 		State.WALK:
 			animation_player.play("Pavo_Walk")
 		State.JUMP:
-			animation_player.play("Pavo_Walk")  # No jump animation yet
+			animation_player.play("Pavo_Walk") # No jump animation yet
 		State.HURT:
 			animation_player.play("Pavo_Hurt")
 			animation_player.animation_finished.connect(_on_hurt_animation_finished, CONNECT_ONE_SHOT)
@@ -355,5 +356,5 @@ func _play_animation_for_state(state: State) -> void:
 
 func _on_hurt_animation_finished(_anim_name: String) -> void:
 	# Return to appropriate state after hurt
-	current_state = State.IDLE  # Reset so _update_state can pick the right one
+	current_state = State.IDLE # Reset so _update_state can pick the right one
 	_update_state()
