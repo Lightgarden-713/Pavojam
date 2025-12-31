@@ -3,3 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://drjvcea7bwg61" path="res://assets/rat.gltf" id="1_mxy18"]
 
 [node name="rat" instance=ExtResource("1_mxy18")]
+
+[node name="Rat" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)

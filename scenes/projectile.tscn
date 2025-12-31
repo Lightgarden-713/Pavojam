@@ -2,8 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="1_c8fcr"]
 [ext_resource type="Script" uid="uid://blqc8yfnssrup" path="res://scripts/projectile.gd" id="1_q3m7n"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_q3m7n"]
+[ext_resource type="PackedScene" uid="uid://c41uoxuiuklvv" path="res://assets/Pavo_plume.gltf" id="3_softn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q3m7n"]
 
@@ -11,15 +10,14 @@
 script = ExtResource("1_q3m7n")
 hitbox = NodePath("HitboxComponent")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-mesh = SubResource("CapsuleMesh_q3m7n")
-
 [node name="HitboxComponent" parent="." instance=ExtResource("1_c8fcr")]
 collision_mask = 0
 
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+transform = Transform3D(0.66, 0, 0, 0, -2.8849517e-08, 0.66, 0, -0.66, -2.8849517e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_q3m7n")
+
+[node name="Pavo_plume" parent="." instance=ExtResource("3_softn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.23452097)
 
 [editable path="HitboxComponent"]
