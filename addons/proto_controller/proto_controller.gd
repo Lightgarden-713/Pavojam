@@ -7,7 +7,7 @@ extends CharacterBody3D
 
 @export_group("References")
 @export var body_mesh_node: Node3D
-@export var animation_player: AnimationPlayer
+var animation_player: AnimationPlayer
 
 @export_group("Player component references")
 @export var health_component: HealthComponent
@@ -88,6 +88,7 @@ var current_state: State = State.IDLE
 
 
 func _ready() -> void:
+	animation_player = body_mesh_node.find_child("AnimationPlayer")
 	# Initialize stats
 	current_base_speed = base_speed
 
@@ -307,7 +308,8 @@ func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
 func _setup_animation_loops() -> void:
 	if not animation_player:
 		return
-		animation_player.animation_finished.connect(_on_hurt_animation_finished)
+	
+	animation_player.animation_finished.connect(_on_hurt_animation_finished)
 	# Make looping animations loop
 	var looping_anims := ["Idle", "Pavo_Walk"]
 	for anim_name in looping_anims:
