@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="UpgradeAttackRange" load_steps=3 format=3 uid="uid://dqnrony42ibb1"]
 
 [ext_resource type="Texture2D" uid="uid://kvwe8snu17kl" path="res://icon.svg" id="1_dm6os"]
-[ext_resource type="Script" uid="uid://cosubykyy1ofp" path="res://scripts/player_upgrades/upgrade_attack_range.gd" id="1_lbb5w"]
+[ext_resource type="Script" path="res://scripts/player_upgrades/upgrade_attack_range.gd" id="1_lbb5w"]
 
 [resource]
 script = ExtResource("1_lbb5w")

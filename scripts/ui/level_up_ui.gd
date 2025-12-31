@@ -5,7 +5,6 @@ extends PanelContainer
 @export var game_manager: GameManager
 @export var animation_player: AnimationPlayer
 @export var upgrade_options_container: Node
-
 const LEVEL_UP_OPTION_PREFAB: PackedScene = preload("res://scenes/ui/level_up_option_ui.tscn")
 
 var selected_upgrade: PlayerUpgrade = null
@@ -37,6 +36,7 @@ func open(upgrades_to_choose: Array[PlayerUpgrade]) -> void:
 func _on_upgrade_selected(upgrade: PlayerUpgrade) -> void:
 	animation_player.play("close")
 	self.selected_upgrade = upgrade
+	
 
 
 func _on_exit_animation_finished() -> void:
