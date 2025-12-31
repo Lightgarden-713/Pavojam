@@ -48,6 +48,7 @@ extends CharacterBody3D
 @export var knockback_force_duration : float = .75
 @export var knockback_falloff_duration : float = .25
 @export var knockback_falloff_curve : Curve
+@export var knockback_max_vertical_angle_deg : float = 60
 
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
@@ -248,5 +249,15 @@ func apply_knockback(knockback_direction: Vector3) -> void:
 func _handle_on_hit(incoming_hitbox : HitboxComponent) -> void:
 	# calculate knockback direction (might improve if we use collision shape centers)
 	var knockback_dir = incoming_hitbox.global_position.direction_to(hurtbox_component.global_position)
+
+	# cardinal to polar (r = 1)
+	var theta = atan2(knockback_dir.z, knockback_dir.x)
+	var phi = atan2(knockback_dir.y, Vector2(knockback_dir.x, knockback_dir.z).length())
+
+	# clamp vertical angle
+	phi = clamp(phi, -deg_to_rad(knockback_max_vertical_angle_deg), deg_to_rad(knockback_max_vertical_angle_deg))
+
+	# go back to cartesian coords (use sin on Y axis so it keeps symmetrical on (-angle, angle))
+	knockback_dir = Vector3(cos(phi) * cos(theta), sin(phi), cos(phi) * sin(theta))
 
 	apply_knockback(incoming_hitbox.knockback_force * knockback_dir.normalized())
