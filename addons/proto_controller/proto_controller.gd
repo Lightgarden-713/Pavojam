@@ -49,7 +49,7 @@ extends CharacterBody3D
 @export var knockback_force_duration: float = .75
 @export var knockback_falloff_duration: float = .25
 @export var knockback_falloff_curve: Curve
-@export var knockback_max_vertical_angle_deg: float = 60
+@export var knockback_max_vertical_angle_deg: float = 20.0
 
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
