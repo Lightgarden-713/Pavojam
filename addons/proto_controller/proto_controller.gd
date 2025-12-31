@@ -2,17 +2,16 @@
 # CC0 License
 # Intended for rapid prototyping of first-person games.
 # Happy prototyping!
-
 class_name ProtoController
 extends CharacterBody3D
 
 @export_group("References")
-@export var body_mesh_node : Node3D
+@export var body_mesh_node: Node3D
 
 @export_group("Player component references")
-@export var health_component : HealthComponent
-@export var xp_component : XPComponent
-@export var projectile_attack_component : ProjectileAttack
+@export var health_component: HealthComponent
+@export var xp_component: XPComponent
+@export var projectile_attack_component: ProjectileAttack
 
 @export_group("Camera")
 
@@ -21,55 +20,56 @@ extends CharacterBody3D
 @export_range(0.0, 89.0, 0.5) var look_pitch_max_deg := 85.0
 
 ## Can we move around?
-@export var can_move : bool = true
+@export var can_move: bool = true
 ## Are we affected by gravity?
-@export var has_gravity : bool = true
+@export var has_gravity: bool = true
 ## Can we press to jump?
-@export var can_jump : bool = true
+@export var can_jump: bool = true
 ## Can we hold to run?
-@export var can_sprint : bool = false
+@export var can_sprint: bool = false
 ## Can we press to enter freefly mode (noclip)?
-@export var can_freefly : bool = false
+@export var can_freefly: bool = false
 
 @export_group("Speeds")
 ## Look around rotation speed.
-@export var look_speed : float = 0.002
+@export var look_speed: float = 0.002
 ## Normal speed.
-@export var base_speed : float = 7.0
+@export var base_speed: float = 7.0
 ## Speed of jump.
-@export var jump_velocity : float = 4.5
+@export var jump_velocity: float = 4.5
 ## How fast do we run?
-@export var sprint_speed : float = 10.0
+@export var sprint_speed: float = 10.0
 ## How fast do we freefly?
-@export var freefly_speed : float = 25.0
+@export var freefly_speed: float = 25.0
 
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
-@export var input_left : String = "ui_left"
+@export var input_left: String = "ui_left"
 ## Name of Input Action to move Right.
-@export var input_right : String = "ui_right"
+@export var input_right: String = "ui_right"
 ## Name of Input Action to move Forward.
-@export var input_forward : String = "ui_up"
+@export var input_forward: String = "ui_up"
 ## Name of Input Action to move Backward.
-@export var input_back : String = "ui_down"
+@export var input_back: String = "ui_down"
 ## Name of Input Action to Jump.
-@export var input_jump : String = "ui_accept"
+@export var input_jump: String = "ui_accept"
 ## Name of Input Action to Sprint.
-@export var input_sprint : String = "sprint"
+@export var input_sprint: String = "sprint"
 ## Name of Input Action to toggle freefly mode.
-@export var input_freefly : String = "freefly"
+@export var input_freefly: String = "freefly"
 
 # Upgradable stats
-var current_base_speed : float
+var current_base_speed: float
 
-var mouse_captured : bool = false
-var look_rotation : Vector2
-var move_speed : float = 0.0
-var freeflying : bool = false
+var mouse_captured: bool = false
+var look_rotation: Vector2
+var move_speed: float = 0.0
+var freeflying: bool = false
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
+
 
 func _ready() -> void:
 	# Initialize stats
@@ -78,6 +78,7 @@ func _ready() -> void:
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -96,6 +97,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			enable_freefly()
 		else:
 			disable_freefly()
+
 
 func _physics_process(delta: float) -> void:
 	# If freeflying, handle freefly and nothing else
@@ -123,7 +125,7 @@ func _physics_process(delta: float) -> void:
 
 	# Modify speed based on sprinting
 	if can_sprint and Input.is_action_pressed(input_sprint):
-			move_speed = sprint_speed
+		move_speed = sprint_speed
 	else:
 		move_speed = current_base_speed
 
@@ -153,7 +155,7 @@ func _physics_process(delta: float) -> void:
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
 ## Modifies look_rotation based on rot_input, then resets basis and rotates by look_rotation.
-func rotate_look(rot_input : Vector2):
+func rotate_look(rot_input: Vector2):
 	look_rotation.x -= rot_input.y * look_speed
 	look_rotation.x = clamp(look_rotation.x, deg_to_rad(look_pitch_min_deg), deg_to_rad(look_pitch_max_deg))
 	look_rotation.y -= rot_input.x * look_speed
@@ -167,6 +169,7 @@ func enable_freefly():
 	collider.disabled = true
 	freeflying = true
 	velocity = Vector3.ZERO
+
 
 func disable_freefly():
 	collider.disabled = false

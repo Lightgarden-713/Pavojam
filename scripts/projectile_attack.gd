@@ -14,21 +14,24 @@ enum AttackMode { AIMED }
 @export var projectiles_per_attack: float
 
 @export_group("Projectile Config")
-@export_flags_3d_physics var projectile_collision_mask : int
+@export_flags_3d_physics var projectile_collision_mask: int
 
 # Upgradable Stats
-var current_attacks_per_second : float
+var current_attacks_per_second: float
 
-var time_until_shooting : float
+var time_until_shooting: float
+
 
 func _ready() -> void:
 	current_attacks_per_second = attacks_per_second
 	time_until_shooting = 1 / attacks_per_second
 
+
 func _process(delta: float) -> void:
 	time_until_shooting -= delta
 	if time_until_shooting <= 0:
 		shoot()
+
 
 func shoot() -> void:
 	var tree_root = get_tree().root
@@ -41,7 +44,7 @@ func shoot() -> void:
 
 	# Spawn and setup Projectiles
 	for projectile_n in range(projectiles_per_attack):
-		var projectile : Projectile = projectile_prefab.instantiate() as Projectile
+		var projectile: Projectile = projectile_prefab.instantiate() as Projectile
 
 		projectile.hitbox.damage_amount = projectile_damage
 		projectile.hitbox.collision_mask = projectile_collision_mask
