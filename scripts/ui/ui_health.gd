@@ -17,6 +17,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	health_text.text = "HP: " + str(int(player_health.health)) + " / " + str(int(player_health.current_max_health))
 	health_bar.value = health_percentage()
-	
-func health_percentage()-> int:
+
+
+func health_percentage() -> int:
 	return int(player_health.health / player_health.current_max_health * 100)
