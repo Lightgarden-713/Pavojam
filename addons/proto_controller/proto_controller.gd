@@ -7,6 +7,7 @@ extends CharacterBody3D
 
 @export_group("References")
 @export var body_mesh_node: Node3D
+var animation_player: AnimationPlayer
 
 @export_group("Player component references")
 @export var health_component: HealthComponent
@@ -67,6 +68,8 @@ extends CharacterBody3D
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly: String = "freefly"
 
+enum State { IDLE, WALK, JUMP, HURT }
+
 # Upgradable stats
 var current_base_speed: float
 
@@ -77,6 +80,7 @@ var freeflying: bool = false
 
 var ongoing_knockback_time_left: float = 0.0
 var knockback_vector: Vector3
+var current_state: State = State.IDLE
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
@@ -84,6 +88,7 @@ var knockback_vector: Vector3
 
 
 func _ready() -> void:
+	animation_player = body_mesh_node.find_child("AnimationPlayer")
 	# Initialize stats
 	current_base_speed = base_speed
 
@@ -92,6 +97,9 @@ func _ready() -> void:
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 	hurtbox_component.on_hit.connect(_handle_on_hit)
+
+	# Set animation loop modes
+	_setup_animation_loops()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -198,6 +206,9 @@ func _physics_process(delta: float) -> void:
 	# Use velocity to actually move
 	move_and_slide()
 
+	# Update state and animations
+	_update_state()
+
 
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
@@ -271,6 +282,9 @@ func apply_knockback(knockback_direction: Vector3) -> void:
 
 
 func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
+	# Enter hurt state
+	_set_state(State.HURT)
+
 	if incoming_hitbox.knockback_force == 0:
 		return
 
@@ -288,3 +302,63 @@ func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
 	knockback_dir = Vector3(cos(phi) * cos(theta), sin(phi), cos(phi) * sin(theta))
 
 	apply_knockback(incoming_hitbox.knockback_force * knockback_dir.normalized())
+
+
+# TODO: Fix this in blender
+func _setup_animation_loops() -> void:
+	if not animation_player:
+		return
+	
+	animation_player.animation_finished.connect(_on_hurt_animation_finished)
+	# Make looping animations loop
+	var looping_anims := ["Idle", "Pavo_Walk"]
+	for anim_name in looping_anims:
+		var anim := animation_player.get_animation(anim_name)
+		if anim:
+			anim.loop_mode = Animation.LOOP_LINEAR
+	
+
+
+func _update_state() -> void:
+	# Don't interrupt hurt state until animation finishes
+	if current_state == State.HURT:
+		return
+
+	var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+	var is_moving := input_dir.length_squared() > 0.1
+
+	if is_on_floor():
+		_set_state(State.WALK if is_moving else State.IDLE)
+	else:
+		_set_state(State.JUMP)
+
+
+func _set_state(new_state: State) -> void:
+	if current_state == new_state:
+		return
+
+	current_state = new_state
+	_play_animation_for_state(new_state)
+
+
+func _play_animation_for_state(state: State) -> void:
+	if not animation_player:
+		return
+
+	match state:
+		State.IDLE:
+			animation_player.play("Idle")
+		State.WALK:
+			animation_player.play("Pavo_Walk")
+		State.JUMP:
+			animation_player.play("Pavo_Walk") # No jump animation yet
+		State.HURT:
+			animation_player.play("Pavo_Hurt")
+
+
+func _on_hurt_animation_finished(anim_name: String) -> void:
+	if anim_name != "Pavo_Hurt":
+		return
+	# Return to appropriate state after hurt
+	current_state = State.IDLE # Reset so _update_state can pick the right one
+	_update_state()
