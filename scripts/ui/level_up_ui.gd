@@ -26,6 +26,7 @@ func open(upgrades_to_choose: Array[PlayerUpgrade]) -> void:
 
 		# connect to signals
 		upgrade_option.selected.connect(_on_upgrade_selected.bind(upgrade))
+		upgrade_option.selection_started.connect(_on_selection_started)
 
 	animation_player.play("open")
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -45,3 +46,8 @@ func _on_exit_animation_finished() -> void:
 		ui_option.call_deferred("queue_free")
 
 	exited.emit()
+
+func _on_selection_started() -> void:
+	for option in upgrade_options_container.get_children():
+		if option is LevelUpOptionUI:
+			option.option_image.disabled = true

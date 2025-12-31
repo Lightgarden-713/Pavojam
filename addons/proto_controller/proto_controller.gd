@@ -33,8 +33,10 @@ extends CharacterBody3D
 @export var can_freefly : bool = false
 
 @export_group("Speeds")
-## Look around rotation speed.
+## Look around rotation speed (mouse).
 @export var look_speed : float = 0.002
+## Look around rotation speed (joystick). Higher value = faster camera movement.
+@export var joystick_look_speed : float = 13
 ## Normal speed.
 @export var base_speed : float = 7.0
 ## Speed of jump.
@@ -98,7 +100,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_ESCAPE):
 		release_mouse()
 
-	# Look around
+	# Look around (mouse)
 	if mouse_captured and event is InputEventMouseMotion:
 		rotate_look(event.relative)
 
@@ -108,6 +110,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			enable_freefly()
 		else:
 			disable_freefly()
+
+
+func _process(delta: float) -> void:
+	# Handle right analog stick for camera look
+	# Axis 2 = Right Stick X, Axis 3 = Right Stick Y
+	var joystick_look := Vector2(
+		Input.get_joy_axis(0, JOY_AXIS_RIGHT_X),
+		Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
+	)
+	
+	# Apply deadzone
+	if joystick_look.length() > 0.15:
+		# Scale input to feel natural (multiply by speed and delta for frame-independent movement)
+		var look_input := joystick_look * joystick_look_speed * delta * 100.0
+		rotate_look(look_input)
 
 func _physics_process(delta: float) -> void:
 	# If freeflying, handle freefly and nothing else
