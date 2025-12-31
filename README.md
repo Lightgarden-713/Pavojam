@@ -9,7 +9,7 @@ Controls:
 
 We currently have a workflow that builds the game on each commit merged to main.
 
-![build-workflow](https://github.com/Lightgarden-713/Pavojam/actions/workflows/godot-ci.yml/badge.svg)
+[![build-workflow](https://github.com/Lightgarden-713/Pavojam/actions/workflows/godot-ci.yml/badge.svg)](https://github.com/Lightgarden-713/Pavojam/actions/workflows/godot-ci.yml)
 
 ## Dependencies
 
