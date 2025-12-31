@@ -51,6 +51,7 @@ func _on_exit_animation_finished() -> void:
 
 	exited.emit()
 
+
 func _on_selection_started() -> void:
 	for option in upgrade_options_container.get_children():
 		if option is LevelUpOptionUI:
