@@ -2,6 +2,7 @@ class_name WaveManager
 extends Node3D
 
 @export var enemy_scene: PackedScene = preload("res://scenes/enemies/rat_enemy.tscn")
+@export var miniboss_scene: PackedScene = preload("res://scenes/enemies/miniboss.tscn")
 
 @export_category("Timing")
 @export var initial_delay_sec := 5.0
@@ -39,20 +40,35 @@ func _start_next_wave():
 
 	var enemies_to_spawn = base_enemies + increase_per_wave * wave_number
 	for i in enemies_to_spawn:
-		_spawn_enemy()
+		_spawn_enemy(enemy_scene)
 		await get_tree().create_timer(spawn_wait_time).timeout
 
-	time_until_next_wave = time_between_waves_sec
+	if is_miniboss_wave():
+		var miniboss = _spawn_enemy(miniboss_scene)
+		miniboss.health_component.health_depleted.connect(_on_miniboss_killed, CONNECT_ONE_SHOT)
+
+	# on miniboss_waves we wait until the miniboss is slained to go to the next wave
+	if !is_miniboss_wave():
+		time_until_next_wave = time_between_waves_sec
 
 
-func _spawn_enemy():
-	print("spawning enemy")
-	var enemy = enemy_scene.instantiate()
+func _spawn_enemy(enemy_to_spawn: PackedScene) -> GenericEnemy:
+	var enemy = enemy_to_spawn.instantiate()
 	get_parent().add_child(enemy)
 	enemy.global_position = _get_spawn_position()
+
+	return enemy
 
 
 func _get_spawn_position() -> Vector3:
 	var spawners_count = get_child_count() - 1
 	var chosen_spawner_i = rand.randi_range(0, spawners_count)
 	return get_child(chosen_spawner_i).global_position
+
+
+func _on_miniboss_killed() -> void:
+	time_until_next_wave = time_between_waves_sec
+
+
+func is_miniboss_wave() -> bool:
+	return wave_number % 5 == 0
