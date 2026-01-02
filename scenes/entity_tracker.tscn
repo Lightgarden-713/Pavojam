@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b6bdaykmkraqy" path="res://scripts/entity_tracker.gd" id="1_rllc3"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_488e8"]
+resource_local_to_scene = true
 
 [node name="EntityTracker" type="Area3D" node_paths=PackedStringArray("collision_shape")]
 collision_layer = 0

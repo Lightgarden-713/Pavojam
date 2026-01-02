@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://yw1d6vykb175"]
+
+[ext_resource type="Script" uid="uid://blqc8yfnssrup" path="res://scripts/projectile.gd" id="1_or38t"]
+[ext_resource type="PackedScene" uid="uid://bulxhhc46d7ij" path="res://scene_components/hitbox_component.tscn" id="2_f0cbk"]
+[ext_resource type="Script" uid="uid://dtk4w4i7tcgmw" path="res://scripts/explosion.gd" id="3_or38t"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_or38t"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_or38t"]
+resource_local_to_scene = true
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.3529412)
+
+[sub_resource type="SphereMesh" id="SphereMesh_f0cbk"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_or38t")
+radius = 1.0
+height = 2.0
+
+[node name="Projectile" type="Node3D" node_paths=PackedStringArray("hitbox")]
+script = ExtResource("1_or38t")
+hitbox = NodePath("HitboxComponent")
+projectile_lifetime_sec = 10.0
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_f0cbk")]
+collision_mask = 0
+monitoring = false
+knockback_force = 8.0
+
+[node name="CollisionShape3D" parent="HitboxComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_or38t")
+
+[node name="Telegraphy" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_f0cbk")
+
+[node name="Explosion" type="Node" parent="." node_paths=PackedStringArray("explosion_root_node", "telegraphy_sphere_mesh", "hitbox")]
+script = ExtResource("3_or38t")
+explosion_root_node = NodePath("..")
+telegraphy_sphere_mesh = NodePath("../Telegraphy")
+hitbox = NodePath("../HitboxComponent")
+time_to_explode_sec = 3.0
+explosion_radius = 1.0
+
+[editable path="HitboxComponent"]

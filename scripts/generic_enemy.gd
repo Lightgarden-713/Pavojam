@@ -1,3 +1,4 @@
+class_name GenericEnemy
 extends RigidBody3D
 
 @export_category("References")
