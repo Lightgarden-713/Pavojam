@@ -71,4 +71,5 @@ func _on_miniboss_killed() -> void:
 
 
 func is_miniboss_wave() -> bool:
-	return wave_number % 5 == 0
+	return true
+	# return wave_number % 5 == 0

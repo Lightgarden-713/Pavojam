@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1gwkhfs7i33b"]
+[gd_scene load_steps=9 format=3 uid="uid://b1gwkhfs7i33b"]
 
 [ext_resource type="PackedScene" uid="uid://bpyrd5tkn71c4" path="res://scenes/enemies/GenericEnemy.tscn" id="1_5lvu1"]
+[ext_resource type="PackedScene" uid="uid://b24jc8h8s18jn" path="res://scenes/attacks/projectile_attack.tscn" id="2_3ag5j"]
+[ext_resource type="PackedScene" uid="uid://yw1d6vykb175" path="res://scenes/miniboss_projectile.tscn" id="3_pcm0h"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5lvu1"]
 radius = 1.5
@@ -43,5 +45,20 @@ shape = SubResource("SphereShape3D_5n34f")
 [node name="CollisionShape3D" parent="HitboxComponent" index="0"]
 shape = SubResource("SphereShape3D_rar1o")
 
+[node name="ProjectileAttack" parent="." index="8" instance=ExtResource("2_3ag5j")]
+projectile_prefab = ExtResource("3_pcm0h")
+projectile_damage = 40.0
+projectile_speed = 4.0
+shoot_mode = 1
+attacks_per_second = 0.5
+projectiles_per_attack = 18
+angle_between_projectiles = 20.0
+projectile_collision_mask = 1
+
+[node name="EntityTracker" parent="ProjectileAttack" index="0"]
+monitoring = false
+initial_detection_radius = 1.0
+
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]
+[editable path="ProjectileAttack"]
