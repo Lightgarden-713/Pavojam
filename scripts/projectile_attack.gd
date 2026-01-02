@@ -72,6 +72,15 @@ func shoot() -> void:
 	entities_in_range.append_array(entity_tracker.entities_within_detection_range)
 
 	if aim_mode == AimMode.AUTO_AIMED and len(entities_in_range) == 0:
+		# Consume shot
+		if shoot_mode == ShootMode.SEQUENTIAL:
+			remaining_projectiles_for_current_attack -= 1
+			time_until_next_projectile = time_between_projectiles
+			if remaining_projectiles_for_current_attack == 0:
+				end_attack()
+		elif shoot_mode == ShootMode.PARALLEL:
+			end_attack()
+
 		return
 
 	# Calculate direction towards target
