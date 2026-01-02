@@ -36,7 +36,6 @@ func open(upgrades_to_choose: Array[PlayerUpgrade]) -> void:
 func _on_upgrade_selected(upgrade: PlayerUpgrade) -> void:
 	animation_player.play("close")
 	self.selected_upgrade = upgrade
-	
 
 
 func _on_exit_animation_finished() -> void:
