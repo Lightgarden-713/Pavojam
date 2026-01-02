@@ -19,7 +19,6 @@ enum ShootMode { SEQUENTIAL, PARALLEL }
 
 @export_subgroup("Sequential Shooting Stats")
 @export var time_between_projectiles: float
-@export var can_retarget: bool
 
 @export_subgroup("Parallel Shooting Stats")
 @export var angle_between_projectiles: float
@@ -101,7 +100,6 @@ func shoot() -> void:
 
 
 ## Assume we always have at least one entity in range for autoaimed attacks, otherwise we don't even call this.
-## Might modify the provided entities in range
 func get_aim_direction(entities_in_range: Array[Node3D]) -> Vector3:
 	if aim_mode == AimMode.AIMED:
 		# Forward direction
@@ -115,10 +113,6 @@ func get_aim_direction(entities_in_range: Array[Node3D]) -> Vector3:
 		for entity in entities_in_range:
 			if global_position.distance_to(entity.global_position) < global_position.distance_to(closest_entity.global_position):
 				closest_entity = entity
-
-		# Can only target once per shooting
-		if not can_retarget:
-			entities_in_range.erase(closest_entity)
 
 		return global_position.direction_to(closest_entity.global_position)
 
