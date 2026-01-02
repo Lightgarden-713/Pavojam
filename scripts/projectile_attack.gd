@@ -14,6 +14,7 @@ enum AttackMode { AIMED, AUTO_AIMED }
 @export var attack_mode: AttackMode
 @export var attacks_per_second: float
 @export var projectiles_per_attack: int
+@export var time_between_projectiles: float
 
 @export_group("Projectile Config")
 @export_flags_3d_physics var projectile_collision_mask: int
@@ -21,55 +22,76 @@ enum AttackMode { AIMED, AUTO_AIMED }
 # Upgradable Stats
 var current_projectile_damage: float
 var current_attacks_per_second: float
-var current_projectiles_per_attack: float
-var time_until_shooting: float
+var current_projectiles_per_attack: int
+var is_attacking: bool
+var time_until_attacking: float
+var time_until_next_projectile: float
+var remaining_projectiles_for_current_attack: int
 
 
 func _ready() -> void:
 	current_attacks_per_second = attacks_per_second
 	current_projectiles_per_attack = projectiles_per_attack
 	current_projectile_damage = projectile_damage
-	time_until_shooting = 1 / attacks_per_second
+	time_until_attacking = 1 / attacks_per_second
+	remaining_projectiles_for_current_attack = current_projectiles_per_attack
 
 
 func _process(delta: float) -> void:
-	time_until_shooting -= delta
-	if time_until_shooting <= 0:
+	time_until_attacking -= delta
+	time_until_next_projectile -= delta
+	if time_until_attacking <= 0:
+		start_attack()
+
+	if (is_attacking and
+		remaining_projectiles_for_current_attack > 0 and
+		time_until_next_projectile <= 0 ):
 		shoot()
+
+
+func start_attack() -> void:
+	remaining_projectiles_for_current_attack = current_projectiles_per_attack
+	time_until_next_projectile = 0 # First one fires instantly
+	is_attacking = true
+	time_until_attacking = 1 / current_attacks_per_second
+
+
+func end_attack() -> void:
+	is_attacking = false
 
 
 func shoot() -> void:
 	var entities_in_range: Array[Node3D] = []
 	entities_in_range.append_array(entity_tracker.entities_within_detection_range)
 
-	for projectile_n in range(current_projectiles_per_attack):
-		# Pick target as a forward pos
-		var target = global_position - global_transform.basis.z
+	# Pick target as a forward pos
+	var target = global_position - global_transform.basis.z
 
-		if attack_mode == AttackMode.AUTO_AIMED:
-			if entities_in_range.is_empty():
-				# Reset shoot timer
-				time_until_shooting = 1 / current_attacks_per_second
-				return
+	if attack_mode == AttackMode.AUTO_AIMED:
+		if entities_in_range.is_empty():
+			return
 
-			# get closest entity
-			var closest_entity = entities_in_range[0]
-			for entity in entities_in_range:
-				if global_position.distance_to(entity.global_position) < global_position.distance_to(closest_entity.global_position):
-					closest_entity = entity
+		# get closest entity
+		var closest_entity = entities_in_range[0]
+		for entity in entities_in_range:
+			if global_position.distance_to(entity.global_position) < global_position.distance_to(closest_entity.global_position):
+				closest_entity = entity
 
-			target = closest_entity.global_position
+		target = closest_entity.global_position
 
-			# Can only target once per shooting
-			entities_in_range.erase(closest_entity)
+		# Can only target once per shooting
+		entities_in_range.erase(closest_entity)
 
-		# Calculate direction towards target
-		var shoot_direction = global_position.direction_to(target)
+	# Calculate direction towards target
+	var shoot_direction = global_position.direction_to(target)
 
-		spawn_projectile(shoot_direction)
+	spawn_projectile(shoot_direction)
 
-	# Reset shoot timer
-	time_until_shooting = 1 / current_attacks_per_second
+	remaining_projectiles_for_current_attack -= 1
+	time_until_next_projectile = time_between_projectiles
+
+	if remaining_projectiles_for_current_attack <= 0:
+		end_attack()
 
 
 func spawn_projectile(projectile_direction: Vector3) -> void:
