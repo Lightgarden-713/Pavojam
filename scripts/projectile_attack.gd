@@ -2,7 +2,8 @@ class_name ProjectileAttack
 extends Node3D
 
 # TODO: test Auto aimed / Homing / Teledirected projectiles
-enum AttackMode { AIMED, AUTO_AIMED }
+enum AimMode { AIMED, AUTO_AIMED }
+enum ShootMode { SEQUENTIAL, PARALLEL }
 
 @export_group("References")
 @export var projectile_prefab: PackedScene
@@ -11,10 +12,17 @@ enum AttackMode { AIMED, AUTO_AIMED }
 @export_group("Attack Stats")
 @export var projectile_damage: float
 @export var projectile_speed: float
-@export var attack_mode: AttackMode
+@export var aim_mode: AimMode
+@export var shoot_mode: ShootMode
 @export var attacks_per_second: float
 @export var projectiles_per_attack: int
+
+@export_subgroup("Sequential Shooting Stats")
 @export var time_between_projectiles: float
+@export var can_retarget: bool
+
+@export_subgroup("Parallel Shooting Stats")
+@export var angle_between_projectiles: float
 
 @export_group("Projectile Config")
 @export_flags_3d_physics var projectile_collision_mask: int
@@ -64,12 +72,43 @@ func shoot() -> void:
 	var entities_in_range: Array[Node3D] = []
 	entities_in_range.append_array(entity_tracker.entities_within_detection_range)
 
-	# Pick target as a forward pos
-	var target = global_position - global_transform.basis.z
+	if aim_mode == AimMode.AUTO_AIMED and len(entities_in_range) == 0:
+		return
 
-	if attack_mode == AttackMode.AUTO_AIMED:
+	# Calculate direction towards target
+	var shoot_direction = get_aim_direction(entities_in_range)
+
+	if shoot_mode == ShootMode.SEQUENTIAL:
+		spawn_projectile(shoot_direction)
+
+		remaining_projectiles_for_current_attack -= 1
+		time_until_next_projectile = time_between_projectiles
+	elif shoot_mode == ShootMode.PARALLEL:
+		# get a "semicircle" centered at the shoot direction and shoot all projectiles
+		var up_vector = global_transform.basis.y
+		# Start from the furthest angle and start adding `angle_between projectiles`
+		var offset_rotation = angle_between_projectiles * (remaining_projectiles_for_current_attack / 2.0)
+		offset_rotation *= -1
+
+		for projectile_n in range(remaining_projectiles_for_current_attack):
+			spawn_projectile(shoot_direction.rotated(up_vector, deg_to_rad(offset_rotation)))
+			offset_rotation += angle_between_projectiles
+
+		remaining_projectiles_for_current_attack = 0
+
+	if remaining_projectiles_for_current_attack <= 0:
+		end_attack()
+
+
+## Assume we always have at least one entity in range for autoaimed attacks, otherwise we don't even call this.
+## Might modify the provided entities in range
+func get_aim_direction(entities_in_range: Array[Node3D]) -> Vector3:
+	if aim_mode == AimMode.AIMED:
+		# Forward direction
+		return global_transform.basis.z
+	elif aim_mode == AimMode.AUTO_AIMED:
 		if entities_in_range.is_empty():
-			return
+			return Vector3.ZERO
 
 		# get closest entity
 		var closest_entity = entities_in_range[0]
@@ -77,21 +116,13 @@ func shoot() -> void:
 			if global_position.distance_to(entity.global_position) < global_position.distance_to(closest_entity.global_position):
 				closest_entity = entity
 
-		target = closest_entity.global_position
-
 		# Can only target once per shooting
-		entities_in_range.erase(closest_entity)
+		if not can_retarget:
+			entities_in_range.erase(closest_entity)
 
-	# Calculate direction towards target
-	var shoot_direction = global_position.direction_to(target)
+		return global_position.direction_to(closest_entity.global_position)
 
-	spawn_projectile(shoot_direction)
-
-	remaining_projectiles_for_current_attack -= 1
-	time_until_next_projectile = time_between_projectiles
-
-	if remaining_projectiles_for_current_attack <= 0:
-		end_attack()
+	return Vector3.ZERO
 
 
 func spawn_projectile(projectile_direction: Vector3) -> void:
