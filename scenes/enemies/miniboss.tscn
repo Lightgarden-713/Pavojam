@@ -37,7 +37,7 @@ shape = SubResource("SphereShape3D_5lvu1")
 mesh = SubResource("SphereMesh_pcm0h")
 
 [node name="HealthComponent" parent="." index="3"]
-max_health = 1000.0
+max_health = 3000.0
 
 [node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
 shape = SubResource("SphereShape3D_5n34f")
