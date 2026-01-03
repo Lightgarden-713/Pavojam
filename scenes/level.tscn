@@ -162,6 +162,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015434742, 0, 0)
 navigation_mesh = SubResource("NavigationMesh_w8frs")
 
 [node name="env_colliseum" parent="World/NavigationRegion3D" instance=ExtResource("2_ppgk2")]
@@ -188,19 +189,37 @@ increase_per_wave = 2
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.3, -11)
 
 [node name="env_door" parent="World/WaveManager/Spawn1" instance=ExtResource("13_ux5qa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6164017, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.7322028e-08, -0.6164017, -6.662941)
 
 [node name="Spawn2" type="Node3D" parent="World/WaveManager"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0.3, -8)
 
 [node name="env_door" parent="World/WaveManager/Spawn2" instance=ExtResource("13_ux5qa")]
-transform = Transform3D(0.64278764, 0, 0.76604444, 0, 1, 0, -0.76604444, 0, 0.64278764, 0, -0.6164017, 0)
+transform = Transform3D(-0.59346104, 0, -0.80486286, 0, 1, 0, 0.80486286, 0, -0.59346104, -2.4899554, -0.6164017, -1.5267155)
 
 [node name="Spawn3" type="Node3D" parent="World/WaveManager"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10, 0.3, -8)
 
 [node name="env_door" parent="World/WaveManager/Spawn3" instance=ExtResource("13_ux5qa")]
-transform = Transform3D(0.64278764, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, 0.64278764, 0, -0.6164017, 0)
+transform = Transform3D(-0.54460967, 0, 0.8386897, 0, 1, 0, -0.8386897, 0, -0.54460967, 3.7949355, -0.6164017, 0.13316025)
+
+[node name="Spawn4" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 14.376707)
+
+[node name="env_door" parent="World/WaveManager/Spawn4" instance=ExtResource("13_ux5qa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.011346221, -0.09518051)
+
+[node name="Spawn5" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10.430012, 0, 9.274926)
+
+[node name="env_door2" parent="World/WaveManager/Spawn5" instance=ExtResource("13_ux5qa")]
+transform = Transform3D(0.64278764, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, 0.64278764, -0.46705246, -0.154055, 0.51978874)
+
+[node name="Spawn6" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 11.075705, 0, 7.906312)
+
+[node name="env_door" parent="World/WaveManager/Spawn6" instance=ExtResource("13_ux5qa")]
+transform = Transform3D(0.58354104, 0, 0.81208366, 0, 1, 0, -0.81208366, 0, 0.58354104, 0.8575821, 0.016328812, 1.1552715)
 
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 3

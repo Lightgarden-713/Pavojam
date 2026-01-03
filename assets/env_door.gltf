@@ -9,7 +9,8 @@
 			"name":"Scene",
 			"nodes":[
 				0,
-				1
+				1,
+				2
 			]
 		}
 	],
@@ -21,6 +22,15 @@
 		{
 			"mesh":1,
 			"name":"Doorcol-colonly"
+		},
+		{
+			"mesh":2,
+			"name":"Portal",
+			"translation":[
+				0,
+				0,
+				-4.492138385772705
+			]
 		}
 	],
 	"materials":[
@@ -61,6 +71,20 @@
 						"TEXCOORD_0":6
 					},
 					"indices":7
+				}
+			]
+		},
+		{
+			"name":"Cube.001",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":8,
+						"NORMAL":9,
+						"TEXCOORD_0":10
+					},
+					"indices":11,
+					"material":0
 				}
 			]
 		}
@@ -146,6 +170,40 @@
 			"componentType":5123,
 			"count":156,
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":8,
+			"componentType":5126,
+			"count":10,
+			"max":[
+				2.2576498985290527,
+				8.804232597351074,
+				5.274354934692383
+			],
+			"min":[
+				-2.2576498985290527,
+				0.04789157956838608,
+				5.274354934692383
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":9,
+			"componentType":5126,
+			"count":10,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":10,
+			"componentType":5126,
+			"count":10,
+			"type":"VEC2"
+		},
+		{
+			"bufferView":11,
+			"componentType":5123,
+			"count":24,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -196,6 +254,30 @@
 			"byteLength":312,
 			"byteOffset":16608,
 			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":120,
+			"byteOffset":16920,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":120,
+			"byteOffset":17040,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":80,
+			"byteOffset":17160,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":48,
+			"byteOffset":17240,
+			"target":34963
 		}
 	],
 	"samplers":[
@@ -206,7 +288,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":16920,
+			"byteLength":17288,
 			"uri":"env_door.bin"
 		}
 	]
