@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=40 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://my3j856pvsl4" path="res://scripts/game_manager.gd" id="1_olg7q"]
@@ -10,17 +10,18 @@
 [ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui/ui_health.gd" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="4_ppgk2"]
 [ext_resource type="Resource" uid="uid://d1c4h70yeyjhv" path="res://resources/upgrades/health_upgrade.tres" id="4_ux5qa"]
-[ext_resource type="Script" path="res://scripts/xp_bar.gd" id="5_2r41h"]
+[ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/ui/xp_bar.gd" id="5_2r41h"]
 [ext_resource type="Resource" uid="uid://d12crmrod7vn7" path="res://resources/upgrades/speed_upgrade.tres" id="5_82cfe"]
 [ext_resource type="Resource" uid="uid://dbhyl7mqt8x4a" path="res://resources/upgrades/xp_absorption_factor_upgrade.tres" id="6_arp2o"]
 [ext_resource type="Script" uid="uid://slwhbg4sgaym" path="res://scripts/wave_manager.gd" id="6_b121j"]
+[ext_resource type="Resource" uid="uid://d0mef5lykibto" path="res://resources/upgrades/attack_upgrade.tres" id="7_82cfe"]
 [ext_resource type="Resource" uid="uid://5exlvnp05483" path="res://resources/upgrades/max_ammo_upgrade.tres" id="7_ux5qa"]
 [ext_resource type="Resource" uid="uid://dqnrony42ibb1" path="res://resources/upgrades/attack_range_upgrade.tres" id="8_82cfe"]
-[ext_resource type="Resource" path="res://resources/upgrades/attack_upgrade.tres" id="7_82cfe"]
 [ext_resource type="Script" uid="uid://b8upaitibbcq6" path="res://scripts/ui/wave_level_ui.gd" id="9_8c41q"]
 [ext_resource type="Script" uid="uid://cfx5iw35d7ic7" path="res://scripts/ui/level_up_ui.gd" id="11_8iemx"]
 [ext_resource type="PackedScene" uid="uid://1qt2ax6nxs83" path="res://assets/env_door.gltf" id="13_ux5qa"]
 [ext_resource type="Texture2D" uid="uid://cb65uyfm7n5q5" path="res://assets/frame.png" id="16_ux5qa"]
+[ext_resource type="Script" uid="uid://rtu0nfru75ps" path="res://scripts/ui/upgrades_bar_ui.gd" id="20_8gofh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -340,3 +341,21 @@ alignment = 1
 libraries = {
 &"": SubResource("AnimationLibrary_64w2a")
 }
+
+[node name="UpgradesBarUI" type="MarginContainer" parent="UI/Control" node_paths=PackedStringArray("level_up_ui", "upgrades_container")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+script = ExtResource("20_8gofh")
+level_up_ui = NodePath("../LevelUpUI")
+upgrades_container = NodePath("VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/UpgradesBarUI"]
+layout_mode = 2
+theme_override_constants/separation = -24

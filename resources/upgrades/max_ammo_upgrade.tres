@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UpgradeMaxAmmo" load_steps=3 format=3 uid="uid://5exlvnp05483"]
 
-[ext_resource type="Texture2D" uid="uid://kvwe8snu17kl" path="res://icon.svg" id="1_8i7iw"]
+[ext_resource type="Texture2D" uid="uid://cr48xplrhq68e" path="res://assets/upgrades/ammo.png" id="1_8i7iw"]
 [ext_resource type="Script" uid="uid://bs8p4aen74byl" path="res://scripts/player_upgrades/upgrade_max_ammo.gd" id="1_kgl8c"]
 
 [resource]

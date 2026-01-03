@@ -1,0 +1,266 @@
+[gd_scene load_steps=20 format=3 uid="uid://dhki6q427qbtr"]
+
+[ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/ui/xp_bar.gd" id="1_pfayw"]
+[ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui/ui_health.gd" id="2_7vp6q"]
+[ext_resource type="Script" uid="uid://b8upaitibbcq6" path="res://scripts/ui/wave_level_ui.gd" id="3_jcn1r"]
+[ext_resource type="Texture2D" uid="uid://cb65uyfm7n5q5" path="res://assets/frame.png" id="4_uegxj"]
+[ext_resource type="Script" uid="uid://cfx5iw35d7ic7" path="res://scripts/ui/level_up_ui.gd" id="5_y220t"]
+[ext_resource type="Script" uid="uid://rtu0nfru75ps" path="res://scripts/ui/upgrades_bar_ui.gd" id="6_4kltc"]
+
+[sub_resource type="Theme" id="Theme_ux5qa"]
+default_font_size = 24
+Label/constants/outline_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ppgk2"]
+bg_color = Color(0.101960786, 0.101960786, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2r41h"]
+bg_color = Color(0.2, 0.4, 0.9019608, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arp2o"]
+bg_color = Color(0.060934506, 2.744957e-08, 6.7683867e-09, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ux5qa"]
+bg_color = Color(0.67231417, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_82cfe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gunhw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ux5qa"]
+texture = ExtResource("4_uegxj")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.88235295)
+
+[sub_resource type="LabelSettings" id="LabelSettings_olg7q"]
+font_size = 58
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_8iemx"]
+length = 0.001
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_t1rx8"]
+resource_name = "exit"
+length = 0.5
+step = 0.25
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_exit_animation_finished"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_olg7q"]
+resource_name = "fade_in"
+length = 0.5
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_64w2a"]
+_data = {
+&"RESET": SubResource("Animation_8iemx"),
+&"close": SubResource("Animation_t1rx8"),
+&"open": SubResource("Animation_olg7q")
+}
+
+[node name="UI" type="CanvasLayer"]
+process_mode = 3
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_ux5qa")
+
+[node name="XPBar" type="ProgressBar" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ppgk2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2r41h")
+value = 50.0
+script = ExtResource("1_pfayw")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 220.0
+offset_bottom = 162.0
+theme_override_constants/margin_left = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="HealthContainer" type="PanelContainer" parent="Control/MarginContainer/VBoxContainer" node_paths=PackedStringArray("health_text", "health_bar")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+script = ExtResource("2_7vp6q")
+health_text = NodePath("MarginContainer/Label")
+health_bar = NodePath("HealthBar")
+
+[node name="HealthBar" type="ProgressBar" parent="Control/MarginContainer/VBoxContainer/HealthContainer"]
+custom_minimum_size = Vector2(180, 48)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_arp2o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ux5qa")
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/HealthContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/HealthContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_82cfe")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gunhw")
+text = "Health: 0"
+
+[node name="WaveLevelUI" type="PanelContainer" parent="Control/MarginContainer/VBoxContainer" node_paths=PackedStringArray("wave_number_lavel", "next_wave_label")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+script = ExtResource("3_jcn1r")
+wave_number_lavel = NodePath("MarginContainer/VBoxContainer/WaveNumber")
+next_wave_label = NodePath("MarginContainer/VBoxContainer/NextWave")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer/WaveLevelUI"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/VBoxContainer/WaveLevelUI/MarginContainer"]
+layout_mode = 2
+
+[node name="WaveNumber" type="Label" parent="Control/MarginContainer/VBoxContainer/WaveLevelUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Wave: 0"
+
+[node name="NextWave" type="Label" parent="Control/MarginContainer/VBoxContainer/WaveLevelUI/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(204, 0)
+layout_mode = 2
+text = "Next Wave: 11"
+
+[node name="LevelUpUI" type="PanelContainer" parent="Control" node_paths=PackedStringArray("animation_player", "upgrade_options_container")]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_ux5qa")
+script = ExtResource("5_y220t")
+animation_player = NodePath("LevelUpAnimator")
+upgrade_options_container = NodePath("MarginContainer/VBoxContainer/OptionsContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/LevelUpUI"]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/LevelUpUI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="Title" type="Label" parent="Control/LevelUpUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Leveled up!"
+label_settings = SubResource("LabelSettings_olg7q")
+horizontal_alignment = 1
+
+[node name="OptionsContainer" type="HBoxContainer" parent="Control/LevelUpUI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="LevelUpAnimator" type="AnimationPlayer" parent="Control/LevelUpUI"]
+libraries = {
+&"": SubResource("AnimationLibrary_64w2a")
+}
+
+[node name="UpgradesBarUI" type="MarginContainer" parent="Control" node_paths=PackedStringArray("level_up_ui", "upgrades_container")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+script = ExtResource("6_4kltc")
+level_up_ui = NodePath("../LevelUpUI")
+upgrades_container = NodePath("VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/UpgradesBarUI"]
+layout_mode = 2
+theme_override_constants/separation = -24

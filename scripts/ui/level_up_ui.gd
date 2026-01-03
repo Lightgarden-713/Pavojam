@@ -5,7 +5,6 @@ extends PanelContainer
 @export var game_manager: GameManager
 @export var animation_player: AnimationPlayer
 @export var upgrade_options_container: Node
-
 const LEVEL_UP_OPTION_PREFAB: PackedScene = preload("res://scenes/ui/level_up_option_ui.tscn")
 
 var selected_upgrade: PlayerUpgrade = null

@@ -15,7 +15,7 @@ layout_mode = 2
 
 [node name="ImageButton" type="TextureButton" parent="VBoxContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(120, 120)
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 texture_normal = ExtResource("2_r8iu3")
 texture_pressed = ExtResource("2_r8iu3")
