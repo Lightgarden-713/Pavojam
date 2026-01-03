@@ -5,6 +5,7 @@ extends MarginContainer
 @export var level_up_ui: LevelUpUI
 @export var upgrades_container: VBoxContainer
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	level_up_ui.exited.connect(_on_level_up_finish)

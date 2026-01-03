@@ -308,7 +308,7 @@ func _handle_on_hit(incoming_hitbox: HitboxComponent) -> void:
 func _setup_animation_loops() -> void:
 	if not animation_player:
 		return
-	
+
 	animation_player.animation_finished.connect(_on_hurt_animation_finished)
 	# Make looping animations loop
 	var looping_anims := ["Idle", "Pavo_Walk"]
@@ -316,7 +316,6 @@ func _setup_animation_loops() -> void:
 		var anim := animation_player.get_animation(anim_name)
 		if anim:
 			anim.loop_mode = Animation.LOOP_LINEAR
-	
 
 
 func _update_state() -> void:
