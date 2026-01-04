@@ -24,20 +24,20 @@ func _ready() -> void:
 	if health_component == null:
 		push_error("HurtEyeComponent: health_component not set")
 		return
-	
+
 	if mesh_root == null:
 		push_error("HurtEyeComponent: mesh_root not set")
 		return
-	
+
 	# Find the mesh recursively
 	var eye_mesh = _find_mesh_recursive(mesh_root)
-	
+
 	_eye_material = eye_mesh.get_active_material(eye_material_index) as BaseMaterial3D
-	
+
 	if _eye_material == null:
 		push_error("HurtEyeComponent: Could not get eye material at index " + str(eye_material_index))
 		return
-	
+
 	health_component.damage_taken.connect(_on_damage_taken)
 
 
@@ -45,26 +45,26 @@ func _find_mesh_recursive(node: Node) -> MeshInstance3D:
 	# Check if this node is the mesh we're looking for
 	if node is MeshInstance3D:
 		return node as MeshInstance3D
-	
+
 	# Search children recursively
 	for child in node.get_children():
 		var result = _find_mesh_recursive(child)
 		if result != null:
 			return result
-	
+
 	return null
 
 
 func _on_damage_taken() -> void:
 	if _eye_material == null:
 		return
-	
+
 	if _eye_tween:
 		_eye_tween.kill()
-	
+
 	# Set UV offset to show hurt eye
 	_eye_material.uv1_offset = Vector3(hurt_eye_uv_offset.x, hurt_eye_uv_offset.y, 0)
-	
+
 	# Wait and then reset to normal eye
 	_eye_tween = create_tween()
 	_eye_tween.tween_interval(hurt_duration)
