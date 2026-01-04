@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ch8t0twm5k5s5" path="res://assets/Pavo.gltf" id="2_ujot4"]
 [ext_resource type="PackedScene" uid="uid://bha5j07kt4xem" path="res://scene_components/xp_component.tscn" id="3_0rk7u"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_6dqce"]
-[ext_resource type="Script" uid="uid://djrblkfxkco6u" path="res://scripts/hurt_eye_component.gd" id="5_ujot4"]
+[ext_resource type="Script" path="res://scripts/hurt_eye_component.gd" id="5_ujot4"]
 [ext_resource type="PackedScene" uid="uid://b24jc8h8s18jn" path="res://scenes/attacks/projectile_attack.tscn" id="6_h60nn"]
 
 [sub_resource type="Curve" id="Curve_ujot4"]
@@ -65,7 +65,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="XPComponent" parent="." instance=ExtResource("3_0rk7u")]
 
-[node name="EyeChangeComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "mesh_root")]
+[node name="HurtEyeComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "mesh_root")]
 script = ExtResource("5_ujot4")
 health_component = NodePath("../HealthComponent")
 mesh_root = NodePath("../Pavo")
