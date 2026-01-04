@@ -5,8 +5,7 @@ extends Node
 
 @export_group("References")
 @export var health_component: HealthComponent
-## The root node containing the mesh (e.g., the imported GLTF root like "Pavo")
-@export var mesh_root: Node3D
+@export var pavo_mesh: MeshInstance3D
 
 @export_group("Settings")
 ## The material surface index for the eye (should be second as pavo only has 2 texture materials)
@@ -25,34 +24,17 @@ func _ready() -> void:
 		push_error("HurtEyeComponent: health_component not set")
 		return
 
-	if mesh_root == null:
-		push_error("HurtEyeComponent: mesh_root not set")
+	if pavo_mesh == null:
+		push_error("HurtEyeComponent: pavo_mesh not set")
 		return
 
-	# Find the mesh recursively
-	var eye_mesh = _find_mesh_recursive(mesh_root)
-
-	_eye_material = eye_mesh.get_active_material(eye_material_index) as BaseMaterial3D
+	_eye_material = pavo_mesh.get_active_material(eye_material_index) as BaseMaterial3D
 
 	if _eye_material == null:
 		push_error("HurtEyeComponent: Could not get eye material at index " + str(eye_material_index))
 		return
 
 	health_component.damage_taken.connect(_on_damage_taken)
-
-
-func _find_mesh_recursive(node: Node) -> MeshInstance3D:
-	# Check if this node is the mesh we're looking for
-	if node is MeshInstance3D:
-		return node as MeshInstance3D
-
-	# Search children recursively
-	for child in node.get_children():
-		var result = _find_mesh_recursive(child)
-		if result != null:
-			return result
-
-	return null
 
 
 func _on_damage_taken() -> void:
