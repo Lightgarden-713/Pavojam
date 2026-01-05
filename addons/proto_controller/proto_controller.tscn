@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ch8t0twm5k5s5" path="res://assets/Pavo.gltf" id="2_ujot4"]
 [ext_resource type="PackedScene" uid="uid://bha5j07kt4xem" path="res://scene_components/xp_component.tscn" id="3_0rk7u"]
 [ext_resource type="PackedScene" uid="uid://jsdc71kh28tc" path="res://scene_components/hurtbox_component.tscn" id="3_6dqce"]
+[ext_resource type="Script" uid="uid://djrblkfxkco6u" path="res://scripts/hurt_eye_component.gd" id="5_ujot4"]
 [ext_resource type="PackedScene" uid="uid://b24jc8h8s18jn" path="res://scenes/attacks/projectile_attack.tscn" id="6_h60nn"]
 
 [sub_resource type="Curve" id="Curve_ujot4"]
@@ -33,7 +34,9 @@ health_component = NodePath("HealthComponent")
 xp_component = NodePath("XPComponent")
 projectile_attack_component = NodePath("ProjectileAttack")
 hurtbox_component = NodePath("HurtboxComponent")
+jump_velocity = 6.0
 knockback_falloff_curve = SubResource("Curve_ujot4")
+knockback_max_vertical_angle_deg = 15.0
 
 [node name="Pavo" parent="." instance=ExtResource("2_ujot4")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0.15)
@@ -62,6 +65,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="XPComponent" parent="." instance=ExtResource("3_0rk7u")]
 
+[node name="HurtEyeComponent" type="Node" parent="." node_paths=PackedStringArray("health_component", "pavo_mesh")]
+script = ExtResource("5_ujot4")
+health_component = NodePath("../HealthComponent")
+pavo_mesh = NodePath("../Pavo/Pavo_Bones/Skeleton3D/Pavo")
+
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("owner_health_component") instance=ExtResource("3_6dqce")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 collision_mask = 2
@@ -81,5 +89,6 @@ collision_layer = 1
 collision_mask = 2
 initial_detection_radius = 10.0
 
+[editable path="Pavo"]
 [editable path="HurtboxComponent"]
 [editable path="ProjectileAttack"]

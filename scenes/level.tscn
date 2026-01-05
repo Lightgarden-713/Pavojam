@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cor8id61tymqq"]
+[gd_scene load_steps=40 format=3 uid="uid://cor8id61tymqq"]
 
 [ext_resource type="PackedScene" uid="uid://bgkd7d3lm3qye" path="res://scenes/player.tscn" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://my3j856pvsl4" path="res://scripts/game_manager.gd" id="1_olg7q"]
@@ -10,17 +10,18 @@
 [ext_resource type="Script" uid="uid://bafmnigyk7spf" path="res://scripts/ui/ui_health.gd" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://toswubf77db8" path="res://scenes/experience/experience_orb.tscn" id="4_ppgk2"]
 [ext_resource type="Resource" uid="uid://d1c4h70yeyjhv" path="res://resources/upgrades/health_upgrade.tres" id="4_ux5qa"]
-[ext_resource type="Script" path="res://scripts/xp_bar.gd" id="5_2r41h"]
+[ext_resource type="Script" uid="uid://y26ktl1i5d4q" path="res://scripts/ui/xp_bar.gd" id="5_2r41h"]
 [ext_resource type="Resource" uid="uid://d12crmrod7vn7" path="res://resources/upgrades/speed_upgrade.tres" id="5_82cfe"]
 [ext_resource type="Resource" uid="uid://dbhyl7mqt8x4a" path="res://resources/upgrades/xp_absorption_factor_upgrade.tres" id="6_arp2o"]
 [ext_resource type="Script" uid="uid://slwhbg4sgaym" path="res://scripts/wave_manager.gd" id="6_b121j"]
+[ext_resource type="Resource" uid="uid://d0mef5lykibto" path="res://resources/upgrades/attack_upgrade.tres" id="7_82cfe"]
 [ext_resource type="Resource" uid="uid://5exlvnp05483" path="res://resources/upgrades/max_ammo_upgrade.tres" id="7_ux5qa"]
 [ext_resource type="Resource" uid="uid://dqnrony42ibb1" path="res://resources/upgrades/attack_range_upgrade.tres" id="8_82cfe"]
-[ext_resource type="Resource" path="res://resources/upgrades/attack_upgrade.tres" id="7_82cfe"]
 [ext_resource type="Script" uid="uid://b8upaitibbcq6" path="res://scripts/ui/wave_level_ui.gd" id="9_8c41q"]
 [ext_resource type="Script" uid="uid://cfx5iw35d7ic7" path="res://scripts/ui/level_up_ui.gd" id="11_8iemx"]
 [ext_resource type="PackedScene" uid="uid://1qt2ax6nxs83" path="res://assets/env_door.gltf" id="13_ux5qa"]
 [ext_resource type="Texture2D" uid="uid://cb65uyfm7n5q5" path="res://assets/frame.png" id="16_ux5qa"]
+[ext_resource type="Script" uid="uid://rtu0nfru75ps" path="res://scripts/ui/upgrades_bar_ui.gd" id="20_8gofh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w7c3h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -161,6 +162,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015434742, 0, 0)
 navigation_mesh = SubResource("NavigationMesh_w8frs")
 
 [node name="env_colliseum" parent="World/NavigationRegion3D" instance=ExtResource("2_ppgk2")]
@@ -187,19 +189,37 @@ increase_per_wave = 2
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.3, -11)
 
 [node name="env_door" parent="World/WaveManager/Spawn1" instance=ExtResource("13_ux5qa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6164017, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.7322028e-08, -0.6164017, -6.662941)
 
 [node name="Spawn2" type="Node3D" parent="World/WaveManager"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10, 0.3, -8)
 
 [node name="env_door" parent="World/WaveManager/Spawn2" instance=ExtResource("13_ux5qa")]
-transform = Transform3D(0.64278764, 0, 0.76604444, 0, 1, 0, -0.76604444, 0, 0.64278764, 0, -0.6164017, 0)
+transform = Transform3D(-0.59346104, 0, -0.80486286, 0, 1, 0, 0.80486286, 0, -0.59346104, -2.4899554, -0.6164017, -1.5267155)
 
 [node name="Spawn3" type="Node3D" parent="World/WaveManager"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10, 0.3, -8)
 
 [node name="env_door" parent="World/WaveManager/Spawn3" instance=ExtResource("13_ux5qa")]
-transform = Transform3D(0.64278764, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, 0.64278764, 0, -0.6164017, 0)
+transform = Transform3D(-0.54460967, 0, 0.8386897, 0, 1, 0, -0.8386897, 0, -0.54460967, 3.7949355, -0.6164017, 0.13316025)
+
+[node name="Spawn4" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 14.376707)
+
+[node name="env_door" parent="World/WaveManager/Spawn4" instance=ExtResource("13_ux5qa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.011346221, -0.09518051)
+
+[node name="Spawn5" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -10.430012, 0, 9.274926)
+
+[node name="env_door2" parent="World/WaveManager/Spawn5" instance=ExtResource("13_ux5qa")]
+transform = Transform3D(0.64278764, 0, -0.76604444, 0, 1, 0, 0.76604444, 0, 0.64278764, -0.46705246, -0.154055, 0.51978874)
+
+[node name="Spawn6" type="Node3D" parent="World/WaveManager"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 11.075705, 0, 7.906312)
+
+[node name="env_door" parent="World/WaveManager/Spawn6" instance=ExtResource("13_ux5qa")]
+transform = Transform3D(0.58354104, 0, 0.81208366, 0, 1, 0, -0.81208366, 0, 0.58354104, 0.8575821, 0.016328812, 1.1552715)
 
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -340,3 +360,21 @@ alignment = 1
 libraries = {
 &"": SubResource("AnimationLibrary_64w2a")
 }
+
+[node name="UpgradesBarUI" type="MarginContainer" parent="UI/Control" node_paths=PackedStringArray("level_up_ui", "upgrades_container")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+script = ExtResource("20_8gofh")
+level_up_ui = NodePath("../LevelUpUI")
+upgrades_container = NodePath("VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/UpgradesBarUI"]
+layout_mode = 2
+theme_override_constants/separation = -24
