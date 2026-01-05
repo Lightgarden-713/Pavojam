@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=12 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://bb7xj3gm15bgx" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="PackedScene" uid="uid://c1i3f13st5yow" path="res://scene_components/health_component.tscn" id="2_5hfox"]
@@ -80,8 +80,10 @@ shape = SubResource("CapsuleShape3D_0rk7u")
 
 [node name="ProjectileAttack" parent="." instance=ExtResource("6_h60nn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0921607, -0.41275918)
-attack_mode = 1
+aim_mode = 1
 projectiles_per_attack = 1
+time_between_projectiles = 0.1
+angle_between_projectiles = 10.0
 projectile_collision_mask = 2
 
 [node name="EntityTracker" parent="ProjectileAttack" index="0"]
