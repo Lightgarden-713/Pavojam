@@ -17,7 +17,7 @@ func _on_level_up_finish() -> void:
 	upgrade_rect.custom_minimum_size = Vector2(64, 64)
 	upgrades_container.add_child(upgrade_rect)
 	var childs = upgrades_container.get_child_count()
-	
+
 	if childs > 6 and childs < 9:
 		upgrades_container.add_theme_constant_override("separation", -36)
 
