@@ -1,0 +1,173 @@
+[gd_scene load_steps=8 format=3 uid="uid://7wpmpmkqcjtp"]
+
+[ext_resource type="Script" uid="uid://ceqx6ii8r6fxe" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="PackedScene" uid="uid://cor8id61tymqq" path="res://scenes/level.tscn" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://dnrnatq3y8hfl" path="res://assets/GameTitle.png" id="3_wu84c"]
+[ext_resource type="Theme" uid="uid://da87rbkhsfjrd" path="res://assets/menu_buttons.tres" id="4_8ln24"]
+
+[sub_resource type="Animation" id="Animation_oa1go"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_rtw2f"]
+resource_name = "drop_anim"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.2666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -520), Vector2(0, -520), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 1.25, 1.3, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 3), Vector2(1, 3), Vector2(1.2, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tbmy8"]
+_data = {
+&"RESET": SubResource("Animation_oa1go"),
+&"drop_anim": SubResource("Animation_rtw2f")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+scene_to_change = ExtResource("2_ekxnf")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsBar" type="MenuBar" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_right = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 265
+theme_override_constants/margin_bottom = 265
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="TitleContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 110
+theme_override_constants/margin_bottom = 110
+
+[node name="Control" type="Control" parent="HBoxContainer/TitleContainer"]
+layout_mode = 2
+
+[node name="Gametitle" type="TextureRect" parent="HBoxContainer/TitleContainer/Control"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 128.0
+pivot_offset = Vector2(575, 128)
+texture = ExtResource("3_wu84c")
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/TitleContainer/Control/Gametitle"]
+libraries = {
+&"": SubResource("AnimationLibrary_tbmy8")
+}
+autoplay = "drop_anim"
+
+[node name="ButtonContainer" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="HBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+theme = ExtResource("4_8ln24")
+text = "Play"
+icon_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="HBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("4_8ln24")
+disabled = true
+text = "Settings
+"
+icon_alignment = 1
+
+[node name="ExitButton" type="Button" parent="HBoxContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("4_8ln24")
+text = "Exit
+"
+icon_alignment = 1
+
+[connection signal="pressed" from="HBoxContainer/ButtonContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ButtonContainer/ExitButton" to="." method="_on_exit_button_pressed"]

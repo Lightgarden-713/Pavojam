@@ -1,0 +1,35 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://da87rbkhsfjrd"]
+
+[ext_resource type="Texture2D" uid="uid://h1e57kkrsuul" path="res://assets/button_disabled.png" id="1_n7ws3"]
+[ext_resource type="Texture2D" uid="uid://dndy8j1wdrtmk" path="res://assets/button.png" id="2_t3r30"]
+[ext_resource type="Texture2D" uid="uid://drk4lc1i55esl" path="res://assets/button_pressed.png" id="3_bs6jn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tbmy8"]
+texture = ExtResource("1_n7ws3")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jk1qb"]
+texture = ExtResource("2_t3r30")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(0, 0, 48, 48)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5dd4i"]
+texture = ExtResource("3_bs6jn")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/constants/outline_size = 4
+Button/font_sizes/font_size = 24
+Button/styles/disabled = SubResource("StyleBoxTexture_tbmy8")
+Button/styles/normal = SubResource("StyleBoxTexture_jk1qb")
+Button/styles/pressed = SubResource("StyleBoxTexture_5dd4i")

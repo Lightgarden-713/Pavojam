@@ -98,7 +98,7 @@ code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx;
 
 uniform vec4 ColorParameter : source_color = vec4(0.236887, 0.335912, 0.299607, 1.000000);
-uniform sampler2D Texture2DParameter2 : source_color;
+uniform sampler2D Texture2DParameter;
 
 
 
@@ -107,44 +107,32 @@ void vertex() {
 	vec4 n_out16p0 = ColorParameter;
 
 
-	vec4 n_out15p0;
-// Texture2D:15
-	n_out15p0 = texture(Texture2DParameter2, UV);
+// Input:7
+	vec2 n_out7p0 = UV;
 
 
-// Input:2
-	float n_out2p0 = TIME;
+// VectorCompose:8
+	float n_in8p0 = 0.00000;
+	vec2 n_out8p0 = vec2(n_in8p0, n_out7p0.x);
 
 
-// FloatOp:18
-	float n_in18p1 = 5.00000;
-	float n_out18p0 = n_out2p0 * n_in18p1;
+// VectorCompose:6
+	vec2 n_out6p0 = vec2(n_out7p0.x, n_out8p0.x);
 
 
-// FloatFunc:17
-	float n_out17p0 = sin(n_out18p0);
+// UVFunc:5
+	vec2 n_in5p1 = vec2(0.00000, 0.00000);
+	vec2 n_out5p0 = n_out6p0 * n_in5p1 + UV;
 
 
-	float n_out21p0;
-// Remap:21
-	float n_in21p1 = 0.00000;
-	float n_in21p2 = 1.00000;
-	float n_in21p3 = 0.00000;
-	float n_in21p4 = 1.00000;
-	{
-		float __input_range = n_in21p2 - n_in21p1;
-		float __output_range = n_in21p4 - n_in21p3;
-		n_out21p0 = n_in21p3 + __output_range * ((n_out17p0 - n_in21p1) / __input_range);
-	}
-
-
-// FloatOp:20
-	float n_out20p0 = n_out15p0.x * n_out21p0;
+	vec4 n_out10p0;
+// Texture2D:10
+	n_out10p0 = texture(Texture2DParameter, n_out5p0);
 
 
 // Output:0
 	COLOR.rgb = vec3(n_out16p0.xyz);
-	COLOR.a = n_out20p0;
+	COLOR.a = n_out10p0.x;
 
 
 }
@@ -153,15 +141,15 @@ nodes/vertex/0/position = Vector2(620, 160)
 nodes/vertex/2/node = SubResource("VisualShaderNodeInput_nhmne")
 nodes/vertex/2/position = Vector2(-2340, -240)
 nodes/vertex/5/node = SubResource("VisualShaderNodeUVFunc_2ph8d")
-nodes/vertex/5/position = Vector2(0, 80)
+nodes/vertex/5/position = Vector2(0, 140)
 nodes/vertex/6/node = SubResource("VisualShaderNodeVectorCompose_yrdae")
 nodes/vertex/6/position = Vector2(-760, 320)
 nodes/vertex/7/node = SubResource("VisualShaderNodeInput_ivt5h")
 nodes/vertex/7/position = Vector2(-1200, 540)
 nodes/vertex/8/node = SubResource("VisualShaderNodeVectorCompose_76xkx")
-nodes/vertex/8/position = Vector2(-560, 580)
+nodes/vertex/8/position = Vector2(-860, 700)
 nodes/vertex/9/node = SubResource("VisualShaderNodeTexture2DParameter_o0xfc")
-nodes/vertex/9/position = Vector2(-340, 320)
+nodes/vertex/9/position = Vector2(-400, 560)
 nodes/vertex/10/node = SubResource("VisualShaderNodeTexture_b2uaj")
 nodes/vertex/10/position = Vector2(120, 600)
 nodes/vertex/11/node = SubResource("VisualShaderNodeTexture_y4g53")
@@ -184,4 +172,4 @@ nodes/vertex/20/node = SubResource("VisualShaderNodeFloatOp_l24ka")
 nodes/vertex/20/position = Vector2(-460, -120)
 nodes/vertex/21/node = SubResource("VisualShaderNodeRemap_vaqo6")
 nodes/vertex/21/position = Vector2(-1480, -240)
-nodes/vertex/connections = PackedInt32Array(6, 0, 5, 2, 9, 0, 10, 2, 5, 0, 10, 0, 7, 0, 6, 0, 12, 0, 13, 0, 11, 0, 13, 1, 14, 0, 15, 2, 16, 0, 0, 6, 2, 0, 18, 0, 18, 0, 17, 0, 15, 0, 20, 0, 20, 0, 0, 7, 21, 0, 20, 1, 17, 0, 21, 0)
+nodes/vertex/connections = PackedInt32Array(9, 0, 10, 2, 5, 0, 10, 0, 12, 0, 13, 0, 11, 0, 13, 1, 14, 0, 15, 2, 18, 0, 17, 0, 15, 0, 20, 0, 21, 0, 20, 1, 17, 0, 21, 0, 16, 0, 0, 6, 10, 0, 0, 7, 2, 0, 18, 0, 7, 0, 6, 0, 8, 0, 6, 1, 7, 0, 8, 1, 6, 0, 5, 2)
